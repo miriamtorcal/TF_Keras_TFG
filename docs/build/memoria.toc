@@ -1,0 +1,15 @@
+\babel@toc {spanish}{}\relax 
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\'{I}ndice general}{\es@scroman {iii}}{section*.1}%
+\contentsline {chapter}{\'{I}ndice de figuras}{\es@scroman {iv}}{section*.2}%
+\contentsline {chapter}{\'{I}ndice de tablas}{\es@scroman {v}}{section*.3}%
+\contentsline {chapter}{Introducción}{1}{chapter*.4}%
+\contentsline {chapter}{Objetivos del proyecto}{3}{chapter*.5}%
+\contentsline {chapter}{Conceptos teóricos}{5}{chapter*.6}%
+\contentsline {section}{\numberline {3.1}Deep Learning}{5}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Edge Computing}{5}{section.3.2}%
+\contentsline {chapter}{Técnicas y herramientas}{7}{chapter*.7}%
+\contentsline {chapter}{Aspectos relevantes del desarrollo del proyecto}{9}{chapter*.8}%
+\contentsline {chapter}{Trabajos relacionados}{11}{chapter*.9}%
+\contentsline {chapter}{Conclusiones y Líneas de trabajo futuras}{13}{chapter*.10}%
+\contentsline {chapter}{Bibliograf\'{\i }a}{15}{chapter*.11}%
