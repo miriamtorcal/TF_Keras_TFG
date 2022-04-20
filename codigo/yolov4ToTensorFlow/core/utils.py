@@ -124,7 +124,17 @@ def image_preprocess(image, target_size, gt_boxes=None):
         gt_boxes[:, [1, 3]] = gt_boxes[:, [1, 3]] * scale + dh
         return image_paded, gt_boxes
 
-def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_label=True):
+def format_boxes(bboxes, image_height, image_width):
+    for box in bboxes:
+        ymin = int(box[0] * image_height)
+        xmin = int(box[1] * image_width)
+        ymax = int(box[2] * image_height)
+        xmax = int(box[3] * image_width)
+        box[0], box[1], box[2], box[3] = xmin, ymin, xmax, ymax
+    return bboxes
+
+def draw_bbox(image, bboxes, show_label=True, allowedClasses = list(read_class_names(cfg.YOLO.CLASSES).values())):
+    classes=read_class_names(cfg.YOLO.CLASSES)
     num_classes = len(classes)
     image_h, image_w, _ = image.shape
     hsv_tuples = [(1.0 * x / num_classes, 1., 1.) for x in range(num_classes)]
@@ -136,21 +146,25 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
     random.seed(None)
 
     out_boxes, out_scores, out_classes, num_boxes = bboxes
-    for i in range(num_boxes[0]):
-        if int(out_classes[0][i]) < 0 or int(out_classes[0][i]) > num_classes: continue
-        coor = out_boxes[0][i]
-        coor[0] = int(coor[0] * image_h)
-        coor[2] = int(coor[2] * image_h)
-        coor[1] = int(coor[1] * image_w)
-        coor[3] = int(coor[3] * image_w)
+    for i in range(num_boxes):
+        if int(out_classes[i]) < 0 or int(out_classes[i]) > num_classes: continue
+        coor = out_boxes[i]
+        # coor[0] = int(coor[0] * image_h)
+        # coor[2] = int(coor[2] * image_h)
+        # coor[1] = int(coor[1] * image_w)
+        # coor[3] = int(coor[3] * image_w)
 
         fontScale = 0.5
-        score = out_scores[0][i]
-        class_ind = int(out_classes[0][i])
+        score = out_scores[i]
+        class_ind = int(out_classes[i])
         bbox_color = colors[class_ind]
+        class_name = classes[class_ind]
         bbox_thick = int(0.6 * (image_h + image_w) / 600)
-        c1, c2 = (coor[1], coor[0]), (coor[3], coor[2])
+        c1, c2 = (coor[0], coor[1]), (coor[2], coor[3])
         cv2.rectangle(image, c1, c2, bbox_color, bbox_thick)
+
+        if class_name not in allowedClasses:
+            continue
 
         if show_label:
             bbox_mess = '%s: %.2f' % (classes[class_ind], score)
