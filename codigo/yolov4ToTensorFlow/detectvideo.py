@@ -7,6 +7,7 @@ from absl import app, flags, logging
 from absl.flags import FLAGS
 import core.utils as utils
 from core.yolov4 import filter_boxes
+from core.functions import *
 from tensorflow.python.saved_model import tag_constants
 from PIL import Image
 import cv2
@@ -102,7 +103,10 @@ def main(_argv):
             iou_threshold=FLAGS.iou,
             score_threshold=FLAGS.score
         )
-        pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
+        original_h, original_w, _ = frame.shape
+        bboxes = utils.format_boxes(boxes.numpy()[0], original_h, original_w)
+
+        pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0], valid_detections.numpy()[0]]
         image = utils.draw_bbox(frame, pred_bbox)
         curr_time = time.time()
         exec_time = curr_time - prev_time

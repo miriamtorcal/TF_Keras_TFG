@@ -110,18 +110,25 @@ def main(_argv):
         bboxes = utils.format_boxes(boxes.numpy()[0], original_h, original_w)
 
         pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0], valid_detections.numpy()[0]]
-        allowed_classes = list(utils.read_class_names(cfg.YOLO.CLASSES).values())
+        # allowed_classes = list(utils.read_class_names(cfg.YOLO.CLASSES).values())
+        allowed_classes = ['person', 'bicycle', 'car', 'truck', 'bus', 'motorbike']
         
         if FLAGS.count:
             # count objects found
             counted_classes = countObjects(pred_bbox, byClass = True, allowedClasses=allowed_classes)
+            # for key, value in counted_classes.items():
+            #     print("Number of {}s: {}".format(key, value))
+            #     # generateCsv(datetime.now(), key, value)
+            #     results.append([datetime.now(), key, value])
+            image, registroPos = utils.draw_bbox_info(frame, pred_bbox, allowedClasses=allowed_classes)
             for key, value in counted_classes.items():
                 print("Number of {}s: {}".format(key, value))
-                # generateCsv(datetime.now(), key, value)
-                results.append([datetime.now(), key, value])
-            image = utils.draw_bbox(frame, pred_bbox, allowedClasses=allowed_classes)
+                for k, v in registroPos.items():
+                    # print("Number of {}s: {}".format(key, value))
+                    if key == k:
+                        results.append([datetime.now(), key, value, v[:]])
         else:
-            image = utils.draw_bbox(frame, pred_bbox, allowedClasses=allowed_classes)
+            image, registroPos = utils.draw_bbox_info(frame, pred_bbox, allowedClasses=allowed_classes)
         
         generateCsv(results)
         curr_time = time.time()
