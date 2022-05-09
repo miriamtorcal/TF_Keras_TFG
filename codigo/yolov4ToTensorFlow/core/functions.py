@@ -26,30 +26,18 @@ def countObjects(data: list, byClass: bool = True,  allowedClasses: list = list(
     
     return counts
 
-# def generateCsv(time: Any, typeDetected: Any, numDetections: Any):
-#     with open('resultInfo.csv', 'w', newline='') as csvfile:
-#         fieldNames = ['Time', 'NumberObject', 'TypeObject']
-#         writer = csv.DictWriter(csvfile, fieldnames = fieldNames)
-
-#         writer.writeheader()
-#         writer.writerow({
-#             'Time': time,
-#             'NumberObject': numDetections,
-#             'TypeObject': typeDetected,
-#         })
-#     del writer
-#     csvfile.close()
 
 def generateCsv(info):
     with open('resultInfo.csv', 'w', newline='') as csvfile:
-        fieldNames = ['Time', 'NumberObject', 'TypeObject']
+        fieldNames = ['Time', 'NumberObject', 'TypeObject', 'Positions']
         writer = csv.DictWriter(csvfile, fieldnames = fieldNames)
         writer.writeheader()
         for i in info:
             writer.writerow({
                 'Time': i[0], 
                 'NumberObject': i[2], 
-                'TypeObject': i[1]
+                'TypeObject': i[1],
+                'Positions': str(i[3]),
             })
     del writer
     csvfile.close()
