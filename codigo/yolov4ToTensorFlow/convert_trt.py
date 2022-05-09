@@ -45,8 +45,7 @@ def save_trt():
     conversion_params = trt.DEFAULT_TRT_CONVERSION_PARAMS._replace(
       precision_mode=trt.TrtPrecisionMode.INT8,
       max_workspace_size_bytes=4000000000,
-      use_calibration=True,
-      max_batch_size=8)
+      use_calibration=True)
     converter = trt.TrtGraphConverterV2(
       input_saved_model_dir=FLAGS.weights,
       conversion_params=conversion_params)
@@ -54,16 +53,14 @@ def save_trt():
   elif FLAGS.quantize_mode == 'float16':
     conversion_params = trt.DEFAULT_TRT_CONVERSION_PARAMS._replace(
       precision_mode=trt.TrtPrecisionMode.FP16,
-      max_workspace_size_bytes=4000000000,
-      max_batch_size=8)
+      max_workspace_size_bytes=4000000000)
     converter = trt.TrtGraphConverterV2(
       input_saved_model_dir=FLAGS.weights, conversion_params=conversion_params)
     converter.convert()
   else :
     conversion_params = trt.DEFAULT_TRT_CONVERSION_PARAMS._replace(
       precision_mode=trt.TrtPrecisionMode.FP32,
-      max_workspace_size_bytes=4000000000,
-      max_batch_size=8)
+      max_workspace_size_bytes=4000000000)
     converter = trt.TrtGraphConverterV2(
       input_saved_model_dir=FLAGS.weights, conversion_params=conversion_params)
     converter.convert()
