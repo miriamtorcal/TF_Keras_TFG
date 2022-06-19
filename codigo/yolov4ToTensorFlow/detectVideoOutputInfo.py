@@ -1,20 +1,20 @@
+from tensorflow.compat.v1 import InteractiveSession
+from tensorflow.compat.v1 import ConfigProto
+from datetime import datetime
+import numpy as np
+import cv2
+from PIL import Image
+from tensorflow.python.saved_model import tag_constants
+from core.functions import *
+from core.yolov4 import filter_boxes
+import core.utils as utils
+from absl.flags import FLAGS
+from absl import app, flags, logging
 import time
 import tensorflow as tf
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
 if len(physical_devices) > 0:
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
-from absl import app, flags, logging
-from absl.flags import FLAGS
-import core.utils as utils
-from core.yolov4 import filter_boxes
-from core.functions import *
-from tensorflow.python.saved_model import tag_constants
-from PIL import Image
-import cv2
-import numpy as np
-from datetime import datetime
-from tensorflow.compat.v1 import ConfigProto
-from tensorflow.compat.v1 import InteractiveSession
 
 flags.DEFINE_string('framework', 'tf', '(tf, tflite, trt')
 flags.DEFINE_string('weights', './checkpoints/yolov4-416',
@@ -26,9 +26,14 @@ flags.DEFINE_string('video', './data/videos/road.mp4', 'path to input video')
 flags.DEFINE_float('iou', 0.45, 'iou threshold')
 flags.DEFINE_float('score', 0.25, 'score threshold')
 flags.DEFINE_boolean('count', False, 'count objects within video')
+flags.DEFINE_boolean('dont_show', False, 'dont show video output')
 flags.DEFINE_string('output', './detections/videos', './detections/videos')
-flags.DEFINE_string('output_format', 'XVID', 'codec used in VideoWriter when saving video to file')
-flags.DEFINE_boolean('dis_cv2_window', False, 'disable cv2 window during the process') # this is good for the .ipynb
+flags.DEFINE_string('output_format', 'XVID',
+                    'codec used in VideoWriter when saving video to file')
+# this is good for the .ipynb
+flags.DEFINE_boolean('dis_cv2_window', False,
+                     'disable cv2 window during the process')
+
 
 def main(_argv):
     config = ConfigProto()
@@ -39,7 +44,7 @@ def main(_argv):
     video_path = FLAGS.video
     results = []
 
-    print("Video from: ", video_path )
+    print("Video from: ", video_path)
     vid = cv2.VideoCapture(video_path)
 
     if FLAGS.framework == 'tflite':
@@ -50,9 +55,10 @@ def main(_argv):
         print(input_details)
         print(output_details)
     else:
-        saved_model_loaded = tf.saved_model.load(FLAGS.weights, tags=[tag_constants.SERVING])
+        saved_model_loaded = tf.saved_model.load(
+            FLAGS.weights, tags=[tag_constants.SERVING])
         infer = saved_model_loaded.signatures['serving_default']
-    
+
     if FLAGS.output:
         # by default VideoCapture returns float instead of int
         width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -72,7 +78,7 @@ def main(_argv):
                 print("Video processing complete")
                 break
             raise ValueError("No image! Try with another video format")
-        
+
         frame_size = frame.shape[:2]
         image_data = cv2.resize(frame, (input_size, input_size))
         image_data = image_data / 255.
@@ -82,7 +88,8 @@ def main(_argv):
         if FLAGS.framework == 'tflite':
             interpreter.set_tensor(input_details[0]['index'], image_data)
             interpreter.invoke()
-            pred = [interpreter.get_tensor(output_details[i]['index']) for i in range(len(output_details))]
+            pred = [interpreter.get_tensor(
+                output_details[i]['index']) for i in range(len(output_details))]
             if FLAGS.model == 'yolov3' and FLAGS.tiny == True:
                 boxes, pred_conf = filter_boxes(pred[1], pred[0], score_threshold=0.25,
                                                 input_shape=tf.constant([input_size, input_size]))
@@ -105,50 +112,58 @@ def main(_argv):
             iou_threshold=FLAGS.iou,
             score_threshold=FLAGS.score
         )
-        
+
         original_h, original_w, _ = frame.shape
         bboxes = utils.format_boxes(boxes.numpy()[0], original_h, original_w)
 
-        pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0], valid_detections.numpy()[0]]
+        pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0],
+                     valid_detections.numpy()[0]]
         # allowed_classes = list(utils.read_class_names(cfg.YOLO.CLASSES).values())
-        allowed_classes = ['person', 'bicycle', 'car', 'truck', 'bus', 'motorbike']
-        
+        # allowed_classes = ['person', 'bicycle',
+        #                    'car', 'truck', 'bus', 'motorbike']
+
         if FLAGS.count:
             # count objects found
-            counted_classes = countObjects(pred_bbox, byClass = True, allowedClasses=allowed_classes)
-            # for key, value in counted_classes.items():
-            #     print("Number of {}s: {}".format(key, value))
-            #     # generateCsv(datetime.now(), key, value)
-            #     results.append([datetime.now(), key, value])
-            image, registroPos = utils.draw_bbox_info(frame, pred_bbox, allowedClasses=allowed_classes)
+            counted_classes = countObjects(
+                pred_bbox, byClass=True, allowedClasses=allowed_classes)
+            image, registroPos = utils.draw_bbox_info(
+                frame, pred_bbox, allowedClasses=allowed_classes)
             for key, value in counted_classes.items():
-                print("Number of {}s: {}".format(key, value))
+                # print("Number of {}s: {}".format(key, value))
                 for k, v in registroPos.items():
-                    # print("Number of {}s: {}".format(key, value))
                     if key == k:
                         results.append([datetime.now(), key, value, v[:]])
+            generateCsv(results)
         else:
-            image, registroPos = utils.draw_bbox_info(frame, pred_bbox, allowedClasses=allowed_classes)
-        
-        generateCsv(results)
+            image, registroPos = utils.draw_bbox_info(
+                frame, pred_bbox, allowedClasses=allowed_classes)
+
+        # generateCsv(results)
         curr_time = time.time()
-        
-        exec_time = curr_time - prev_time
-        result = np.asarray(image)
-        cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
-        info = "time: %.2f ms" %(1000*exec_time)
-        print(info)
-        result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-        cv2.imshow("result", result)
-
+        if not FLAGS.dont_show:
+            exec_time = curr_time - prev_time
+            result = np.asarray(image)
+            cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
+            info = "time: %.2f ms" % (1000*exec_time)
+            print(info)
+            result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            cv2.imshow("result", result)
+        else:
+            exec_time = curr_time - prev_time
+            result = np.asarray(image)
+            info = "time: %.2f ms" % (1000*exec_time)
+            result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            print(info)
 
         if FLAGS.output:
             out.write(result)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'): break
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
         frame_id += 1
+
 
 if __name__ == '__main__':
     try:

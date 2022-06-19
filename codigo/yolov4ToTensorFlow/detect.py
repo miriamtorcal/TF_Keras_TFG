@@ -14,6 +14,7 @@ import cv2
 import numpy as np
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
+from datetime import datetime
 
 flags.DEFINE_string('framework', 'tf', '(tf, tflite, trt')
 flags.DEFINE_string('weights', './checkpoints/yolov4-416',
@@ -33,6 +34,7 @@ def main(_argv):
     STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
     input_size = FLAGS.size
     image_path = FLAGS.image
+    results = []
 
     original_image = cv2.imread(image_path)
     original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
@@ -80,8 +82,18 @@ def main(_argv):
         score_threshold=FLAGS.score
     )
     pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
-    
-    image = utils.draw_bbox_img(original_image, pred_bbox)
+    # allowed_classes = ['person', 'bicycle',
+    #                        'car', 'truck', 'bus', 'motorbike']
+
+    counted_classes = countObjectsImg(pred_bbox, byClass=True)
+    image, registroPos = utils.draw_bbox_img(original_image, pred_bbox)
+    for key, value in counted_classes.items():
+        # print("Number of {}s: {}".format(key, value))
+        for k, v in registroPos.items():
+            if key == k:
+                results.append([datetime.now(), key, value, v[:]])
+    generateCsv(results)
+
     # image = utils.draw_bbox(image_data*255, pred_bbox)
     image = Image.fromarray(image.astype(np.uint8))
     image.show()
