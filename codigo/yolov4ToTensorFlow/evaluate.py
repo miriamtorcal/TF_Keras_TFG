@@ -4,11 +4,13 @@ import cv2
 import os
 import shutil
 import numpy as np
+import pandas as pd
 import tensorflow as tf
 from core.yolov4 import filter_boxes
 from tensorflow.python.saved_model import tag_constants
 import core.utils as utils
 from core.config import cfg
+from PIL import Image 
 
 flags.DEFINE_string('weights', './checkpoints/yolov4-416',
                     'path to weights file')
@@ -19,15 +21,21 @@ flags.DEFINE_boolean('tiny', False, 'yolov3 or yolov3-tiny')
 flags.DEFINE_integer('size', 416, 'resize images to')
 flags.DEFINE_string('annotation_path', "./data/dataset/val2017.txt", 'annotation path')
 flags.DEFINE_string('write_image_path', "./data/detection/", 'write image path')
+flags.DEFINE_string('classes', '', 'path to input classes in positions')
 flags.DEFINE_float('iou', 0.5, 'iou threshold')
 flags.DEFINE_float('score', 0.25, 'score threshold')
 
 def main(_argv):
     INPUT_SIZE = FLAGS.size
     STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
-    CLASSES = utils.read_class_names(cfg.YOLO.CLASSES)
+    if FLAGS.classes:
+        CLASSES = utils.read_class_names(FLAGS.classes)
+        NUM_CLASS = len(CLASSES)
+    else:
+        CLASSES = utils.read_class_names(cfg.YOLO.CLASSES)
 
     predicted_dir_path = './mAP/predicted'
+    data_path = './mAP/license_plate'
     ground_truth_dir_path = './mAP/ground-truth'
     if os.path.exists(predicted_dir_path): shutil.rmtree(predicted_dir_path)
     if os.path.exists(ground_truth_dir_path): shutil.rmtree(ground_truth_dir_path)
@@ -50,12 +58,20 @@ def main(_argv):
         infer = saved_model_loaded.signatures['serving_default']
 
     num_lines = sum(1 for line in open(FLAGS.annotation_path))
-    with open(cfg.TEST.ANNOT_PATH, 'r') as annotation_file:
+
+    if FLAGS.annotation_path:
+        fich = FLAGS.annotation_path
+    else:
+        fich = cfg.TEST.ANNOT_PATH 
+
+    with open(fich, 'r') as annotation_file:
         for num, line in enumerate(annotation_file):
             annotation = line.strip().split()
             image_path = annotation[0]
             image_name = image_path.split('/')[-1]
+
             image = cv2.imread(image_path)
+            h, w, _ = image.shape
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             bbox_data_gt = np.array([list(map(int, box.split(','))) for box in annotation[1:]])
 
@@ -75,6 +91,10 @@ def main(_argv):
                     bbox_mess = ' '.join([class_name, xmin, ymin, xmax, ymax]) + '\n'
                     f.write(bbox_mess)
                     print('\t' + str(bbox_mess).strip())
+                    bboxMess = list(bbox_mess.split(' '))
+                    bboxMess.pop(0)
+                    c1, c2 = (int(bboxMess[0]), int(bboxMess[1])), (int(bboxMess[2]), int(bboxMess[3].replace('\n', '')))
+                    cv2.rectangle(image, c1, c2, (0, 255, 0), 2)
             print('=> predict result of %s:' % image_name)
             predict_result_path = os.path.join(predicted_dir_path, str(num) + '.txt')
             # Predict Process
@@ -109,16 +129,21 @@ def main(_argv):
                 score_threshold=FLAGS.score
             )
             boxes, scores, classes, valid_detections = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
-
+            # cv2.rectangle(image, tuple(pred_bbox[:2]), tuple(pred_bbox[2:]), (0, 0, 255), 2)
             # if cfg.TEST.DECTECTED_IMAGE_PATH is not None:
             #     image_result = utils.draw_bbox(np.copy(image), [boxes, scores, classes, valid_detections])
             #     cv2.imwrite(cfg.TEST.DECTECTED_IMAGE_PATH + image_name, image_result)
+            
+            gt = pd.read_csv(ground_truth_path, sep=' ', names=['file', 'x1', 'y1', 'x2', 'y2'])
+            gt = gt.drop(['file'], axis=1)
 
             with open(predict_result_path, 'w') as f:
                 image_h, image_w, _ = image.shape
                 for i in range(valid_detections[0]):
+                    iou = -1
                     if int(classes[0][i]) < 0 or int(classes[0][i]) > NUM_CLASS: continue
                     coor = boxes[0][i]
+                    
                     coor[0] = int(coor[0] * image_h)
                     coor[2] = int(coor[2] * image_h)
                     coor[1] = int(coor[1] * image_w)
@@ -132,7 +157,31 @@ def main(_argv):
                     bbox_mess = ' '.join([class_name, score, xmin, ymin, xmax, ymax]) + '\n'
                     f.write(bbox_mess)
                     print('\t' + str(bbox_mess).strip())
+                    bboxPred = list(bbox_mess.split(' '))
+                    bboxPred.pop(0)
+                    bboxPred.pop(0)
+                    # print(int(float(bboxPred[0])))
+
+                    for k in gt.index:
+                        if iou < utils.bb_intersection_over_union(gt.iloc[k].to_list(), bboxPred):
+                            iou = utils.bb_intersection_over_union(gt.iloc[k].to_list(), bboxPred)
+
+                    c1, c2 = (int(float(bboxPred[0])), int(float(bboxPred[1]))), (int(float(bboxPred[2])), int(float(bboxPred[3].replace('\n', ''))))
+                    cv2.rectangle(image, c1, c2, (0, 0, 255), 2)
+                    cv2.putText(image, "IoU: {:.4f}".format(iou),  (c1[0], np.float32(c1[1] - 2)), cv2.FONT_HERSHEY_SIMPLEX,
+                            0.5, (238, 255, 3), 2, lineType=cv2.LINE_AA)
             print(num, num_lines)
+
+            data_predict_result_path = os.path.join(data_path, 'data' + str(num) + '.txt')
+            with open(data_predict_result_path, 'w') as d:
+                textIoU = f"IoU {iou}"
+                d.write(textIoU + ' ' + bbox_mess)
+
+            image = Image.fromarray(image.astype(np.uint8))
+            # image.show()
+            image_path = os.path.join(predicted_dir_path, str(num) + '.png')
+            image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
+            cv2.imwrite((image_path), image)
 
 if __name__ == '__main__':
     try:
