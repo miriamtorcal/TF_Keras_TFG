@@ -1,0 +1,1 @@
+license_plate 470 368 808 470

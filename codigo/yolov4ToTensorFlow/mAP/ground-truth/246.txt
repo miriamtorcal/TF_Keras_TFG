@@ -1,0 +1,2 @@
+license_plate 160 204 191 228
+license_plate 769 407 862 461

@@ -1,0 +1,300 @@
+.\original_data\positions\license_plate\00723dac8201a83e.jpg 0,408,59,438,0 786,347,830,374,0
+.\original_data\positions\license_plate\017527da8bfeb97d.jpg 522,305,789,375,0
+.\original_data\positions\license_plate\03b7b71e1ffcb7a8.jpg 0,315,64,373,0
+.\original_data\positions\license_plate\044417ca6134604f.jpg 705,353,813,399,0
+.\original_data\positions\license_plate\057569768fd6303e.jpg 26,241,63,262,0 845,448,981,538,0
+.\original_data\positions\license_plate\064a8def3049d040.jpg 54,485,210,589,0
+.\original_data\positions\license_plate\0673b967f8c68eec.jpg 216,531,478,631,0
+.\original_data\positions\license_plate\0727983dd5f9e4e6.jpg 485,593,710,693,0
+.\original_data\positions\license_plate\081f5a6bc61b9c48.jpg 589,337,726,416,0
+.\original_data\positions\license_plate\08481c03daf6f35d.jpg 316,597,703,680,0
+.\original_data\positions\license_plate\091c033b2a7df15b.jpg 222,467,276,525,0
+.\original_data\positions\license_plate\09453a7c716a9ef3.jpg 494,631,650,683,0
+.\original_data\positions\license_plate\0c756c9366a8cb10.jpg 225,381,254,393,0 635,580,756,638,0
+.\original_data\positions\license_plate\0cacb08195a3e2d7.jpg 306,385,434,471,0
+.\original_data\positions\license_plate\0d6ca8553971fefd.jpg 250,585,368,649,0 819,194,827,205,0
+.\original_data\positions\license_plate\0e50ea14c4fc1353.jpg 582,419,755,465,0
+.\original_data\positions\license_plate\0ee91c4938b6e7ee.jpg 0,172,18,181,0 301,564,442,632,0
+.\original_data\positions\license_plate\0f0596b1c511e071.jpg 265,107,285,113,0 903,431,1023,514,0
+.\original_data\positions\license_plate\0f4bfc46402a9f52.jpg 444,313,822,500,0
+.\original_data\positions\license_plate\0fbd1b85fc01d2ae.jpg 74,416,148,459,0
+.\original_data\positions\license_plate\125622a2508e3b1d.jpg 290,478,373,521,0
+.\original_data\positions\license_plate\128a59bca025bed6.jpg 444,392,575,461,0
+.\original_data\positions\license_plate\12b7ea40074d3b20.jpg 300,561,706,631,0
+.\original_data\positions\license_plate\133921bd26fff729.jpg 101,463,118,473,0
+.\original_data\positions\license_plate\140e8d10ff02e7e7.jpg 495,392,563,425,0
+.\original_data\positions\license_plate\16789af24af158d8.jpg 262,462,637,565,0
+.\original_data\positions\license_plate\16c15b29b30148c2.jpg 251,582,547,678,0
+.\original_data\positions\license_plate\18098dc9ee6aad80.jpg 631,386,779,419,0
+.\original_data\positions\license_plate\182268e1f8c6525f.jpg 505,413,679,482,0
+.\original_data\positions\license_plate\19eba8ac64eed194.jpg 257,298,356,373,0
+.\original_data\positions\license_plate\19ff847d0cd1c5ec.jpg 421,495,603,537,0
+.\original_data\positions\license_plate\1a3e9d87d733ff7f.jpg 828,338,915,376,0
+.\original_data\positions\license_plate\1ca1155083156d72.jpg 356,374,658,502,0
+.\original_data\positions\license_plate\1db3793d7c84faa1.jpg 167,418,211,448,0
+.\original_data\positions\license_plate\1e6e75488d7878aa.jpg 58,454,85,486,0 663,392,676,406,0
+.\original_data\positions\license_plate\1eb2ebab9cd7adf6.jpg 438,399,502,414,0
+.\original_data\positions\license_plate\1edfbe8c28a86caf.jpg 408,334,588,373,0
+.\original_data\positions\license_plate\1f0e643b125f00ec.jpg 729,454,820,507,0
+.\original_data\positions\license_plate\1f34454c4c073e1b.jpg 74,334,126,359,0 290,523,504,581,0
+.\original_data\positions\license_plate\228bd52bbe043677.jpg 498,269,578,309,0 916,204,947,219,0
+.\original_data\positions\license_plate\246a0e4264a39433.jpg 307,451,399,498,0
+.\original_data\positions\license_plate\25d5c2fbd8b99662.jpg 878,407,924,462,0
+.\original_data\positions\license_plate\26183d88c4f8012f.jpg 198,451,361,522,0
+.\original_data\positions\license_plate\26192da5ce2afa62.jpg 346,68,401,104,0
+.\original_data\positions\license_plate\2619ec27a314e69c.jpg 0,409,148,567,0
+.\original_data\positions\license_plate\2753536137929411.jpg 118,399,240,462,0
+.\original_data\positions\license_plate\27798906120ea394.jpg 189,404,343,486,0 288,232,322,260,0 891,178,966,199,0
+.\original_data\positions\license_plate\28d1fb27a6e42ee7.jpg 395,403,436,421,0
+.\original_data\positions\license_plate\28e26a4eb646c67a.jpg 453,335,647,394,0
+.\original_data\positions\license_plate\2956bcbedfc167b6.jpg 892,380,932,425,0 942,276,971,301,0
+.\original_data\positions\license_plate\299f0363ae21d1c3.jpg 462,396,588,462,0
+.\original_data\positions\license_plate\29f7991e696e6e3f.jpg 444,288,637,385,0
+.\original_data\positions\license_plate\2a3e44107826e876.jpg 604,241,714,293,0
+.\original_data\positions\license_plate\2c09fab0221652c5.jpg 401,386,761,485,0
+.\original_data\positions\license_plate\2d40d6e377c82ec9.jpg 25,650,272,778,0
+.\original_data\positions\license_plate\2e8a83cfb1afe7ba.jpg 333,482,501,528,0
+.\original_data\positions\license_plate\2e95d7a799e23e11.jpg 746,269,873,320,0
+.\original_data\positions\license_plate\2f3887024d298547.jpg 467,393,581,422,0
+.\original_data\positions\license_plate\2f90aaa72744452d.jpg 406,403,578,439,0 769,307,824,328,0
+.\original_data\positions\license_plate\2fe1f00b77a110a0.jpg 414,346,603,386,0
+.\original_data\positions\license_plate\302d636c896c263f.jpg 169,314,198,328,0
+.\original_data\positions\license_plate\30b6cfb60bf44533.jpg 57,401,83,413,0
+.\original_data\positions\license_plate\321ffb38656f7311.jpg 168,452,196,468,0 294,441,312,450,0 637,490,726,536,0
+.\original_data\positions\license_plate\3241f09a8964ddfb.jpg 337,513,392,551,0 876,370,905,387,0
+.\original_data\positions\license_plate\326c3286bcb5b2b0.jpg 23,124,45,129,0 734,419,865,516,0
+.\original_data\positions\license_plate\343326e127297379.jpg 976,359,1023,382,0
+.\original_data\positions\license_plate\35875c388efcddf0.jpg 1,47,34,63,0 459,378,737,526,0
+.\original_data\positions\license_plate\36d7b8b3cca3b0f5.jpg 79,270,114,300,0 785,61,799,69,0 800,82,808,89,0 962,184,988,200,0
+.\original_data\positions\license_plate\37ff77d13a54aac2.jpg 409,463,503,526,0
+.\original_data\positions\license_plate\39c193bcc0c00f9e.jpg 208,369,444,514,0
+.\original_data\positions\license_plate\3d98e3713783e82d.jpg 118,401,230,437,0 3696,1464,3931,1777,0
+.\original_data\positions\license_plate\3e156de979eb0828.jpg 626,533,778,619,0
+.\original_data\positions\license_plate\3e2306f2cf4b2c67.jpg 565,520,698,591,0
+.\original_data\positions\license_plate\3ecd5af7c4f11963.jpg 292,245,628,433,0
+.\original_data\positions\license_plate\3ed000628c6a0587.jpg 424,360,538,421,0
+.\original_data\positions\license_plate\3feecc5809a29627.jpg 244,700,439,751,0
+.\original_data\positions\license_plate\4148b2126f0986a4.jpg 353,829,607,910,0
+.\original_data\positions\license_plate\415d64bf8cfe82f2.jpg 413,339,592,384,0
+.\original_data\positions\license_plate\428a5131c8cff7da.jpg 415,522,626,638,0
+.\original_data\positions\license_plate\43339d9cbca470e4.jpg 612,263,752,343,0
+.\original_data\positions\license_plate\43b1b0028dd2db8d.jpg 510,519,672,561,0
+.\original_data\positions\license_plate\44afab29f5fa0abf.jpg 291,555,519,641,0 939,454,1023,503,0
+.\original_data\positions\license_plate\4572990fd64bb6be.jpg 0,242,78,270,0 923,481,958,557,0
+.\original_data\positions\license_plate\460753acbd6e6dad.jpg 133,254,168,276,0 294,528,433,611,0
+.\original_data\positions\license_plate\46a7991da6461831.jpg 68,335,150,411,0
+.\original_data\positions\license_plate\4793138df3c05610.jpg 488,389,581,440,0
+.\original_data\positions\license_plate\485e5f37dd13ffab.jpg 94,123,131,144,0
+.\original_data\positions\license_plate\488722909dd9c0ac.jpg 295,640,520,767,0
+.\original_data\positions\license_plate\49595029959689b7.jpg 796,486,879,569,0
+.\original_data\positions\license_plate\4ac941b9393d00f9.jpg 997,413,1023,439,0
+.\original_data\positions\license_plate\4e2cb95b9c509b10.jpg 466,261,656,338,0
+.\original_data\positions\license_plate\4e593c88022ff6b1.jpg 591,440,706,512,0 756,229,827,278,0
+.\original_data\positions\license_plate\4ee3f0e9a2fb20a9.jpg 309,311,496,408,0
+.\original_data\positions\license_plate\4fa24c1abe969cb7.jpg 434,239,550,384,0
+.\original_data\positions\license_plate\4ff8bebd6d6a0361.jpg 385,367,662,438,0
+.\original_data\positions\license_plate\5021041c726b6ee4.jpg 517,383,641,445,0
+.\original_data\positions\license_plate\508f0a75156e5fd4.jpg 910,462,948,490,0
+.\original_data\positions\license_plate\5290f4027491d09b.jpg 157,545,337,607,0
+.\original_data\positions\license_plate\53386dae3cf13cc3.jpg 280,489,598,571,0
+.\original_data\positions\license_plate\5373ec295ea62c47.jpg 831,388,948,432,0
+.\original_data\positions\license_plate\53925df03b471f5d.jpg 523,611,552,623,0
+.\original_data\positions\license_plate\53ad98b12752ad16.jpg 119,167,165,191,0 421,351,584,435,0 428,38,452,50,0 808,16,845,31,0 879,84,907,99,0
+.\original_data\positions\license_plate\548a8e997a66a0c4.jpg 423,426,518,480,0 714,407,737,419,0
+.\original_data\positions\license_plate\548a985825bb991f.jpg 271,399,567,615,0
+.\original_data\positions\license_plate\5641e6ad7d2600f2.jpg 150,496,306,597,0
+.\original_data\positions\license_plate\575d96d014e4fbab.jpg 372,459,522,543,0
+.\original_data\positions\license_plate\593e594137f374ab.jpg 495,358,871,504,0
+.\original_data\positions\license_plate\59b83c5f8f1dcfa4.jpg 99,884,111,914,0 662,761,685,777,0
+.\original_data\positions\license_plate\5a3f94aa35766f31.jpg 173,269,227,298,0 333,200,366,225,0 686,313,781,362,0
+.\original_data\positions\license_plate\5a96f5e1f9be8d42.jpg 261,511,478,582,0
+.\original_data\positions\license_plate\5cc19b450a51ee4c.jpg 711,633,854,742,0
+.\original_data\positions\license_plate\5daafbcf76fa6602.jpg 402,504,559,551,0
+.\original_data\positions\license_plate\5df8816356fc2b29.jpg 32,307,62,336,0
+.\original_data\positions\license_plate\5fb888d79b551331.jpg 470,475,752,628,0
+.\original_data\positions\license_plate\5ff91ccfc6f15d04.jpg 265,278,539,346,0
+.\original_data\positions\license_plate\61a69ad713142e45.jpg 307,483,424,573,0
+.\original_data\positions\license_plate\620bd952592bc0e9.jpg 953,296,1003,319,0
+.\original_data\positions\license_plate\621837d55c229864.jpg 309,396,459,507,0
+.\original_data\positions\license_plate\628a23a43f19c4db.jpg 135,368,254,444,0
+.\original_data\positions\license_plate\62bb93bbd270dd9a.jpg 668,419,739,445,0
+.\original_data\positions\license_plate\6306fc7f3573eb70.jpg 532,433,553,443,0 1001,451,1023,470,0
+.\original_data\positions\license_plate\63d3df798bc8840f.jpg 399,642,630,779,0
+.\original_data\positions\license_plate\643c3cc1a4e85db2.jpg 450,370,599,445,0
+.\original_data\positions\license_plate\647ff22cf6950211.jpg 470,467,620,547,0
+.\original_data\positions\license_plate\64de505bd2bac82b.jpg 214,585,394,642,0
+.\original_data\positions\license_plate\659dbf4f8c0fd29d.jpg 587,642,766,733,0
+.\original_data\positions\license_plate\65e080f9ac466664.jpg 51,252,82,267,0 204,249,277,291,0
+.\original_data\positions\license_plate\665cac5fd1cc2186.jpg 100,398,212,472,0
+.\original_data\positions\license_plate\66771a4870c324f9.jpg 754,137,889,169,0
+.\original_data\positions\license_plate\66be6b583048fa94.jpg 0,326,110,468,0
+.\original_data\positions\license_plate\67945cf7a6beccdf.jpg 446,432,611,476,0
+.\original_data\positions\license_plate\67c834b73882a9f9.jpg 405,77,423,107,0 609,334,872,427,0 829,136,854,161,0
+.\original_data\positions\license_plate\6846c275ded01f85.jpg 472,536,987,655,0
+.\original_data\positions\license_plate\693acf98575cbe27.jpg 174,239,251,311,0
+.\original_data\positions\license_plate\69450fa183d57a7b.jpg 0,172,14,179,0 997,283,1023,298,0
+.\original_data\positions\license_plate\6a0ef049e5ec4b16.jpg 4,412,259,545,0
+.\original_data\positions\license_plate\6aff04e9c32aec0f.jpg 0,677,162,852,0
+.\original_data\positions\license_plate\6c144e47161867c2.jpg 333,450,448,484,0
+.\original_data\positions\license_plate\6e819dc674a74078.jpg 495,317,740,399,0 957,13,990,30,0
+.\original_data\positions\license_plate\6eb18d1ad17cd174.jpg 937,433,999,517,0
+.\original_data\positions\license_plate\70e7b5173fe1e289.jpg 175,238,441,323,0
+.\original_data\positions\license_plate\71dbb47ebe504abe.jpg 118,367,210,401,0
+.\original_data\positions\license_plate\724307be418b2ed2.jpg 207,406,313,485,0
+.\original_data\positions\license_plate\7275e72e1996267f.jpg 445,359,733,438,0
+.\original_data\positions\license_plate\73467682c5995b65.jpg 381,473,582,527,0
+.\original_data\positions\license_plate\747b0f12f54703ee.jpg 366,534,681,592,0
+.\original_data\positions\license_plate\749b4451492fc250.jpg 162,454,315,517,0
+.\original_data\positions\license_plate\74ee6d1b58ae2e70.jpg 435,389,597,421,0
+.\original_data\positions\license_plate\76e14d05ee8acb6d.jpg 105,296,259,397,0
+.\original_data\positions\license_plate\77e716224c85410f.jpg 238,241,258,252,0
+.\original_data\positions\license_plate\7b4e86e1c94d65de.jpg 944,412,968,439,0
+.\original_data\positions\license_plate\7bcf6b4ec09f1ea7.jpg 343,383,568,475,0
+.\original_data\positions\license_plate\7cbc7ee444622a66.jpg 487,610,727,692,0
+.\original_data\positions\license_plate\7f56adf4b9306ac9.jpg 208,307,399,362,0
+.\original_data\positions\license_plate\7f9740e95a74f2b9.jpg 254,359,744,461,0
+.\original_data\positions\license_plate\80e02a518ffe4cb2.jpg 373,433,677,509,0
+.\original_data\positions\license_plate\82b53fe7f9147c96.jpg 209,386,269,428,0
+.\original_data\positions\license_plate\844adfe06e003c09.jpg 595,519,644,546,0
+.\original_data\positions\license_plate\85b1dafd26aa98df.jpg 5,58,26,71,0 137,22,158,30,0
+.\original_data\positions\license_plate\85f0b4db3eb512ce.jpg 741,342,832,372,0
+.\original_data\positions\license_plate\86c92b0402fec141.jpg 324,350,550,412,0
+.\original_data\positions\license_plate\88df55ff4e13b90d.jpg 653,535,928,747,0
+.\original_data\positions\license_plate\88fc866f92860d70.jpg 541,721,694,795,0
+.\original_data\positions\license_plate\894cacdb385fdb6b.jpg 482,520,599,579,0
+.\original_data\positions\license_plate\895d440e05b2a8d8.jpg 181,521,402,579,0
+.\original_data\positions\license_plate\8cb5553e75d3d311.jpg 99,346,175,417,0 843,138,901,173,0
+.\original_data\positions\license_plate\8cca720c410ee7f8.jpg 191,863,465,919,0 364,261,383,273,0
+.\original_data\positions\license_plate\8cdcb833ef1ef049.jpg 227,355,385,403,0 838,268,869,295,0
+.\original_data\positions\license_plate\908a3ac555a1a509.jpg 586,464,704,514,0
+.\original_data\positions\license_plate\90abd4265adf5a00.jpg 70,433,104,450,0 362,325,380,337,0 432,457,460,475,0 526,327,543,334,0 655,341,675,354,0 737,281,756,290,0 780,568,826,594,0 828,349,849,360,0
+.\original_data\positions\license_plate\911e694dcc0814bf.jpg 107,130,144,147,0 509,156,527,174,0 809,509,888,634,0 919,362,973,393,0
+.\original_data\positions\license_plate\9286a99f243b359a.jpg 790,360,898,423,0
+.\original_data\positions\license_plate\944281d0485869f0.jpg 412,417,634,558,0
+.\original_data\positions\license_plate\9498d0aff8f9ff8c.jpg 945,372,987,404,0
+.\original_data\positions\license_plate\955a8e4c8ba8116e.jpg 602,427,844,529,0
+.\original_data\positions\license_plate\98bcfbc4d3c8abbc.jpg 27,414,95,443,0 235,305,264,317,0
+.\original_data\positions\license_plate\99732f172ac80128.jpg 62,230,95,239,0 736,331,806,375,0
+.\original_data\positions\license_plate\9995dfc6e0eae5a1.jpg 381,394,532,439,0
+.\original_data\positions\license_plate\99c9c657582f958f.jpg 94,416,122,439,0 298,481,366,529,0
+.\original_data\positions\license_plate\9a795bbf4e94d630.jpg 300,472,481,525,0
+.\original_data\positions\license_plate\a21aa7c1d7b93d12.jpg 128,390,332,478,0
+.\original_data\positions\license_plate\a3ad91fabd188be3.jpg 171,404,307,459,0 843,211,883,233,0
+.\original_data\positions\license_plate\a52079c6cc4050cd.jpg 447,544,577,607,0
+.\original_data\positions\license_plate\a56e82026bb71ad5.jpg 421,405,618,508,0
+.\original_data\positions\license_plate\a5d6f8d36672fa64.jpg 971,474,1016,524,0
+.\original_data\positions\license_plate\a67bc3f5f8650c73.jpg 672,569,854,625,0
+.\original_data\positions\license_plate\a79296fb4a48245e.jpg 246,398,346,442,0 604,325,660,351,0
+.\original_data\positions\license_plate\a823532e163f5722.jpg 271,548,461,693,0
+.\original_data\positions\license_plate\a929dc75c20da7d8.jpg 294,481,542,607,0
+.\original_data\positions\license_plate\a9b2a2018f845393.jpg 100,363,199,432,0
+.\original_data\positions\license_plate\aac1aaaf824b63dd.jpg 44,264,83,285,0 460,432,584,487,0
+.\original_data\positions\license_plate\abca9401dcf8f7ba.jpg 59,330,128,365,0 463,460,587,522,0
+.\original_data\positions\license_plate\aca8821ff0368720.jpg 10,166,46,202,0 314,157,399,222,0
+.\original_data\positions\license_plate\ad10c7d29f111692.jpg 765,587,889,632,0
+.\original_data\positions\license_plate\ae6724423f0d111a.jpg 615,616,834,696,0
+.\original_data\positions\license_plate\b01d46f9911d558b.jpg 402,143,627,242,0
+.\original_data\positions\license_plate\b09813a8742277c7.jpg 0,293,34,311,0 341,335,656,416,0 881,259,896,271,0
+.\original_data\positions\license_plate\b101900b26128253.jpg 53,178,83,192,0 718,460,758,478,0
+.\original_data\positions\license_plate\b1096bc91a89b0cf.jpg 701,380,812,441,0
+.\original_data\positions\license_plate\b1a50a3824887ee2.jpg 382,521,571,598,0 541,153,548,161,0
+.\original_data\positions\license_plate\b25d7d2cb7abf86b.jpg 416,423,608,519,0 1001,174,1023,208,0
+.\original_data\positions\license_plate\b32671b7cc279583.jpg 148,419,410,566,0
+.\original_data\positions\license_plate\b3b61da98e22cd4a.jpg 733,342,838,431,0
+.\original_data\positions\license_plate\b57fe3aa2ff9577e.jpg 112,387,140,413,0
+.\original_data\positions\license_plate\b5e7183b6a5abe6c.jpg 551,520,693,591,0
+.\original_data\positions\license_plate\b6580dec5ada277d.jpg 224,302,432,424,0
+.\original_data\positions\license_plate\b6ecda23586a6ba5.jpg 294,565,413,651,0
+.\original_data\positions\license_plate\b7cdb5c0c99002b7.jpg 726,278,874,332,0
+.\original_data\positions\license_plate\b8a3f2ea385e45b3.jpg 40,396,72,410,0 291,409,337,433,0 696,410,744,431,0
+.\original_data\positions\license_plate\b91c3aaba25bf914.jpg 272,468,427,509,0
+.\original_data\positions\license_plate\b94993a2d67b455e.jpg 254,221,414,275,0
+.\original_data\positions\license_plate\b9f5b9acf1777acf.jpg 388,377,566,449,0
+.\original_data\positions\license_plate\bacc80fafc0566c3.jpg 770,375,819,410,0
+.\original_data\positions\license_plate\bbcac63e32bd8137.jpg 377,274,758,454,0
+.\original_data\positions\license_plate\bd12ea92bcab1afd.jpg 97,182,112,192,0 209,195,230,205,0 738,397,809,454,0
+.\original_data\positions\license_plate\be654a7eabe0e891.jpg 558,100,564,104,0 799,372,911,442,0
+.\original_data\positions\license_plate\be9fd0014b5a4f2a.jpg 209,320,410,384,0
+.\original_data\positions\license_plate\bf2f25f3ed9ff4d5.jpg 300,397,682,486,0
+.\original_data\positions\license_plate\c650ff8d3e8e75b3.jpg 103,459,190,521,0
+.\original_data\positions\license_plate\c7df5232291486a3.jpg 602,628,852,714,0
+.\original_data\positions\license_plate\c91ee912164d8ecb.jpg 440,308,648,384,0
+.\original_data\positions\license_plate\cb4b754537798d23.jpg 0,352,42,371,0 504,478,638,507,0 892,465,1009,495,0
+.\original_data\positions\license_plate\cb8c75fc1c7ccf73.jpg 381,475,629,610,0
+.\original_data\positions\license_plate\ccc1a2d44a290368.jpg 514,418,647,486,0
+.\original_data\positions\license_plate\cdb1e8621d1c624e.jpg 643,415,894,486,0
+.\original_data\positions\license_plate\ce97f7bc90e97109.jpg 229,335,323,395,0
+.\original_data\positions\license_plate\d027c6e32db60e3c.jpg 352,391,676,492,0
+.\original_data\positions\license_plate\d27e094e98374ff8.jpg 528,432,761,488,0
+.\original_data\positions\license_plate\d28d71c2690c16ed.jpg 304,77,361,89,0 611,478,786,526,0
+.\original_data\positions\license_plate\d2fe2b47668e9d8e.jpg 810,434,1023,561,0
+.\original_data\positions\license_plate\d3729058c6a4186e.jpg 581,364,739,421,0
+.\original_data\positions\license_plate\d44c0b2252bf8a92.jpg 401,383,559,437,0
+.\original_data\positions\license_plate\d5058059dc0ce0ad.jpg 450,391,647,460,0 904,153,926,162,0
+.\original_data\positions\license_plate\d53a3bc813477685.jpg 417,341,511,366,0
+.\original_data\positions\license_plate\d565d93637d4e76d.jpg 515,493,671,541,0
+.\original_data\positions\license_plate\d59b7a0ff294e3be.jpg 436,574,565,615,0
+.\original_data\positions\license_plate\d6c5271e96ec1a61.jpg 248,87,268,102,0
+.\original_data\positions\license_plate\d7b71c9fd144d58d.jpg 636,483,809,558,0
+.\original_data\positions\license_plate\d7d49b1a3706f3eb.jpg 176,411,293,471,0
+.\original_data\positions\license_plate\d830c3573e57bfc0.jpg 409,582,537,630,0
+.\original_data\positions\license_plate\d8daed582e6cce2d.jpg 492,341,747,477,0
+.\original_data\positions\license_plate\d8f6c135ec5486ff.jpg 795,421,931,495,0
+.\original_data\positions\license_plate\d9fa2abf3719a4bd.jpg 21,361,249,479,0
+.\original_data\positions\license_plate\da1352ab6054a2e4.jpg 213,364,790,642,0
+.\original_data\positions\license_plate\da8186b39f042cdf.jpg 408,416,527,445,0
+.\original_data\positions\license_plate\daac3a6c64a79bea.jpg 43,361,190,416,0 300,878,458,932,0
+.\original_data\positions\license_plate\de2b5afb7eda96cf.jpg 160,204,191,228,0 769,407,862,461,0
+.\original_data\positions\license_plate\dec4608715b2d28d.jpg 192,426,429,492,0
+.\original_data\positions\license_plate\defd8f4b30b3e1e1.jpg 161,362,299,496,0
+.\original_data\positions\license_plate\e08424f3cd5f6dac.jpg 386,290,592,394,0
+.\original_data\positions\license_plate\e1925cd0ae28fbd9.jpg 462,388,580,438,0
+.\original_data\positions\license_plate\e2427db217e5c3db.jpg 77,369,168,463,0
+.\original_data\positions\license_plate\e4d600a63db8bf3a.jpg 900,463,984,571,0
+.\original_data\positions\license_plate\e52d4f347b2cf90f.jpg 488,430,607,495,0
+.\original_data\positions\license_plate\e57d38ae6a921518.jpg 212,417,327,501,0 1006,143,1023,154,0
+.\original_data\positions\license_plate\e5edf93b7c9f5edb.jpg 325,473,495,515,0
+.\original_data\positions\license_plate\e6299b9e04680adb.jpg 240,94,256,102,0 491,140,516,150,0 742,188,784,204,0 945,224,998,246,0
+.\original_data\positions\license_plate\e742e284c7c9da96.jpg 856,440,957,529,0
+.\original_data\positions\license_plate\e82f13b4a2fe69f3.jpg 160,486,985,686,0
+.\original_data\positions\license_plate\e8b36c888a75d742.jpg 406,120,422,128,0
+.\original_data\positions\license_plate\e9561d7c16db565f.jpg 213,332,332,403,0
+.\original_data\positions\license_plate\e9cd346a4a84d594.jpg 284,475,471,579,0
+.\original_data\positions\license_plate\e9fdd0a41cb61da6.jpg 342,391,511,476,0
+.\original_data\positions\license_plate\ea02d99ba51372ee.jpg 99,319,133,329,0 157,584,298,658,0 680,255,697,263,0 806,323,854,338,0
+.\original_data\positions\license_plate\ebaefbcb87bfa8a1.jpg 276,501,367,561,0
+.\original_data\positions\license_plate\ec8a36f7874c0c34.jpg 190,390,303,419,0
+.\original_data\positions\license_plate\ed7d99098d4af8e6.jpg 135,386,252,422,0
+.\original_data\positions\license_plate\ee047c8ca2cca8a2.jpg 395,333,681,412,0
+.\original_data\positions\license_plate\ef1bd7b718a3f6e8.jpg 741,240,785,261,0
+.\original_data\positions\license_plate\efde2a25c1c9c924.jpg 635,434,803,474,0
+.\original_data\positions\license_plate\f0c7057612710f21.jpg 396,434,596,529,0
+.\original_data\positions\license_plate\f1131b93a33cefb9.jpg 397,491,550,571,0
+.\original_data\positions\license_plate\f194eaf4f3d1d835.jpg 286,464,395,549,0
+.\original_data\positions\license_plate\f3814f4a6121838d.jpg 688,236,802,278,0
+.\original_data\positions\license_plate\f38265abb22a00e4.jpg 33,230,83,246,0 452,147,462,157,0 488,173,523,183,0 844,490,902,542,0
+.\original_data\positions\license_plate\f3bd3adea149193b.jpg 154,539,295,658,0
+.\original_data\positions\license_plate\f3c9af100984744f.jpg 4,307,49,340,0
+.\original_data\positions\license_plate\f3d472955c13cae0.jpg 393,574,641,622,0 911,110,926,122,0
+.\original_data\positions\license_plate\f5128e7a123b4fa8.jpg 583,359,709,425,0
+.\original_data\positions\license_plate\f53243c2bb551b8a.jpg 71,355,110,418,0
+.\original_data\positions\license_plate\f5c2a80a21ddb78c.jpg 208,226,372,272,0
+.\original_data\positions\license_plate\f5d1729aa333b284.jpg 82,238,149,268,0 719,498,842,599,0
+.\original_data\positions\license_plate\f6256bceaf66693f.jpg 494,557,735,658,0
+.\original_data\positions\license_plate\f700c5b69c973db6.jpg 326,336,435,368,0
+.\original_data\positions\license_plate\f73b754cdb1ab677.jpg 682,513,842,558,0
+.\original_data\positions\license_plate\f83d18919353c483.jpg 271,452,416,486,0
+.\original_data\positions\license_plate\f9170e8c13a99991.jpg 370,84,615,199,0
+.\original_data\positions\license_plate\fa897478280a2758.jpg 529,461,710,547,0
+.\original_data\positions\license_plate\fa9147596edc058f.jpg 619,408,706,469,0
+.\original_data\positions\license_plate\fb4e60b5cee8b88e.jpg 287,669,453,757,0 294,247,360,275,0
+.\original_data\positions\license_plate\fb55b73f241bf50a.jpg 366,406,674,488,0
+.\original_data\positions\license_plate\fc0a607ba5f38505.jpg 684,492,767,525,0
+.\original_data\positions\license_plate\fc0f46431cb1dbe9.jpg 7,90,42,98,0 74,75,92,79,0 594,441,786,493,0
+.\original_data\positions\license_plate\fd07d2db70cf53d5.jpg 97,561,249,610,0
+.\original_data\positions\license_plate\fdd963edc28bf163.jpg 470,368,808,470,0
+.\original_data\positions\license_plate\fe6139d150a3e2a8.jpg 394,726,616,787,0 537,210,705,259,0
+.\original_data\positions\license_plate\feaf383fc5de383f.jpg 407,683,602,763,0
+.\original_data\positions\license_plate\fed5c0275ff3a440.jpg 57,358,228,442,0 928,197,1023,246,0
+.\original_data\positions\license_plate\ff69d090c735eccb.jpg 523,341,815,486,0
+.\original_data\positions\license_plate\ff85b09876d61631.jpg 348,672,515,751,0

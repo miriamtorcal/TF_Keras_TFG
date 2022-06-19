@@ -1,0 +1,2 @@
+license_plate 892 380 932 425
+license_plate 942 276 971 301

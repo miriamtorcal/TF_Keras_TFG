@@ -1,0 +1,2 @@
+license_plate 62 230 95 239
+license_plate 736 331 806 375

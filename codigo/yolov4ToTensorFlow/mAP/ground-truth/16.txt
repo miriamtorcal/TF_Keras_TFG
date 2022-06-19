@@ -1,0 +1,2 @@
+license_plate 0 172 18 181
+license_plate 301 564 442 632
