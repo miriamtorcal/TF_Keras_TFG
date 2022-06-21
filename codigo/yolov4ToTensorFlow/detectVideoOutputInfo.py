@@ -44,8 +44,22 @@ def main(_argv):
     video_path = FLAGS.video
     results = []
 
-    print("Video from: ", video_path)
-    vid = cv2.VideoCapture(video_path)
+    try:
+       print("Video from webcam")
+       vid = cv2.VideoCapture(int(video_path))
+    except:
+        print("Video from: ", video_path )
+        vid = cv2.VideoCapture(video_path)
+
+    out = None
+
+    if FLAGS.output:
+        # by default VideoCapture returns float instead of int
+        width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        fps = int(vid.get(cv2.CAP_PROP_FPS))
+        codec = cv2.VideoWriter_fourcc(*FLAGS.output_format)
+        out = cv2.VideoWriter(FLAGS.output, codec, fps, (width, height))
 
     if FLAGS.framework == 'tflite':
         interpreter = tf.lite.Interpreter(model_path=FLAGS.weights)
@@ -59,13 +73,13 @@ def main(_argv):
             FLAGS.weights, tags=[tag_constants.SERVING])
         infer = saved_model_loaded.signatures['serving_default']
 
-    if FLAGS.output:
-        # by default VideoCapture returns float instead of int
-        width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        fps = int(vid.get(cv2.CAP_PROP_FPS))
-        codec = cv2.VideoWriter_fourcc(*FLAGS.output_format)
-        out = cv2.VideoWriter(FLAGS.output, codec, fps, (width, height))
+    # if FLAGS.output:
+    #     # by default VideoCapture returns float instead of int
+    #     width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
+    #     height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    #     fps = int(vid.get(cv2.CAP_PROP_FPS))
+    #     codec = cv2.VideoWriter_fourcc(*FLAGS.output_format)
+    #     out = cv2.VideoWriter(FLAGS.output, codec, fps, (width, height))
 
     frame_id = 0
     while True:
@@ -118,7 +132,7 @@ def main(_argv):
 
         pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0],
                      valid_detections.numpy()[0]]
-        # allowed_classes = list(utils.read_class_names(cfg.YOLO.CLASSES).values())
+        allowed_classes = list(utils.read_class_names(cfg.YOLO.CLASSES).values())
         # allowed_classes = ['person', 'bicycle',
         #                    'car', 'truck', 'bus', 'motorbike']
 
@@ -159,11 +173,12 @@ def main(_argv):
         if FLAGS.output:
             out.write(result)
 
+        #Press 'q' to exit
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
         frame_id += 1
-
+    cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     try:
