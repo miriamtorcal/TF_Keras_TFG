@@ -43,6 +43,16 @@ Por último, se eliminan las cajas que estan por debajo de un límite, conocido 
 
 \imagen{yolo}{Explicación YOLO}
 
+Para entrenar un modelo, basado en el algoritmo YOLO, tendremos que tener las imégenes con las que vamos a entrenar etiquedas con un contenido como el siguiente:
+
+\imagen{formato_yolo}{Representación del contenido etiquetado YOLO}
+
+El primer parámetro representa el id de la clase, es decir, cuando se etiquetan las imágenes se creara un fichero llamado classes.txt, con los nombres de todas las clases que se han etiquetado para el modelo.
+El segundo representa la distancia desde la coordenada 'x' al centro, mientras que el tercero hace lo propio desde la coordenada 'y'.
+El cuarto parámetro representa el ancho de la anotación, es decir, el ancho del recuadro que conforma la anotación, el último párametro representa el alto de la anotación.
+
+\clearpage
+
 \section{Object Detection}
 
 El Object Detection \cite{objectDetect} es un técnica de vision por ordenador que permite localizar imágenes y/o vídeos. Estos algoritmos se aprovechan del aprendizaje automático o del profundo 
