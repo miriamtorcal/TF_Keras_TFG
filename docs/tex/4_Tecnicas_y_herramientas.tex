@@ -29,9 +29,37 @@ Existen diferentes algoritmos:
     \addtolength{\itemsep}{-2mm} %
     \setlength{\itemindent}{2mm}}
 
-    \item CNN \cite{cnn}
-    \item R-CNN \cite{r-cnn}
-    \item Faster R-CNN \cite{faster_rcnn}
-    \item YOLO \cite{yolo}
+    \item \textbf{CNN:} \textit{(Convolutional Neuronal Network)} es la opción maás básica que se puede escoger,ya que se parte de una red neuronal convolucional \cite{cnn} la cuál itera la imagen hasta devolver las posiciones de los objetos que detecta.
+    
+    Está opción trae consigo diferentes inconvenientes:
+    \begin{list}{\textbullet}{ %
+        \addtolength{\itemsep}{-2mm} %
+        \setlength{\itemindent}{2mm}}
+        \item Si la imagen detecta varios objetos, situados en zonas opuestas, ¿cuántos píxeles tendremos que desplazarnos en cada dirección?.
+        \item El tiempo de cómputo es variable, pudiendo llegar a ser muy largo, ya que por cada movimiento implica una clasificación individual con la red.
+        \item Deetectar un objeto dentro de la red, no indica que se poseen los valores 'x' e 'y' de su posición.
+        \item Si por un casual el desplazamiento de píxeles que se realiza es muy pequeño, podríamos estar detectadndo el mismo objeto múltiples veces.
+        \item Si dos objetos se encuentran muy juntos, se podrían llegara a detectar como un único objeto.    
+    \end{list}
+    \item \textbf{R-CNN:} \textit{(Region Based Convolutional Neural Networks)} surgen en el año 2014, con la siguiente propuesta: determianr primero las regiones de interés de la imagen y después realizar la clasificación de imagenes sobre dichas áreas usando una red preentrenada.\cite{r-cnn}
+    Esto implica, que haya un primer algoritmo que detecte las áreas de interés de la imagen, las cuáles pueden ser muchas y de diversos tamaños. Seguidamente, se pasán las diferentes regiones por la CNN, validandose las clases correctas mediante un clasificador bianrio, de tal forma, que se eliminarán
+    las que tenga un bajo nivel de confianza. Por último, se ajustaría la posición mediante un regresor.
+    
+    \imagen{r-cnn-regions}{Pasos de la detección en R-CNN}
 
+    \item \textbf{Fast R-CNN / Faster R-CNN:} Son dos algoritmos que surgen como mejora a R-CNN: \cite{faster_rcnn}
+    \begin{list}{\textbullet}{ %
+        \addtolength{\itemsep}{-2mm} %
+        \setlength{\itemindent}{2mm}}
+        \item \textbf{Fast R-CNN:} mejora el algoritmo inicial reutilizando algunso recursos, como las \textit{features} extraídaa por la CNN, de tal forma que se agiliza el entreno y la detección de las imágenes.
+        Esta red, posee también mejoras en el cálculo del IoU \textit{(Intersection Over Union)} y en la función de \textit{Loss}. Pero a pesar de esto, no tiene mejoras drásticas en la velocidad de entrenamiento y en la detección.
+       \item \textbf{Faster R-CNN:} logra una mejora de velocidad al integrar el algoritmo de \textit{region proposal} \cite{region_proposal} sobre la propia CNN.
+       Además aperece el concepto de usar \textit{anchor} fijos, lo cuál consiste en usar tamaños pre calculados para la detección de obejtos de la red. 
+    \end{list}
+    
+    \item \textbf{YOLO:} surge en 2016, su nombre viene formado por las siglas de \textit{You Only Look Once}.\cite{yolov4}
+    Esta red, como su propio nombre indica hace una única pasada a la red y detecta todos los obejtos para los que ha sido entrenada para clasificar, al realizar un único vistazo obtiene velocidades muy buenas en equipos que no son necesariamente potentes. Lo cuál permite, detecciones en tiempo real de cientos obejtos de forma simúltanea y su ejecución en dispositivos móviles.  
 \end{list}
+Debido a esto, el modelo escogido ha sido YOLO y en su versión 4, la cuál fue lanzada en Abril del año 2020.
+
+\imagen{resultsYOLOv4}{Comparativa resultados Dataset COCO}
