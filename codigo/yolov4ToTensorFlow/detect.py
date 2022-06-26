@@ -26,6 +26,7 @@ flags.DEFINE_string('image', './data/images/image.jpg', 'path to input image')
 flags.DEFINE_string('output', './detections/images/result.png', 'path to output image')
 flags.DEFINE_float('iou', 0.45, 'iou threshold')
 flags.DEFINE_float('score', 0.25, 'score threshold')
+flags.DEFINE_list('allowed_classes', list(utils.read_class_names(cfg.YOLO.CLASSES).values()), 'list of allowed classes')
 
 def main(_argv):
     config = ConfigProto()
@@ -82,13 +83,10 @@ def main(_argv):
         score_threshold=FLAGS.score
     )
     pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
-    # allowed_classes = ['person', 'bicycle',
-    #                        'car', 'truck', 'bus', 'motorbike']
 
-    counted_classes = countObjectsImg(pred_bbox, byClass=True)
-    image, registroPos = utils.draw_bbox_img(original_image, pred_bbox)
+    counted_classes = countObjectsImg(pred_bbox, byClass=True, allowedClasses=FLAGS.allowed_classes)
+    image, registroPos = utils.draw_bbox_img(original_image, pred_bbox, allowed_classes=FLAGS.allowed_classes)
     for key, value in counted_classes.items():
-        # print("Number of {}s: {}".format(key, value))
         for k, v in registroPos.items():
             if key == k:
                 results.append([datetime.now(), key, value, v[:]])
