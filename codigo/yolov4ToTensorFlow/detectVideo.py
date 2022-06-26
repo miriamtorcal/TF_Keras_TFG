@@ -17,8 +17,7 @@ if len(physical_devices) > 0:
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 flags.DEFINE_string('framework', 'tf', '(tf, tflite, trt')
-flags.DEFINE_string('weights', './checkpoints/yolov4-416',
-                    'path to weights file')
+flags.DEFINE_string('weights', './checkpoints/yolov4-416', 'path to weights file')
 flags.DEFINE_integer('size', 416, 'resize images to')
 flags.DEFINE_boolean('tiny', False, 'yolo or yolo-tiny')
 flags.DEFINE_string('model', 'yolov4', 'yolov3 or yolov4')
@@ -31,9 +30,8 @@ flags.DEFINE_string('output', './detections/videos', './detections/videos')
 flags.DEFINE_string('output_format', 'XVID',
                     'codec used in VideoWriter when saving video to file')
 # this is good for the .ipynb
-flags.DEFINE_boolean('dis_cv2_window', False,
-                     'disable cv2 window during the process')
-
+flags.DEFINE_boolean('dis_cv2_window', False, 'disable cv2 window during the process')
+flags.DEFINE_list('allowed_classes', list(utils.read_class_names(cfg.YOLO.CLASSES).values()), 'list of allowed classes')
 
 def main(_argv):
     config = ConfigProto()
@@ -45,8 +43,8 @@ def main(_argv):
     results = []
 
     try:
-       print("Video from webcam")
        vid = cv2.VideoCapture(int(video_path))
+       print("Video from webcam")
     except:
         print("Video from: ", video_path )
         vid = cv2.VideoCapture(video_path)
@@ -73,13 +71,6 @@ def main(_argv):
             FLAGS.weights, tags=[tag_constants.SERVING])
         infer = saved_model_loaded.signatures['serving_default']
 
-    # if FLAGS.output:
-    #     # by default VideoCapture returns float instead of int
-    #     width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
-    #     height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    #     fps = int(vid.get(cv2.CAP_PROP_FPS))
-    #     codec = cv2.VideoWriter_fourcc(*FLAGS.output_format)
-    #     out = cv2.VideoWriter(FLAGS.output, codec, fps, (width, height))
 
     frame_id = 0
     while True:
@@ -132,16 +123,13 @@ def main(_argv):
 
         pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0],
                      valid_detections.numpy()[0]]
-        allowed_classes = list(utils.read_class_names(cfg.YOLO.CLASSES).values())
-        # allowed_classes = ['person', 'bicycle',
-        #                    'car', 'truck', 'bus', 'motorbike']
 
         if FLAGS.count:
             # count objects found
             counted_classes = countObjects(
-                pred_bbox, byClass=True, allowedClasses=allowed_classes)
+                pred_bbox, byClass=True, allowedClasses=FLAGS.allowed_classes)
             image, registroPos = utils.draw_bbox_info(
-                frame, pred_bbox, allowedClasses=allowed_classes)
+                frame, pred_bbox, allowedClasses=FLAGS.allowed_classes)
             for key, value in counted_classes.items():
                 # print("Number of {}s: {}".format(key, value))
                 for k, v in registroPos.items():
@@ -150,9 +138,8 @@ def main(_argv):
             generateCsv(results)
         else:
             image, registroPos = utils.draw_bbox_info(
-                frame, pred_bbox, allowedClasses=allowed_classes)
+                frame, pred_bbox, allowedClasses=FLAGS.allowed_classes)
 
-        # generateCsv(results)
         curr_time = time.time()
 
         if not FLAGS.dont_show:
@@ -173,7 +160,7 @@ def main(_argv):
         if FLAGS.output:
             out.write(result)
 
-        #Press 'q' to exit
+        # Press 'q' to exit
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
