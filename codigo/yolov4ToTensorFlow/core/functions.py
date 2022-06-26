@@ -27,8 +27,32 @@ def countObjects(data: list, byClass: bool = True,  allowedClasses: list = list(
     return counts
 
 
-def generateCsv(info):
-    with open('resultInfo.csv', 'w', newline='') as csvfile:
+def countObjectsImg(data: list, byClass: bool = True,  allowedClasses: list = list(read_class_names(cfg.YOLO.CLASSES).values())) -> dict:
+    boxes, scores, classes, numObjects = data
+    counts = dict()
+    classes = classes[0]
+    numObjects = numObjects[0]
+
+    # byClass = True => count objects per class
+    if byClass:
+        classNames = read_class_names(cfg.YOLO.CLASSES)
+        for i in range(numObjects):
+            classIndex = int(classes[i])
+            className = classNames[classIndex]
+            print(allowedClasses)
+            if className in allowedClasses:
+                counts[className] = counts.get(className, 0) + 1
+            else:
+                continue
+
+    # count all objects
+    else:
+        counts['all objects'] = numObjects
+    return counts
+
+
+def generateCsv(info: list):
+    with open('resultInfoImg.csv', 'w', newline='') as csvfile:
         fieldNames = ['Time', 'NumberObject', 'TypeObject', 'Positions']
         writer = csv.DictWriter(csvfile, fieldnames = fieldNames)
         writer.writeheader()

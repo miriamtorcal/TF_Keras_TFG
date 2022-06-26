@@ -174,7 +174,6 @@ def draw_bbox_info(image, bboxes, show_label=True, allowedClasses = list(read_cl
             c1, c2 = (coor[0], coor[1]), (coor[2], coor[3])
             cv2.rectangle(image, c1, c2, bbox_color, bbox_thick) 
 
-            print("Object found: {}, Confidence: {:.2f}, BBox Coords (xmin, ymin, xmax, ymax): {}, {}, {}, {} ".format(class_name, score, coor[0], coor[1], coor[2], coor[3]))            
             registroPos[class_name].append((coor[0], coor[1],coor[2], coor[3]))
 
             if show_label:
@@ -241,6 +240,7 @@ def draw_bbox_img(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), all
     hsv_tuples = [(1.0 * x / num_classes, 1., 1.) for x in range(num_classes)]
     colors = list(map(lambda x: colorsys.hsv_to_rgb(*x), hsv_tuples))
     colors = list(map(lambda x: (int(x[0] * 255), int(x[1] * 255), int(x[2] * 255)), colors))
+    registroPos = {}
 
     random.seed(0)
     random.shuffle(colors)
@@ -250,15 +250,22 @@ def draw_bbox_img(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), all
     for i in range(num_boxes[0]):
         if int(out_classes[0][i]) < 0 or int(out_classes[0][i]) > num_classes: continue
         coor = out_boxes[0][i]
+        class_ind = int(out_classes[0][i])
+        class_name = classes[class_ind]
+
         coor[0] = int(coor[0] * image_h)
         coor[2] = int(coor[2] * image_h)
         coor[1] = int(coor[1] * image_w)
         coor[3] = int(coor[3] * image_w)
 
+
         fontScale = 0.5
         score = out_scores[0][i]
-        class_ind = int(out_classes[0][i])
-        class_name = classes[class_ind]
+        # class_ind = int(out_classes[0][i])
+        # class_name = classes[class_ind]
+
+        registroPos.setdefault(class_name, [])
+
 
         # check if class is in allowed classes
         if class_name not in allowed_classes:
@@ -267,7 +274,10 @@ def draw_bbox_img(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), all
             bbox_color = colors[class_ind]
             bbox_thick = int(0.6 * (image_h + image_w) / 600)
             c1, c2 = (coor[1], coor[0]), (coor[3], coor[2])
+            # print(f"Class: {class_name}  Position: {coor[1] / image_w} {coor[0] / image_h} {coor[3] / image_w} {coor[2] / image_h}")
             cv2.rectangle(image, c1, c2, bbox_color, bbox_thick)
+            registroPos[class_name].append((coor[0], coor[1],coor[2], coor[3]))
+
 
             if show_label:
                 bbox_mess = '%s: %.2f' % (classes[class_ind], score)
@@ -277,7 +287,26 @@ def draw_bbox_img(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), all
 
                 cv2.putText(image, bbox_mess, (c1[0], np.float32(c1[1] - 2)), cv2.FONT_HERSHEY_SIMPLEX,
                             fontScale, (0, 0, 0), bbox_thick // 2, lineType=cv2.LINE_AA)
-    return image
+    return image, registroPos
+
+def bb_intersection_over_union(boxA, boxB):
+	# determine the (x, y)-coordinates of the intersection rectangle
+	xA = max(boxA[0], int(float(boxB[0])))
+	yA = max(boxA[1], int(float(boxB[1])))
+	xB = min(boxA[2], int(float(boxB[2])))
+	yB = min(boxA[3], int(float(boxB[3])))
+	# compute the area of intersection rectangle
+	interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
+	# compute the area of both the prediction and ground-truth
+	# rectangles
+	boxAArea = (boxA[2] - boxA[0] + 1) * (boxA[3] - boxA[1] + 1)
+	boxBArea = (int(float(boxB[2])) - int(float(boxB[0])) + 1) * (int(float(boxB[3])) - int(float(boxB[1])) + 1)
+	# compute the intersection over union by taking the intersection
+	# area and dividing it by the sum of prediction + ground-truth
+	# areas - the interesection area
+	iou = interArea / float(boxAArea + boxBArea - interArea)
+	# return the intersection over union value
+	return iou
 
 def bbox_iou(bboxes1, bboxes2):
     """
