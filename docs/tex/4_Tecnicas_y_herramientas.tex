@@ -47,19 +47,26 @@ Existen diferentes algoritmos:
     
     \imagen{r-cnn-regions}{Pasos de la detección en R-CNN}
 
+    \clearpage
+
     \item \textbf{Fast R-CNN / Faster R-CNN:} Son dos algoritmos que surgen como mejora a R-CNN: \cite{faster_rcnn}
     \begin{list}{\textbullet}{ %
         \addtolength{\itemsep}{-2mm} %
         \setlength{\itemindent}{2mm}}
         \item \textbf{Fast R-CNN:} mejora el algoritmo inicial reutilizando algunso recursos, como las \textit{features} extraídaa por la CNN, de tal forma que se agiliza el entreno y la detección de las imágenes.
         Esta red, posee también mejoras en el cálculo del IoU \textit{(Intersection Over Union)} y en la función de \textit{Loss}. Pero a pesar de esto, no tiene mejoras drásticas en la velocidad de entrenamiento y en la detección.
+        \imagen{fast-RCNN}{Arquitectura red Fast-RCNN}
        \item \textbf{Faster R-CNN:} logra una mejora de velocidad al integrar el algoritmo de \textit{region proposal} \cite{region_proposal} sobre la propia CNN.
-       Además aperece el concepto de usar \textit{anchor} fijos, lo cuál consiste en usar tamaños pre calculados para la detección de obejtos de la red. 
+       Además aperece el concepto de usar \textit{anchors} fijos, lo cuál consiste en usar tamaños pre calculados para la detección de obejtos de la red.
+       \imagen{fasterRCNN}{Arquitectura red Faster-RCNN}
     \end{list}
     
+    \clearpage
+
     \item \textbf{YOLO:} surge en 2016, su nombre viene formado por las siglas de \textit{You Only Look Once}.\cite{yolov4}
     Esta red, como su propio nombre indica hace una única pasada a la red y detecta todos los obejtos para los que ha sido entrenada para clasificar, al realizar un único vistazo obtiene velocidades muy buenas en equipos que no son necesariamente potentes. Lo cuál permite, detecciones en tiempo real de cientos obejtos de forma simúltanea y su ejecución en dispositivos móviles.  
 \end{list}
 Debido a esto, el modelo escogido ha sido YOLO y en su versión 4, la cuál fue lanzada en Abril del año 2020.
 
 \imagen{resultsYOLOv4}{Comparativa resultados Dataset COCO}
+

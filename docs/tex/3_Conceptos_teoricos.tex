@@ -51,6 +51,26 @@ El primer parámetro representa el id de la clase, es decir, cuando se etiquetan
 El segundo representa la distancia desde la coordenada 'x' al centro, mientras que el tercero hace lo propio desde la coordenada 'y'.
 El cuarto parámetro representa el ancho de la anotación, es decir, el ancho del recuadro que conforma la anotación, el último párametro representa el alto de la anotación.
 
+YOLO utiliza una red CNN llamada Darknet, aunque puede ser utilizada cualquier otra red convolucional a la hora de entrenar. Además, YOLO utiliza las redes convolucionales al final de la cadena, sin necesidad de tener que convertir a una red \textit{tradicional.}
+La principal cr´tica que tiene es que a pesar de ser rápida, obtiene peores resultados que las redes \textit{R-CNN}, pero con el paso del tiempo las nuevas versiones que se han lanzado se centran en mejorar dicha precisión en los \textit{bounding boxes}, respetando su eficacia.
+
+La arquitectura de la red se basa en una red convolucional \textbf{GoogLeNet} \cite{googlenet}, la cuál consta de 24 capas convolucionales. Enbebe en su salida tanto la parte que clasifica la imágenes como la de posicionamiento y tamaño de los objetos.
+
+\imagen{yolo_archichecture}{Arquitectura de la red convoluvional Darknet}
+
+Por ejemplo, para el \textbf{CocoDataset}, la cuál debe detectar 80 objetos diferentes, nos dará una salida:
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{| c | c | c | c |}
+        \hline
+        Tamaño Grilla & Cantidad Anclas & Cantidad Clases & Ccore, X, Y, Alto, Ancho \\ \hline
+        13*13 & *3* & (80 + & * 5) \\ \hline
+    \end{tabular}
+    \caption{Salida COCO Dataset}
+    \label{tab:salidaYOLO}
+\end{table}
+
 \clearpage
 
 \section{Object Detection}
