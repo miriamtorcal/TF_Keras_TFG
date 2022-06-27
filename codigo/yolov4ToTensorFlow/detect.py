@@ -46,7 +46,7 @@ def main(_argv):
     # image_data = image_data[np.newaxis, ...].astype(np.float32)
 
     images_data = []
-    for i in range(1):
+    for _ in range(1):
         images_data.append(image_data)
     images_data = np.asarray(images_data).astype(np.float32)
 
@@ -84,19 +84,21 @@ def main(_argv):
     )
     pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
 
-    counted_classes = countObjectsImg(pred_bbox, byClass=True, allowedClasses=FLAGS.allowed_classes)
+    counted_classes = count_objects_img(pred_bbox, by_class=True, allowed_classes=FLAGS.allowed_classes)
     image, registroPos = utils.draw_bbox_img(original_image, pred_bbox, allowed_classes=FLAGS.allowed_classes)
     for key, value in counted_classes.items():
         for k, v in registroPos.items():
             if key == k:
                 results.append([datetime.now(), key, value, v[:]])
-    generateCsv(results)
+    generate_csv(results)
 
     # image = utils.draw_bbox(image_data*255, pred_bbox)
     image = Image.fromarray(image.astype(np.uint8))
     image.show()
     image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
     cv2.imwrite(FLAGS.output, image)
+
+    print("Image processing complete")
 
 if __name__ == '__main__':
     try:

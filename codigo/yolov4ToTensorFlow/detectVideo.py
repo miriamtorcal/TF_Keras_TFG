@@ -126,19 +126,19 @@ def main(_argv):
 
         if FLAGS.count:
             # count objects found
-            counted_classes = countObjects(
-                pred_bbox, byClass=True, allowedClasses=FLAGS.allowed_classes)
+            counted_classes = count_objects(
+                pred_bbox, by_class=True, allowed_classes=FLAGS.allowed_classes)
             image, registroPos = utils.draw_bbox_info(
-                frame, pred_bbox, allowedClasses=FLAGS.allowed_classes)
+                frame, pred_bbox, allowed_classes=FLAGS.allowed_classes)
             for key, value in counted_classes.items():
                 # print("Number of {}s: {}".format(key, value))
                 for k, v in registroPos.items():
                     if key == k:
                         results.append([datetime.now(), key, value, v[:]])
-            generateCsv(results)
+            generate_csv(results)
         else:
             image, registroPos = utils.draw_bbox_info(
-                frame, pred_bbox, allowedClasses=FLAGS.allowed_classes)
+                frame, pred_bbox, allowed_classes=FLAGS.allowed_classes)
 
         curr_time = time.time()
 

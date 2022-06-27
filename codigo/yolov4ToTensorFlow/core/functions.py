@@ -5,17 +5,17 @@ from core.config import cfg
 from core.utils import read_class_names
 import csv
 
-def countObjects(data: list, byClass: bool = True,  allowedClasses: list = list(read_class_names(cfg.YOLO.CLASSES).values())) -> dict:
+def count_objects(data: list, by_class: bool = True,  allowed_classes: list = list(read_class_names(cfg.YOLO.CLASSES).values())) -> dict:
     boxes, scores, classes, numObjects = data
     counts = dict()
 
     # byClass = True => count objects per class
-    if byClass:
+    if by_class:
         classNames = read_class_names(cfg.YOLO.CLASSES)
         for i in range(numObjects):
             classIndex = int(classes[i])
             className = classNames[classIndex]
-            if className in allowedClasses:
+            if className in allowed_classes:
                 counts[className] = counts.get(className, 0) + 1
             else:
                 continue
@@ -27,20 +27,19 @@ def countObjects(data: list, byClass: bool = True,  allowedClasses: list = list(
     return counts
 
 
-def countObjectsImg(data: list, byClass: bool = True,  allowedClasses: list = list(read_class_names(cfg.YOLO.CLASSES).values())) -> dict:
+def count_objects_img(data: list, by_class: bool = True,  allowed_classes: list = list(read_class_names(cfg.YOLO.CLASSES).values())) -> dict:
     boxes, scores, classes, numObjects = data
     counts = dict()
     classes = classes[0]
     numObjects = numObjects[0]
 
-    # byClass = True => count objects per class
-    if byClass:
+    # by_class = True => count objects per class
+    if by_class:
         classNames = read_class_names(cfg.YOLO.CLASSES)
         for i in range(numObjects):
             classIndex = int(classes[i])
             className = classNames[classIndex]
-            print(allowedClasses)
-            if className in allowedClasses:
+            if className in allowed_classes:
                 counts[className] = counts.get(className, 0) + 1
             else:
                 continue
@@ -51,7 +50,7 @@ def countObjectsImg(data: list, byClass: bool = True,  allowedClasses: list = li
     return counts
 
 
-def generateCsv(info: list):
+def generate_csv(info: list):
     with open('resultInfoImg.csv', 'w', newline='') as csvfile:
         fieldNames = ['Time', 'NumberObject', 'TypeObject', 'Positions']
         writer = csv.DictWriter(csvfile, fieldnames = fieldNames)
