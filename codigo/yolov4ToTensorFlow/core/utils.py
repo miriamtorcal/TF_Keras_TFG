@@ -140,7 +140,7 @@ def draw_bbox_info(image, bboxes, show_label=True, allowed_classes = list(read_c
     hsv_tuples = [(1.0 * x / num_classes, 1., 1.) for x in range(num_classes)]
     colors = list(map(lambda x: colorsys.hsv_to_rgb(*x), hsv_tuples))
     colors = list(map(lambda x: (int(x[0] * 255), int(x[1] * 255), int(x[2] * 255)), colors))
-    registro_pos = {}
+    registro_pos_info = {}
    
 
     random.seed(0)
@@ -160,7 +160,7 @@ def draw_bbox_info(image, bboxes, show_label=True, allowed_classes = list(read_c
         # bbox_thick = int(0.6 * (image_h + image_w) / 600)
         # c1, c2 = (coor[0], coor[1]), (coor[2], coor[3])
         # cv2.rectangle(image, c1, c2, bbox_color, bbox_thick) 
-        registro_pos.setdefault(class_name, [])
+        registro_pos_info.setdefault(class_name, [])
 
         if class_name not in allowed_classes:
             continue
@@ -170,7 +170,7 @@ def draw_bbox_info(image, bboxes, show_label=True, allowed_classes = list(read_c
             c1, c2 = (coor[0], coor[1]), (coor[2], coor[3])
             cv2.rectangle(image, c1, c2, bbox_color, bbox_thick) 
 
-            registro_pos[class_name].append((coor[0], coor[1],coor[2], coor[3]))
+            registro_pos_info[class_name].append((coor[0], coor[1],coor[2], coor[3]))
 
             if show_label:
                 bbox_mess = '%s: %.2f' % (classes[class_ind], score)
@@ -180,7 +180,7 @@ def draw_bbox_info(image, bboxes, show_label=True, allowed_classes = list(read_c
 
                 cv2.putText(image, bbox_mess, (c1[0], np.float32(c1[1] - 2)), cv2.FONT_HERSHEY_SIMPLEX,
                             font_scale, (0, 0, 0), bbox_thick // 2, lineType=cv2.LINE_AA)
-    return image, registro_pos
+    return image, registro_pos_info
 
 def draw_bbox(image, bboxes, allowedClasses=list(read_class_names(cfg.YOLO.CLASSES).values()), show_label=True):
     classes=read_class_names(cfg.YOLO.CLASSES)
@@ -198,10 +198,6 @@ def draw_bbox(image, bboxes, allowedClasses=list(read_class_names(cfg.YOLO.CLASS
     for i in range(num_boxes):
         if int(out_classes[i]) < 0 or int(out_classes[i]) > num_classes: continue
         coor = out_boxes[i]
-        # coor[0] = int(coor[0] * image_h)
-        # coor[2] = int(coor[2] * image_h)
-        # coor[1] = int(coor[1] * image_w)
-        # coor[3] = int(coor[3] * image_w)
 
         font_scale = 0.5
         score = out_scores[i]
@@ -236,7 +232,7 @@ def draw_bbox_img(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), all
     hsv_tuples = [(1.0 * x / num_classes, 1., 1.) for x in range(num_classes)]
     colors = list(map(lambda x: colorsys.hsv_to_rgb(*x), hsv_tuples))
     colors = list(map(lambda x: (int(x[0] * 255), int(x[1] * 255), int(x[2] * 255)), colors))
-    registro_pos = {}
+    registro_pos_img = {}
 
     random.seed(0)
     random.shuffle(colors)
@@ -260,7 +256,7 @@ def draw_bbox_img(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), all
         # class_ind = int(out_classes[0][i])
         # class_name = classes[class_ind]
 
-        registro_pos.setdefault(class_name, [])
+        registro_pos_img.setdefault(class_name, [])
 
 
         # check if class is in allowed classes
@@ -271,7 +267,7 @@ def draw_bbox_img(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), all
             bbox_thick = int(0.6 * (image_h + image_w) / 600)
             c1, c2 = (coor[1], coor[0]), (coor[3], coor[2])
             cv2.rectangle(image, c1, c2, bbox_color, bbox_thick)
-            registro_pos[class_name].append((coor[0], coor[1],coor[2], coor[3]))
+            registro_pos_img[class_name].append((coor[0], coor[1],coor[2], coor[3]))
 
             if show_label:
                 bbox_mess = '%s: %.2f' % (classes[class_ind], score)
@@ -281,16 +277,16 @@ def draw_bbox_img(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), all
 
                 cv2.putText(image, bbox_mess, (c1[0], np.float32(c1[1] - 2)), cv2.FONT_HERSHEY_SIMPLEX,
                             font_scale, (0, 0, 0), bbox_thick // 2, lineType=cv2.LINE_AA)
-    return image, registro_pos
+    return image, registro_pos_img
 
 def bb_intersection_over_union(box_a, box_b):
 	# determine the (x, y)-coordinates of the intersection rectangle
-	xA = max(box_a[0], int(float(box_b[0])))
-	yA = max(box_a[1], int(float(box_b[1])))
-	xB = min(box_a[2], int(float(box_b[2])))
-	yB = min(box_a[3], int(float(box_b[3])))
+	x_a = max(box_a[0], int(float(box_b[0])))
+	y_a = max(box_a[1], int(float(box_b[1])))
+	x_b = min(box_a[2], int(float(box_b[2])))
+	y_b = min(box_a[3], int(float(box_b[3])))
 	# compute the area of intersection rectangle
-	inter_area = max(0, xB - xA + 1) * max(0, yB - yA + 1)
+	inter_area = max(0, x_b - x_a + 1) * max(0, y_b - y_a + 1)
 	# compute the area of both the prediction and ground-truth
 	# rectangles
 	box_a_area = (box_a[2] - box_a[0] + 1) * (box_a[3] - box_a[1] + 1)
