@@ -21,6 +21,13 @@ A la hora de empezar un nuevo proyecto es importante relacionado con el \textit{
 En este caso se decantó por el uso de \textit{Python}, debido al mayor conocimiento de este lenaguaje y haber trabajado más con este lenguaje que con \textit{Matlab}.
 No hay grandes ventajas entre escoger uno u otro.
 
+\subsection*{Python}
+Python es un lenguaje de programación multiplataforma y multiparadigma \footnote{Debido a que soporta parcialmente la orientación a objetos, la programación funcional y la imperativa.}, destacando entre sus características la legibilidad y la limpieza del código. Python es un \textit{software open source}, siendo por ello gratuito sus uso.
+
+Fue desarrollado al inicio de la década de los 90 por \textit{Guido van Rosseun}. Fue implementado como el sucesor del lenguaje \textit{ABC} y se encuentra fuertemente influenciado por otros como: ABC, Ada, ALGOL 68, APL, C, C++, CLU, Dylan, Haskell, Icon, Java,
+Lips, Modula-3, Perl, Standard ML.
+
+Su principal objetivo es automatizar los procesos, con el fin de minimizar tanto el tiempo de desarrollo, como complicaciones, debido a esto, hoy en día Python es uno de los lenguajes más usados para el desarrolo de todo tipo de aplicaciones.
 
 \section{Algoritmo de detección}
 A parte de tener claro el lenguaje que se quiere utilizar, otra característica a tener en cuenta es elegir el \textit{algoritmo de detección} en el que se va a basar el modelo.
@@ -41,13 +48,12 @@ Existen diferentes algoritmos:
         \item Si por un casual el desplazamiento de píxeles que se realiza es muy pequeño, podríamos estar detectadndo el mismo objeto múltiples veces.
         \item Si dos objetos se encuentran muy juntos, se podrían llegara a detectar como un único objeto.    
     \end{list}
+    
     \item \textbf{R-CNN:} \textit{(Region Based Convolutional Neural Networks)} surgen en el año 2014, con la siguiente propuesta: determianr primero las regiones de interés de la imagen y después realizar la clasificación de imagenes sobre dichas áreas usando una red preentrenada.\cite{r-cnn}
     Esto implica, que haya un primer algoritmo que detecte las áreas de interés de la imagen, las cuáles pueden ser muchas y de diversos tamaños. Seguidamente, se pasán las diferentes regiones por la CNN, validandose las clases correctas mediante un clasificador bianrio, de tal forma, que se eliminarán
     las que tenga un bajo nivel de confianza. Por último, se ajustaría la posición mediante un regresor.
     
     \imagen{r-cnn-regions}{Pasos de la detección en R-CNN}
-
-    \clearpage
 
     \item \textbf{Fast R-CNN / Faster R-CNN:} Son dos algoritmos que surgen como mejora a R-CNN\cite{faster_rcnn}:
     \begin{list}{\textbullet}{ %
@@ -56,12 +62,11 @@ Existen diferentes algoritmos:
         \item \textbf{Fast R-CNN:} mejora el algoritmo inicial reutilizando algunso recursos, como las \textit{features} extraídaa por la CNN, de tal forma que se agiliza el entreno y la detección de las imágenes.
         Esta red, posee también mejoras en el cálculo del IoU \textit{(Intersection Over Union)} y en la función de \textit{Loss}. Pero a pesar de esto, no tiene mejoras drásticas en la velocidad de entrenamiento y en la detección.
         \imagen{fast-RCNN}{Arquitectura red Fast-RCNN}
+        \clearpage
        \item \textbf{Faster R-CNN:} logra una mejora de velocidad al integrar el algoritmo de \textit{region proposal}\cite{region_proposal} sobre la propia CNN.
        Además aperece el concepto de usar \textit{anchors} fijos, lo cuál consiste en usar tamaños pre calculados para la detección de obejtos de la red.
        \imagen{fasterRCNN}{Arquitectura red Faster-RCNN}
     \end{list}
-    
-    \clearpage
 
     \item \textbf{YOLO:} surge en 2016, su nombre viene formado por las siglas de \textit{You Only Look Once}\cite{yolov4}.
     Esta red, como su propio nombre indica hace una única pasada a la red y detecta todos los obejtos para los que ha sido entrenada para clasificar, al realizar un único vistazo obtiene velocidades muy buenas en equipos que no son necesariamente potentes. Lo cuál permite, detecciones en tiempo real de cientos obejtos de forma simúltanea y su ejecución en dispositivos móviles.  
@@ -69,8 +74,6 @@ Existen diferentes algoritmos:
 Debido a esto, el modelo escogido ha sido YOLO y en su versión 4, la cuál fue lanzada en Abril del año 2020.
 
 \imagen{resultsYOLOv4}{Comparativa resultados Dataset COCO}
-
-\clearpage
 
 \section{Tensorflow}
 \textit{Tensorflow}\cite{tensorflow} es una biblioteca de código abierto, la cuál fue lanzada en el año 2015 por Google, la cuál es muy utilizada por muchas empresas resultado de gran utilidad por su versatilidad y nivel de desarrollo.
@@ -89,4 +92,33 @@ Se basa en un sistema de redes neuronales, lo cuál permite relacionar varios da
 \textit{GitHub}\cite{github} es una herramienta para el alojamiento del código desarrollado, por cualquier individuo en la web. Esta herramienta permite llevar un control de versiones, siendo esto muy interesante de cara al proyecto que se va a llevar a cabo.
 Otra característica destacable es que se puede integrar este sistema en \textit{Visual Studio Code}\cite{visualStudioCode} y que podemos enlazar de forma fácil a nuestro repositorio los códigos realizados con \textit{Google Colab}\cite{colab}.
 
+\clearpage
+
 \section{Herramientas de control de calidad del código}
+Las herramientas de control de calidad de código evaluan y procesan de forma automática las líneas de código que conforman el proyecto, comparándolas con unos estándares de calidad. El proyecto será evaluado y dependiendo de si se cumplen o no los estándares y en que medida, la calificación será mejor o peor.
+
+La integración de herramientas de evaluación de código, ayudan a los desarrolladores a evaluar cómo de bueno es un producto software, consiguiendo una mejor mantenibilidad, reducir los errores, hacer revisiones del código centrándose en puntos especificos del código, así como determianr como de buena es la corbertura de pruebas con el objetivo de aumentar el valor del producto software.
+
+Para llevar acabo esta evaluación, se ha contando con la herramienta \textit{SonarCloud}. 
+
+\subsection*{SonarCloud}
+
+SonarCloud\cite{sonar_cloud} es una herramienta de evaluación de código que es capaz, de calcular de forma automática, la duplicación de código, la corbertura del código, su fiabilidad, mantenibilidad, así como su seguridad y sus posibles puntos vulnerables.
+Para llevar a cabo sus evaluaciones, SoanrCloud se fija en los estándares y reglas de cada lenguaje.
+
+\begin{list}{\textbullet}{ %
+    \addtolength{\itemsep}{-2mm} %
+    \setlength{\itemindent}{2mm}}
+
+    \item \textbf{Duplciación de código:} identifica las líneas, fragementos o ficheros de código duplicado.
+    \begin{enumerate}
+        \item Las duplicaciones en un único archivo, es igual al número de copias encontradase en dicho archivo.
+        \item Un archivo se considera duplicado de otro, si el número de líneas iguales supera un determinado umbral.
+    \end{enumerate}
+    \item \textbf{Seguridad:} para analizar la seguridad de código, se fija en dos puntos: \textit{Security Hostpots} y en las \textit{vulneravilidades}
+    \begin{enumerate}
+        \item Los Security Hostpots, son partes de código sensible a la seguridad, estos pueden estar bien, pero requieren de una revisión humana.
+        \item Las vulnerabilidades de seguridad requieren una acción inmediata, para ello, se fija en las reglas  y en los estándares del lenguaje concreto
+    \end{enumerate}
+    \item \textbf{Quality Gate:} son un conjunto de condiciones \textit{booleanas}, los cuáles siguen los estándares de vulnerabilidad y revisión de puntos de acceso. Esta métrica, nos indica si el código está listo pra pasar a producción.
+\end{list}
