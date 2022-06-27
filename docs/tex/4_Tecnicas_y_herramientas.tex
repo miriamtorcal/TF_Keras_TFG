@@ -5,7 +5,7 @@ A lo largo del proyecto se intentado seguir la \textit{metodología ágil Scrum}
 
 \imagen{scrum}{Pasos de la metodología Scrum}
 
-En primer lugar se encuentra el \textit{Product Backlog} \cite{scrum} que se trata del alcance del proyecto, el cuál va variando dependiendo de los \textit{feedbacks} que se van obteniendo en cada \textit{sprint}.
+En primer lugar se encuentra el \textit{Product Backlog}\cite{scrum} que se trata del alcance del proyecto, el cuál va variando dependiendo de los \textit{feedbacks} que se van obteniendo en cada \textit{sprint}.
 
 Seguidamente, se encuentra el \textit{Sprint Backlog}, dónde se marcan los requerimientos que deben de alcanzar durante el \textit{sprint} que se va a iniciar, es decir, se trata de acortar las tareas de cada uno 
 de los \textit{sprints}.
@@ -49,34 +49,44 @@ Existen diferentes algoritmos:
 
     \clearpage
 
-    \item \textbf{Fast R-CNN / Faster R-CNN:} Son dos algoritmos que surgen como mejora a R-CNN: \cite{faster_rcnn}
+    \item \textbf{Fast R-CNN / Faster R-CNN:} Son dos algoritmos que surgen como mejora a R-CNN\cite{faster_rcnn}:
     \begin{list}{\textbullet}{ %
         \addtolength{\itemsep}{-2mm} %
         \setlength{\itemindent}{2mm}}
         \item \textbf{Fast R-CNN:} mejora el algoritmo inicial reutilizando algunso recursos, como las \textit{features} extraídaa por la CNN, de tal forma que se agiliza el entreno y la detección de las imágenes.
         Esta red, posee también mejoras en el cálculo del IoU \textit{(Intersection Over Union)} y en la función de \textit{Loss}. Pero a pesar de esto, no tiene mejoras drásticas en la velocidad de entrenamiento y en la detección.
         \imagen{fast-RCNN}{Arquitectura red Fast-RCNN}
-       \item \textbf{Faster R-CNN:} logra una mejora de velocidad al integrar el algoritmo de \textit{region proposal} \cite{region_proposal} sobre la propia CNN.
+       \item \textbf{Faster R-CNN:} logra una mejora de velocidad al integrar el algoritmo de \textit{region proposal}\cite{region_proposal} sobre la propia CNN.
        Además aperece el concepto de usar \textit{anchors} fijos, lo cuál consiste en usar tamaños pre calculados para la detección de obejtos de la red.
        \imagen{fasterRCNN}{Arquitectura red Faster-RCNN}
     \end{list}
     
     \clearpage
 
-    \item \textbf{YOLO:} surge en 2016, su nombre viene formado por las siglas de \textit{You Only Look Once}.\cite{yolov4}
+    \item \textbf{YOLO:} surge en 2016, su nombre viene formado por las siglas de \textit{You Only Look Once}\cite{yolov4}.
     Esta red, como su propio nombre indica hace una única pasada a la red y detecta todos los obejtos para los que ha sido entrenada para clasificar, al realizar un único vistazo obtiene velocidades muy buenas en equipos que no son necesariamente potentes. Lo cuál permite, detecciones en tiempo real de cientos obejtos de forma simúltanea y su ejecución en dispositivos móviles.  
 \end{list}
 Debido a esto, el modelo escogido ha sido YOLO y en su versión 4, la cuál fue lanzada en Abril del año 2020.
 
 \imagen{resultsYOLOv4}{Comparativa resultados Dataset COCO}
 
-\section{Tensorflow}
-Tensorflow \cite{tensorflow} es una biblioteca de código abierto, la cuál fue lanzada en el año 2015 por Google, la cuál es muy utilizada por muchas empresas resultado de gran utilidad por su versatilidad y nivel de desarrollo.
+\clearpage
 
-Esta herramienta se basa en el \textbf{Deep Learning,} a pesar de que el mercado habia herramientas similares como \textit{DistBelief} \cite{distBelief}, la cuál también fue construida por Google en el año 2011, como un sistema propietario de aprendizaje automático. Su uso creció rápidamente debido al uso de compaañias como \textit{Alphabet}. Pero los años pasaron y el avance de la tecnología 
+\section{Tensorflow}
+\textit{Tensorflow}\cite{tensorflow} es una biblioteca de código abierto, la cuál fue lanzada en el año 2015 por Google, la cuál es muy utilizada por muchas empresas resultado de gran utilidad por su versatilidad y nivel de desarrollo.
+
+Esta herramienta se basa en el \textbf{Deep Learning,} a pesar de que el mercado habia herramientas similares como \textit{DistBelief}\cite{distBelief}, la cuál también fue construida por Google en el año 2011, como un sistema propietario de aprendizaje automático. Su uso creció rápidamente debido al uso de compaañias como \textit{Alphabet}. Pero los años pasaron y el avance de la tecnología 
 hizo que las necesidades aumentasen, haciendo que Google invirtiese tiempo para mejorarla, dando lugar a la actual \textbf{Tensorflow,} una herramienta con un conjunto de datos mayor y con mayor capacidad de almacenamiento y modificación.
 
 Se basa en un sistema de redes neuronales, lo cuál permite relacionar varios datos en la red de manera simultánea, es decir, imita lo que hace el cerebro humano.
 
 \section{TensorRT}
-TensorRT \cite{tensorrt} es un \textit{framework} de aprendizaje automático, el cuál fue publicado por \textbf{Nvidia} para ejecutar inferencias que son interferencias de aprendizaje automático en su hardware. Este \textit{framework}, se encuentra altamente cualificado para ejecutarse en \textit{GPUs Nvidia}, siendo una de las formas más rápidas de ejecutar un modelo en este momento.
+\textit{TensorRT}\cite{tensorrt} es un \textit{framework} de aprendizaje automático, el cuál fue publicado por \textbf{Nvidia} para ejecutar inferencias que son interferencias de aprendizaje automático en su hardware. Este \textit{framework}, se encuentra altamente cualificado para ejecutarse en \textit{GPUs Nvidia}, siendo una de las formas más rápidas de ejecutar un modelo en este momento.
+
+\imagen{workflowTensorrt}{Workflow del framework \textit{Tensorrt}}
+
+\section{GitHub}
+\textit{GitHub}\cite{github} es una herramienta para el alojamiento del código desarrollado, por cualquier individuo en la web. Esta herramienta permite llevar un control de versiones, siendo esto muy interesante de cara al proyecto que se va a llevar a cabo.
+Otra característica destacable es que se puede integrar este sistema en \textit{Visual Studio Code}\cite{visualStudioCode} y que podemos enlazar de forma fácil a nuestro repositorio los códigos realizados con \textit{Google Colab}\cite{colab}.
+
+\section{Herramientas de control de calidad del código}
