@@ -77,9 +77,7 @@ def main(_argv):
     # begin video capture
     try:
         vid = cv2.VideoCapture(int(video_path))
-        print("Video from webcam")
     except:
-        print("Video from: ", video_path)
         vid = cv2.VideoCapture(video_path)
 
     out = None
