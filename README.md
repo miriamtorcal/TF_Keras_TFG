@@ -2,7 +2,6 @@
 <div align="center">
   <img alt="SonarCloud Quality Gate" src="https://sonarcloud.io/api/project_badges/measure?project=mtc1003_TF_Keras_TFG&metric=alert_status">
   <img alt="SonarCloud Security" src="https://sonarcloud.io/api/project_badges/measure?project=mtc1003_TF_Keras_TFG&metric=security_rating">
-  <img alt="DeepSource" src="https://deepsource.io/gh/dpr1005/Semisupervised-learning-and-instance-selection-methods.svg/?label=active+issues&show_trend=true&token=_L2oEwtETgWq6CnhDB1m8qO6)](https://deepsource.io/gh/mtc1003/TF_Keras_TFG/?ref=repository-badge"> 
   <br>
   <a href="https://github.com/mtc1003/TF_Keras_TFG/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/mtc1003/TF_Keras_TFG"></a>
   <a href="https://github.com/mtc1003/TF_Keras_TFG/network/members"><img alt="GitHub forks" src="https://img.shields.io/github/forks/mtc1003/TF_Keras_TFG"></a>
