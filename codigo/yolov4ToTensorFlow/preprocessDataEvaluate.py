@@ -31,7 +31,6 @@ def main(_argv):
             posDf = pd.read_table(posPath + file, sep=" ", names=headers)
             file = file.replace('.txt', '.jpg')
             posDf['file'] = posPath + file
-            # print(posDf)
             files.append(posPath + file)
             dataPos = pd.concat([dataPos, posDf])
 
@@ -57,8 +56,6 @@ def main(_argv):
     dataPos["w"] = dataPos["w"].astype(int)
     dataPos["h"] = dataPos["h"].astype(int)
     dataPos['class'] = dataPos["class"].astype(int)
-
-    # print(dataPos)
 
     dataPos = dataPos[['file','x','y','w','h','class']]
 
