@@ -92,9 +92,9 @@ def main(_argv):
   save_trt()
 
 if __name__ == '__main__':
-    try:
-        app.run(main)
-    except SystemExit:
-        pass
+  try:
+      app.run(main)
+  except SystemExit:
+      pass
 
 
