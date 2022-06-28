@@ -1,7 +1,5 @@
-from absl import app, flags, logging
+from absl import app, flags
 from absl.flags import FLAGS
-import cv2
-import numpy as np
 import os
 import json
 import sys

@@ -83,13 +83,12 @@ def save_trt():
 
   trt_engine_nodes = len([1 for n in trt_graph.node if str(n.op) == 'TRTEngineOp'])
   print("numb. of trt_engine_nodes in TensorRT graph:", trt_engine_nodes)
-  all_nodes = len([1 for n in trt_graph.node])
+  all_nodes = len([1 for _ in trt_graph.node])
   print("numb. of all_nodes in TensorRT graph:", all_nodes)
 
 def main(_argv):
   config = ConfigProto()
   config.gpu_options.allow_growth = True
-  session = InteractiveSession(config=config)
   save_trt()
 
 if __name__ == '__main__':

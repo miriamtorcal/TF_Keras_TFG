@@ -9,7 +9,7 @@ from core.functions import *
 from core.yolov4 import filter_boxes
 import core.utils as utils
 from absl.flags import FLAGS
-from absl import app, flags, logging
+from absl import app, flags
 import time
 import tensorflow as tf
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
