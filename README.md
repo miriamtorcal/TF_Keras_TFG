@@ -2,6 +2,10 @@
 <div align="center">
   <img alt="SonarCloud Quality Gate" src="https://sonarcloud.io/api/project_badges/measure?project=mtc1003_TF_Keras_TFG&metric=alert_status">
   <img alt="SonarCloud Security" src="https://sonarcloud.io/api/project_badges/measure?project=mtc1003_TF_Keras_TFG&metric=security_rating">
+  <img alt="SonarCloud Sqale" src="https://sonarcloud.io/api/project_badges/measure?project=mtc1003_TF_Keras_TFG&metric=sqale_rating">
+  <img alt="SonarCloud Reliabilitye" src="https://sonarcloud.io/api/project_badges/measure?project=mtc1003_TF_Keras_TFG&metric=reliability_rating">
+  <img alt="SonarCloud Vulnerabilities" src="https://sonarcloud.io/api/project_badges/measure?project=mtc1003_TF_Keras_TFG&metric=vulnerabilities">
+  <img alt="SonarCloud Bugs" src="https://sonarcloud.io/api/project_badges/measure?project=mtc1003_TF_Keras_TFG&metric=bugs">
   <br>
   <a href="https://github.com/mtc1003/TF_Keras_TFG/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/mtc1003/TF_Keras_TFG"></a>
   <a href="https://github.com/mtc1003/TF_Keras_TFG/network/members"><img alt="GitHub forks" src="https://img.shields.io/github/forks/mtc1003/TF_Keras_TFG"></a>
