@@ -281,22 +281,22 @@ def draw_bbox_img(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), all
 
 def bb_intersection_over_union(box_a, box_b):
 	# determine the (x, y)-coordinates of the intersection rectangle
-	x_a = max(box_a[0], int(float(box_b[0])))
-	y_a = max(box_a[1], int(float(box_b[1])))
-	x_b = min(box_a[2], int(float(box_b[2])))
-	y_b = min(box_a[3], int(float(box_b[3])))
+    x_a = max(int(box_a[0]), int(float(box_b[0])))
+    y_a = max(int(box_a[1]), int(float(box_b[1])))
+    x_b = min(int(box_a[2]), int(float(box_b[2])))
+    y_b = min(int(box_a[3]), int(float(box_b[3])))
 	# compute the area of intersection rectangle
-	inter_area = max(0, x_b - x_a + 1) * max(0, y_b - y_a + 1)
+    inter_area = max(0, x_b - x_a + 1) * max(0, y_b - y_a + 1)
 	# compute the area of both the prediction and ground-truth
 	# rectangles
-	box_a_area = (box_a[2] - box_a[0] + 1) * (box_a[3] - box_a[1] + 1)
-	box_b_area = (int(float(box_b[2])) - int(float(box_b[0])) + 1) * (int(float(box_b[3])) - int(float(box_b[1])) + 1)
+    box_a_area = (int(box_a[2]) - int(box_a[0]) + 1) * (int(box_a[3]) - int(box_a[1]) + 1)
+    box_b_area = (int(float(box_b[2])) - int(float(box_b[0])) + 1) * (int(float(box_b[3])) - int(float(box_b[1])) + 1)
 	# compute the intersection over union by taking the intersection
 	# area and dividing it by the sum of prediction + ground-truth
 	# areas - the interesection area
-	iou = inter_area / float(box_a_area + box_b_area - inter_area)
+    iou = inter_area / float(box_a_area + box_b_area - inter_area)
 	# return the intersection over union value
-	return iou
+    return iou
 
 def bbox_iou(bboxes1, bboxes2):
     """
@@ -335,7 +335,7 @@ def bbox_iou(bboxes1, bboxes2):
 
     iou = tf.math.divide_no_nan(inter_area, union_area)
 
-    return iou
+    return iou, bboxes1_coor, bboxes2_coor, union_area
 
 
 def bbox_giou(bboxes1, bboxes2):
@@ -348,33 +348,7 @@ def bbox_giou(bboxes1, bboxes2):
     ex) (4,):(3,4) -> (3,)
         (2,1,4):(2,3,4) -> (2,3)
     """
-    bboxes1_area = bboxes1[..., 2] * bboxes1[..., 3]
-    bboxes2_area = bboxes2[..., 2] * bboxes2[..., 3]
-
-    bboxes1_coor = tf.concat(
-        [
-            bboxes1[..., :2] - bboxes1[..., 2:] * 0.5,
-            bboxes1[..., :2] + bboxes1[..., 2:] * 0.5,
-        ],
-        axis=-1,
-    )
-    bboxes2_coor = tf.concat(
-        [
-            bboxes2[..., :2] - bboxes2[..., 2:] * 0.5,
-            bboxes2[..., :2] + bboxes2[..., 2:] * 0.5,
-        ],
-        axis=-1,
-    )
-
-    left_up = tf.maximum(bboxes1_coor[..., :2], bboxes2_coor[..., :2])
-    right_down = tf.minimum(bboxes1_coor[..., 2:], bboxes2_coor[..., 2:])
-
-    inter_section = tf.maximum(right_down - left_up, 0.0)
-    inter_area = inter_section[..., 0] * inter_section[..., 1]
-
-    union_area = bboxes1_area + bboxes2_area - inter_area
-
-    iou = tf.math.divide_no_nan(inter_area, union_area)
+    iou, bboxes1_coor, bboxes2_coor, union_area = bbox_iou(bboxes1, bboxes2)
 
     enclose_left_up = tf.minimum(bboxes1_coor[..., :2], bboxes2_coor[..., :2])
     enclose_right_down = tf.maximum(
@@ -399,33 +373,7 @@ def bbox_ciou(bboxes1, bboxes2):
     ex) (4,):(3,4) -> (3,)
         (2,1,4):(2,3,4) -> (2,3)
     """
-    bboxes1_area = bboxes1[..., 2] * bboxes1[..., 3]
-    bboxes2_area = bboxes2[..., 2] * bboxes2[..., 3]
-
-    bboxes1_coor = tf.concat(
-        [
-            bboxes1[..., :2] - bboxes1[..., 2:] * 0.5,
-            bboxes1[..., :2] + bboxes1[..., 2:] * 0.5,
-        ],
-        axis=-1,
-    )
-    bboxes2_coor = tf.concat(
-        [
-            bboxes2[..., :2] - bboxes2[..., 2:] * 0.5,
-            bboxes2[..., :2] + bboxes2[..., 2:] * 0.5,
-        ],
-        axis=-1,
-    )
-
-    left_up = tf.maximum(bboxes1_coor[..., :2], bboxes2_coor[..., :2])
-    right_down = tf.minimum(bboxes1_coor[..., 2:], bboxes2_coor[..., 2:])
-
-    inter_section = tf.maximum(right_down - left_up, 0.0)
-    inter_area = inter_section[..., 0] * inter_section[..., 1]
-
-    union_area = bboxes1_area + bboxes2_area - inter_area
-
-    iou = tf.math.divide_no_nan(inter_area, union_area)
+    iou, bboxes1_coor, bboxes2_coor, union_area = bbox_iou(bboxes1, bboxes2)
 
     enclose_left_up = tf.minimum(bboxes1_coor[..., :2], bboxes2_coor[..., :2])
     enclose_right_down = tf.maximum(

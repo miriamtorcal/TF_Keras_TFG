@@ -87,13 +87,17 @@ def main(_argv):
             with open(ground_truth_path, 'w') as f:
                 for i in range(num_bbox_gt):
                     class_name = CLASSES[classes_gt[i]]
+                    class_name = class_name.replace(" ", "-")
                     xmin, ymin, xmax, ymax = list(map(str, bboxes_gt[i]))
                     bbox_mess = ' '.join([class_name, xmin, ymin, xmax, ymax]) + '\n'
                     f.write(bbox_mess)
                     print('\t' + str(bbox_mess).strip())
-                    bboxMess = list(bbox_mess.split(' '))
-                    bboxMess.pop(0)
-                    c1, c2 = (int(bboxMess[0]), int(bboxMess[1])), (int(bboxMess[2]), int(bboxMess[3].replace('\n', '')))
+                    bbox_mess_poss = list(bbox_mess.split(' '))
+                    bbox_mess_poss.pop(0)
+                    if not bbox_mess_poss[0].isdigit():
+                        bbox_mess_poss.pop(0)
+
+                    c1, c2 = (int(bbox_mess_poss[0]), int(bbox_mess_poss[1])), (int(bbox_mess_poss[2]), int(bbox_mess_poss[3].replace('\n', '')))
                     cv2.rectangle(image, c1, c2, (0, 255, 0), 2)
             print('=> predict result of %s:' % image_name)
             predict_result_path = os.path.join(predicted_dir_path, str(num) + '.txt')
@@ -157,16 +161,16 @@ def main(_argv):
                     bbox_mess = ' '.join([class_name, score, xmin, ymin, xmax, ymax]) + '\n'
                     f.write(bbox_mess)
                     print('\t' + str(bbox_mess).strip())
-                    bboxPred = list(bbox_mess.split(' '))
-                    bboxPred.pop(0)
-                    bboxPred.pop(0)
-                    # print(int(float(bboxPred[0])))
+                    bbox_pred = list(bbox_mess.split(' '))
+                    bbox_pred.pop(0)
+                    bbox_pred.pop(0)
+                    # pri8nt(int(float(bbox_pred[0])))
+                    for k in gt.index: 
+                        gt_k = gt.iloc[k].to_list()
+                        if iou < utils.bb_intersection_over_union(gt_k, bbox_pred):
+                            iou = utils.bb_intersection_over_union(gt_k, bbox_pred)
 
-                    for k in gt.index:
-                        if iou < utils.bb_intersection_over_union(gt.iloc[k].to_list(), bboxPred):
-                            iou = utils.bb_intersection_over_union(gt.iloc[k].to_list(), bboxPred)
-
-                    c1, c2 = (int(float(bboxPred[0])), int(float(bboxPred[1]))), (int(float(bboxPred[2])), int(float(bboxPred[3].replace('\n', ''))))
+                    c1, c2 = (int(float(bbox_pred[0])), int(float(bbox_pred[1]))), (int(float(bbox_pred[2])), int(float(bbox_pred[3].replace('\n', ''))))
                     cv2.rectangle(image, c1, c2, (0, 0, 255), 2)
                     cv2.putText(image, "IoU: {:.4f}".format(iou),  (c1[0], np.float32(c1[1] - 2)), cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (238, 255, 3), 2, lineType=cv2.LINE_AA)
