@@ -1,11 +1,11 @@
 \capitulo{4}{Técnicas y herramientas}
 
-\section{Metodología}
+\section{Metodología}\label{scrum}
 A lo largo del proyecto se intentado seguir la \textit{metodología ágil Scrum}, pero adaptada ya que para pdoer aplciar esta metodología es necesario contar con un equipo, en el cuál los diferentes miembros se reparten las roles entre los diferentes miembros que lo conforman. En este caso, lso roles recaeen todo sobre una única persona.
 
 \imagen{scrum}{Pasos de la metodología Scrum}
 
-En primer lugar se encuentra el \textit{Product Backlog}\cite{scrum} que se trata del alcance del proyecto, el cuál va variando dependiendo de los \textit{feedbacks} que se van obteniendo en cada \textit{sprint}.
+En primer lugar se encuentra el \textit{Product Backlog} \cite{scrum} que se trata del alcance del proyecto, el cuál va variando dependiendo de los \textit{feedbacks} que se van obteniendo en cada \textit{sprint}.
 
 Seguidamente, se encuentra el \textit{Sprint Backlog}, dónde se marcan los requerimientos que deben de alcanzar durante el \textit{sprint} que se va a iniciar, es decir, se trata de acortar las tareas de cada uno 
 de los \textit{sprints}.
@@ -55,7 +55,7 @@ Existen diferentes algoritmos:
     
     \imagen{r-cnn-regions}{Pasos de la detección en R-CNN}
 
-    \item \textbf{Fast R-CNN / Faster R-CNN:} Son dos algoritmos que surgen como mejora a R-CNN\cite{faster_rcnn}:
+    \item \textbf{Fast R-CNN / Faster R-CNN:} Son dos algoritmos que surgen como mejora a R-CNN \cite{faster_rcnn}:
     \begin{list}{\textbullet}{ %
         \addtolength{\itemsep}{-2mm} %
         \setlength{\itemindent}{2mm}}
@@ -63,12 +63,12 @@ Existen diferentes algoritmos:
         Esta red, posee también mejoras en el cálculo del IoU \textit{(Intersection Over Union)} y en la función de \textit{Loss}. Pero a pesar de esto, no tiene mejoras drásticas en la velocidad de entrenamiento y en la detección.
         \imagen{fast-RCNN}{Arquitectura red Fast-RCNN}
         \clearpage
-       \item \textbf{Faster R-CNN:} logra una mejora de velocidad al integrar el algoritmo de \textit{region proposal}\cite{region_proposal} sobre la propia CNN.
+       \item \textbf{Faster R-CNN:} logra una mejora de velocidad al integrar el algoritmo de \textit{region proposal} \cite{region_proposal} sobre la propia CNN.
        Además aperece el concepto de usar \textit{anchors} fijos, lo cuál consiste en usar tamaños pre calculados para la detección de obejtos de la red.
        \imagen{fasterRCNN}{Arquitectura red Faster-RCNN}
     \end{list}
 
-    \item \textbf{YOLO:} surge en 2016, su nombre viene formado por las siglas de \textit{You Only Look Once}\cite{yolov4}.
+    \item \textbf{YOLO:} surge en 2016, su nombre viene formado por las siglas de \textit{You Only Look Once} \cite{yolov4}.
     Esta red, como su propio nombre indica hace una única pasada a la red y detecta todos los obejtos para los que ha sido entrenada para clasificar, al realizar un único vistazo obtiene velocidades muy buenas en equipos que no son necesariamente potentes. Lo cuál permite, detecciones en tiempo real de cientos obejtos de forma simúltanea y su ejecución en dispositivos móviles.  
 \end{list}
 Debido a esto, el modelo escogido ha sido YOLO y en su versión 4, la cuál fue lanzada en Abril del año 2020.
@@ -76,21 +76,21 @@ Debido a esto, el modelo escogido ha sido YOLO y en su versión 4, la cuál fue 
 \imagen{resultsYOLOv4}{Comparativa resultados Dataset COCO}
 
 \section{Tensorflow}
-\textit{Tensorflow}\cite{tensorflow} es una biblioteca de código abierto, la cuál fue lanzada en el año 2015 por Google, la cuál es muy utilizada por muchas empresas resultado de gran utilidad por su versatilidad y nivel de desarrollo.
+\textit{Tensorflow} \cite{tensorflow} es una biblioteca de código abierto, la cuál fue lanzada en el año 2015 por Google, la cuál es muy utilizada por muchas empresas resultado de gran utilidad por su versatilidad y nivel de desarrollo.
 
-Esta herramienta se basa en el \textbf{Deep Learning,} a pesar de que el mercado habia herramientas similares como \textit{DistBelief}\cite{distBelief}, la cuál también fue construida por Google en el año 2011, como un sistema propietario de aprendizaje automático. Su uso creció rápidamente debido al uso de compaañias como \textit{Alphabet}. Pero los años pasaron y el avance de la tecnología 
+Esta herramienta se basa en el \textbf{Deep Learning,} a pesar de que el mercado habia herramientas similares como \textit{DistBelief} \cite{distBelief}, la cuál también fue construida por Google en el año 2011, como un sistema propietario de aprendizaje automático. Su uso creció rápidamente debido al uso de compaañias como \textit{Alphabet}. Pero los años pasaron y el avance de la tecnología 
 hizo que las necesidades aumentasen, haciendo que Google invirtiese tiempo para mejorarla, dando lugar a la actual \textbf{Tensorflow,} una herramienta con un conjunto de datos mayor y con mayor capacidad de almacenamiento y modificación.
 
 Se basa en un sistema de redes neuronales, lo cuál permite relacionar varios datos en la red de manera simultánea, es decir, imita lo que hace el cerebro humano.
 
 \section{TensorRT}
-\textit{TensorRT}\cite{tensorrt} es un \textit{framework} de aprendizaje automático, el cuál fue publicado por \textbf{Nvidia} para ejecutar inferencias que son interferencias de aprendizaje automático en su hardware. Este \textit{framework}, se encuentra altamente cualificado para ejecutarse en \textit{GPUs Nvidia}, siendo una de las formas más rápidas de ejecutar un modelo en este momento.
+\textit{TensorRT} \cite{tensorrt} es un \textit{framework} de aprendizaje automático, el cuál fue publicado por \textbf{Nvidia} para ejecutar inferencias que son interferencias de aprendizaje automático en su hardware. Este \textit{framework}, se encuentra altamente cualificado para ejecutarse en \textit{GPUs Nvidia}, siendo una de las formas más rápidas de ejecutar un modelo en este momento.
 
 \imagen{workflowTensorrt}{Workflow del framework \textit{Tensorrt}}
 
 \section{GitHub}
-\textit{GitHub}\cite{github} es una herramienta para el alojamiento del código desarrollado, por cualquier individuo en la web. Esta herramienta permite llevar un control de versiones, siendo esto muy interesante de cara al proyecto que se va a llevar a cabo.
-Otra característica destacable es que se puede integrar este sistema en \textit{Visual Studio Code}\cite{visualStudioCode} y que podemos enlazar de forma fácil a nuestro repositorio los códigos realizados con \textit{Google Colab}\cite{colab}.
+\textit{GitHub} \cite{github} es una herramienta para el alojamiento del código desarrollado, por cualquier individuo en la web. Esta herramienta permite llevar un control de versiones, siendo esto muy interesante de cara al proyecto que se va a llevar a cabo.
+Otra característica destacable es que se puede integrar este sistema en \textit{Visual Studio Code} \cite{visualStudioCode} y que podemos enlazar de forma fácil a nuestro repositorio los códigos realizados con \textit{Google Colab}\cite{colab}.
 
 \clearpage
 
@@ -103,7 +103,7 @@ Para llevar acabo esta evaluación, se ha contando con la herramienta \textit{So
 
 \subsection*{SonarCloud}
 
-SonarCloud\cite{sonar_cloud} es una herramienta de evaluación de código que es capaz, de calcular de forma automática, la duplicación de código, la corbertura del código, su fiabilidad, mantenibilidad, así como su seguridad y sus posibles puntos vulnerables.
+SonarCloud \cite{sonar_cloud} es una herramienta de evaluación de código que es capaz, de calcular de forma automática, la duplicación de código, la corbertura del código, su fiabilidad, mantenibilidad, así como su seguridad y sus posibles puntos vulnerables.
 Para llevar a cabo sus evaluaciones, SoanrCloud se fija en los estándares y reglas de cada lenguaje.
 
 \begin{list}{\textbullet}{ %
@@ -122,3 +122,42 @@ Para llevar a cabo sus evaluaciones, SoanrCloud se fija en los estándares y reg
     \end{enumerate}
     \item \textbf{Quality Gate:} son un conjunto de condiciones \textit{booleanas}, los cuáles siguen los estándares de vulnerabilidad y revisión de puntos de acceso. Esta métrica, nos indica si el código está listo pra pasar a producción.
 \end{list}
+
+\section{Fork}
+Fork\ cite{fork}, es un software diseñado para poder realizar de forma gráfica, todas las tareas que se realziarían mediante Git en la consola de comandos.
+Es una herramienta multiplataforma, que cuenta con soporte para Windows y MacOS; permite de forma sencilla mantenerse al tanto de repositorios, \textit{branches}, etiquetas, históricos, realizar \textit{commits}... Entre sus características más relevantes se encuentran:
+\begin{list}{\textbullet}{ %
+    \addtolength{\itemsep}{-2mm} %
+    \setlength{\itemindent}{2mm}}
+
+    \item Integración nativa con GitHub Enterprise, GitLab, BitBucket.
+    \item Edición y visualización de ramas, merging, histórico de commits.
+    \item Simplicidad a la hora de hacer un merge, rebase y push.
+    \item Creación, clonación y añadir dispositivos de forma remota.
+    \item Muestra la diferencia entre los ficheros con cambios respecto a lo ya cometido.
+    \item Soporte de GitFlow, Git Hooks y LFS
+\end{list}
+
+\clearpage
+
+\section{LabelImg}
+LabelImg \cite{labelImg} es una herramienta gratuita \textit{open source} que permite etiquetar gráficamente imágenes. Se encuentra escrita en Python y de cara a la interfaz gráfica usa QT.
+Esta herramienta permite el etiquetado en los froamto de texto \textbf{VOC, XML} o \textbf{YOLO.}
+Para llevar acabo el etiquetado de imágenes, lo primero ha realizar es la apertura de la carpeta contenedora de las imágenes (haciendo \textit{click} en \textbf{\textit{Open Dir}}), seguidamente presioanremos la tecla 'w', para comenzar con la seleción de la región a etiquetar, marcaremos el área de la etiqueta y seguidamente nos preguntará el nombre de la clase a la que pertenece dicha etiqueta, creando a su vez un fichero (\textit{classes.txt}) con todas las clases usadas.
+
+\imagen{labelImg}{Funcionamiento de LabelImg}
+
+\section{OIDv4 ToolKit}
+OIDv4 ToolKit \cite{OIDv4TK} es un conjunto de herramientas, que permite obtener datos de \textit{train} y de \textit{validation} del \textit{Open Images Dataset V4} 
+Para descargar imágenes se usa el siguiente comando:
+\begin{verbatim}
+    python main.py downloader --classes {nombre-clase} --type_csv {tipo-dato} --limit {número-imágenes}
+\end{verbatim}
+
+Dónde \textit{nombre-clase} representa la clase de la cuál se quieren descargar las imágenes(deber ser una clase reconocida por el dataset). 
+
+El campo \textit{tipo-dato} indica si las imágenes van a ser utilizadas para \textit{train} o para \textit{validation}.
+
+Por último, \textit{número-imágenes} indica la cantidad de imágenes que se va a descargar para dicha clase.
+
+Las imágenes descargadas con esta herramienta, ya vienen etiquetadas sólo quedaría convertilas al formato correcto del algoritmo que se vaya a usar.

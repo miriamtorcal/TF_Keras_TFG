@@ -1,7 +1,20 @@
 \capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
 
-Este apartado pretende recoger los aspectos más interesantes del desarrollo del proyecto, comentados por los autores del mismo.
-Debe incluir desde la exposición del ciclo de vida utilizado, hasta los detalles de mayor relevancia de las fases de análisis, diseño e implementación.
-Se busca que no sea una mera operación de copiar y pegar diagramas y extractos del código fuente, sino que realmente se justifiquen los caminos de solución que se han tomado, especialmente aquellos que no sean triviales.
-Puede ser el lugar más adecuado para documentar los aspectos más interesantes del diseño y de la implementación, con un mayor hincapié en aspectos tales como el tipo de arquitectura elegido, los índices de las tablas de la base de datos, normalización y desnormalización, distribución en ficheros3, reglas de negocio dentro de las bases de datos (EDVHV GH GDWRV DFWLYDV), aspectos de desarrollo relacionados con el WWW...
-Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
+En esta sección van a ser detallados los aspectos más relevantes que han tenido lugar a lo largo del desarrollo del proyecto. Al tratarse de un desarrolo \textit{software}, y a lo largo de este se han encontrado diferentes retos e inconvenientes. A su vez, se han aplicado buenas prácticas con el objetivo de obtener un resultado de calidad.
+
+\section{Investigación}
+El eje principal que posee el proyecto es el \textit{Object Detection}, el cuál a pesar de ser conocido, nunca se había trabajado con él, se puede decir que su conociemnto era puramente teórico. En la misma línea, se desconcoia completamente el funcionamiento de la \textit{Jetson Nano}, la cuál a trabajar de forma intenra con \textit{Ubuntu} ha supuesto
+una gran ayuda y beneficio al ser un sistema operativo previamente conocido.
+Por todo esto, ha supuesto un doble esfuerzo, especialmente por el primero de ellos, ya que se ha requerido una formación previa par poder conocer el correcto funcionamiento a la hora de entrenar un modelo de detección, así como averiguar cuál era la mejor opción de cara al proyecto.
+
+\clearpage
+\section{Metodología \textit{Scrum}}
+Tal y coo se comento en el punto \ref{scrum}, el proyecto se ha reliazado siguiendo una metodología ágil, lo cuál nos permite trabajar con \textit{sprints}, de tal manera, que el trabajo a relaizar en cada uno de ellos, se encuentre documentado desde el inicio, para así poder con una mayor eficiencia, pudiendo priorizar las tareas en función de las existentes y contando con diferentes versiones según a la vez que se va siguiendo el desarrollo del proyecto.
+
+Los conocimeientos que se poseían de \textit{Scrum} eran más bien teóricos, pero si que se había tenido la oportunidad de trabajar con ella, durante la realización de las prácticas en empresa.
+
+Una de las principales dificultades encontradas, ha sido la estimación del tiempo que va a ser necesario para pdoer llevarlo a cabo, todo ello apartir de un nombre y descripción, lo cuál ha concluido con resultados no muy exactos, ya que se en algunos casos la estiamción se ha realizado por debajo y en otros por arriba. Si a esto se le suma que ciertas tareas han llevado más tiempo del debido a problemas versiones y de compatibilidades entre sistemas, hay que suamrle que al contar con un determiando número de asiganturas
+más la realización de manera paralela de las prácticas, ha conllevado que tareas que de normal llevan pcoo tiempo, han llevado más de lo planeado.
+
+\section{Creación del dataset de entrenamiento y entremiento del modelo de detección}
+A lo largo del Grado, no se ha visto nada relacionado con la \textbf{Inteligencia Artificial}, siendo esto una desventaja a la hora de crear el dataset del modelo y etiquetarlo con las características corrspondientes al algoritmo de detección escogido.
