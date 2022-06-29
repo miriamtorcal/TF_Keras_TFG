@@ -1,5 +1,3 @@
-from operator import index
-from turtle import width
 from absl import app, flags
 from absl.flags import FLAGS
 import cv2
@@ -11,6 +9,7 @@ import warnings
 warnings.simplefilter(action='ignore')   
 
 flags.DEFINE_string('positions', './original_data/positions', 'path to input original positions')
+flags.DEFINE_string('name_txt_export', 'head.txt', 'name of the txt with all positions')
 
 def main(_argv):
     posPath = FLAGS.positions
@@ -29,8 +28,10 @@ def main(_argv):
     for file in content:
         if os.path.isfile(os.path.join(posPath, file)) and file.endswith(".txt"):
             posDf = pd.read_table(posPath + file, sep=" ", names=headers)
-            file = file.replace('.txt', '.jpg')
-            posDf['file'] = posPath + file
+            if posDf.empty:
+                continue
+            file = file.replace('.txt', '.png')
+            posDf['file'] = posPath + file 
             files.append(posPath + file)
             dataPos = pd.concat([dataPos, posDf])
 
@@ -59,7 +60,6 @@ def main(_argv):
 
     dataPos = dataPos[['file','x','y','w','h','class']]
 
-
     groups = dataPos.groupby(dataPos.file, group_keys=False)
     for g in range(len(groups)):
         newdf = groups.get_group(files[g])
@@ -76,13 +76,13 @@ def main(_argv):
         strLine = ""
         for _ in range(len(listDF)):
             strDF = ",".join([str(_) for _ in listDF[_]])
-            strDF = strDF.replace('.jpg,', '.jpg ')
+            strDF = strDF.replace('.png,', '.png ')
             if (_ != len(listDF) - 1):
                 strDF = strDF + ' '
             strLine += strDF
         strPos.append(strLine)
 
-    with open('./data/dataset/license_plate.txt', 'w') as f:
+    with open('./data/dataset/' + FLAGS.name_txt_export, 'w') as f:
         for w in range(len(strPos)):
             f.write(files[w] + ' ' + strPos[w])
             f.write('\n')
