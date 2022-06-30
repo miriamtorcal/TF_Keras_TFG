@@ -1,6 +1,3 @@
-from ast import For
-from typing import Any
-import numpy as np
 from core.config import cfg
 from core.utils import read_class_names
 import csv
@@ -50,8 +47,12 @@ def count_objects_img(data: list, by_class: bool = True,  allowed_classes: list 
     return counts
 
 
-def generate_csv(info: list):
-    with open('resultInfoImg.csv', 'w', newline='') as csvfile:
+def generate_csv(info: list, name_csv: str):
+    name_csv = name_csv.replace('.mp4', '.csv')
+    name_csv = name_csv.replace('.png', '.csv')
+    name_csv = name_csv.replace('.jpg', '.csv')
+
+    with open(name_csv, 'w', newline='') as csvfile:
         fieldNames = ['Time', 'NumberObject', 'TypeObject', 'Positions']
         writer = csv.DictWriter(csvfile, fieldnames = fieldNames)
         writer.writeheader()

@@ -134,7 +134,7 @@ def main(_argv):
                 for k, v in registroPos.items():
                     if key == k:
                         results.append([datetime.now(), key, value, v[:]])
-            generate_csv(results)
+            generate_csv(results, FLAGS.video)
         else:
             image, registroPos = utils.draw_bbox_info(
                 frame, pred_bbox, allowed_classes=FLAGS.allowed_classes)

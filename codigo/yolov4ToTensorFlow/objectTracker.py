@@ -1,6 +1,5 @@
+from datetime import datetime
 import os
-# comment out below line to enable tensorflow logging outputs
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import time
 import tensorflow as tf
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
@@ -23,6 +22,8 @@ from deep_sort import preprocessing, nn_matching
 from deep_sort.detection import Detection
 from deep_sort.tracker import Tracker
 from tools import generate_detections as gdet
+from core.functions import *
+
 flags.DEFINE_string('framework', 'tf', '(tf, tflite, trt')
 flags.DEFINE_string('weights', './checkpoints/custom-416',
                     'path to weights file')
@@ -59,6 +60,7 @@ def main(_argv):
     STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
     input_size = FLAGS.size
     video_path = FLAGS.video
+    results = []
 
     # load tflite model if flag is set
     if FLAGS.framework == 'tflite':
@@ -176,7 +178,17 @@ def main(_argv):
         count = len(names)
         if FLAGS.count:
             cv2.putText(frame, "Objects being tracked: {}".format(count), (5, 35), cv2.FONT_HERSHEY_COMPLEX_SMALL, 2, (0, 255, 0), 2)
-            print("Objects being tracked: {}".format(count))
+            # count objects found
+            counted_classes = count_objects(
+                pred_bbox, by_class=True, allowed_classes=FLAGS.allowed_classes)
+            image, registro_pos = utils.draw_bbox_info(
+                frame, pred_bbox, allowed_classes=FLAGS.allowed_classes)
+            for key, value in counted_classes.items():
+                # print("Number of {}s: {}".format(key, value))
+                for k, v in registro_pos.items():
+                    if key == k:
+                        results.append([datetime.now(), key, value, v[:]])
+            generate_csv(results, FLAGS.video)
         # delete detections that are not in allowed_classes
         bboxes = np.delete(bboxes, deleted_indx, axis=0)
         scores = np.delete(scores, deleted_indx, axis=0)

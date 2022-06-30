@@ -103,7 +103,6 @@ def main(_argv):
             predict_result_path = os.path.join(predicted_dir_path, str(num) + '.txt')
             # Predict Process
             image_size = image.shape[:2]
-            # image_data = utils.image_preprocess(np.copy(image), [INPUT_SIZE, INPUT_SIZE])
             image_data = cv2.resize(np.copy(image), (INPUT_SIZE, INPUT_SIZE))
             image_data = image_data / 255.
             image_data = image_data[np.newaxis, ...].astype(np.float32)
@@ -133,10 +132,6 @@ def main(_argv):
                 score_threshold=FLAGS.score
             )
             boxes, scores, classes, valid_detections = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
-            # cv2.rectangle(image, tuple(pred_bbox[:2]), tuple(pred_bbox[2:]), (0, 0, 255), 2)
-            # if cfg.TEST.DECTECTED_IMAGE_PATH is not None:
-            #     image_result = utils.draw_bbox(np.copy(image), [boxes, scores, classes, valid_detections])
-            #     cv2.imwrite(cfg.TEST.DECTECTED_IMAGE_PATH + image_name, image_result)
             
             gt = pd.read_csv(ground_truth_path, sep=' ', names=['file', 'x1', 'y1', 'x2', 'y2'])
             gt = gt.drop(['file'], axis=1)

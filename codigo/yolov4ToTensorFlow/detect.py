@@ -89,7 +89,7 @@ def main(_argv):
         for k, v in registroPos.items():
             if key == k:
                 results.append([datetime.now(), key, value, v[:]])
-    generate_csv(results)
+    generate_csv(results, FLAGS.image)
 
     # image = utils.draw_bbox(image_data*255, pred_bbox)
     image = Image.fromarray(image.astype(np.uint8))
