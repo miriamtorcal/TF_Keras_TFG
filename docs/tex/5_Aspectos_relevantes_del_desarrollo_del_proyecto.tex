@@ -19,7 +19,7 @@ más la realización de manera paralela de las prácticas, ha conllevado que tar
 \section{Creación del dataset de entrenamiento y entremiento del modelo de detección}
 A lo largo del Grado, no se ha visto nada relacionado con la \textbf{Inteligencia Artificial}, siendo esto una desventaja a la hora de crear el dataset del modelo y etiquetarlo con las características correspondientes al algoritmo de detección escogido. Lo que ha conllevado una inversión de horas, de cara a la búsqueda de infromación, así como de las diferentes formas para entrenar el modelo, y con ello la más asequible de cara a requisitos técnicos, debido a que llevar a cabo un entrenamiento de estas características, 
 requiere de una gráfica potente, así como un equipo los suficientemente potente para llevarlo a cabo, ya que el modelo necesita estar un mínimo de horas entrenando para que el resultado sea medianamente decente y ser funcional.
-Debido a esto, las labores de entremiento, se han realizado sobre \textbf{Google Colab}, visto en el punto \ref{colab}.
+Debido a esto, las labores de entremiento, se han realizado sobre \textbf{Google Colab}, visto en el Apartado \ref{colab}.
 
 \section{Pruebas realizadas}
 A la hora de probar la funcionalidad de modelo que se ha entrenado, se han realizado diferentes pruebas de detección tras su conversión a un modelo \textit{.pb}, el cuál se basa en el grafo de inferencia que calcula \textit{Tensorflow}.
@@ -32,7 +32,7 @@ Con rwsultados como los que se ven a continuación:
 \imagen{head_detection}{Detección a través del modelo creado para detectar cabezas}
 
 Tras esto, se realizaron scripts para medir el \textit{accuracy} y para preprocesar las posiciones originales, es decir, castearlas y devolverlas en un único fichero que contenga la ruta de la imagen, el parámetro \textit{x1}, el parámetro \textit{y1}, el parámetro \textit{x2}, el parámetro \textit{y2} y por último el id de la clase que se ha detectado en dicha posición.
-Además, por cada imagen que detecta la devuelve representando la posición original, la posciión representada por el modelo y el \textit{IoU} entre ambas posiciones.
+Además, por cada imagen que detecta la devuelve representando la posición original, la posición representada por el modelo y el \textit{IoU} entre ambas posiciones.
 
 \clearpage
 
@@ -45,4 +45,18 @@ Resultados de la evaluación de la calidad del código con un IoU de 0,70:
 
 % \section{Jetson Nano}
 
-% \section{Resultados evaluación de código} 
+\section{Resultados evaluación de código} 
+Durante el desarrollo se integró una herramienta que permitiesen medir la calidad del código, con el objetivo de controlar la calidad del desarrollo, respecto a los estándares definidos (\textit{ver Apartado }\ref{calidad_codigo}).
+En este aprtado veremos los resultados que se han ido obteniendo, los cuáles se ejecutaban automáticamente los análisis al realizarse un \textit{commit}.
+
+\imagen{code_quality_results}{Resultados de la evaluación de la calidad del código}
+
+\clearpage
+
+A través, del dashboard que posee \textit{SonarCloud} para el proyetco, podemos obtener más información sobre la calidad y vulnerabilidades que posee el código.
+
+\imagen{dashboard_sonar}{Resultados mostrados desde el \textit{Dashboard} de SonarCloud}
+
+\imagen{evaluacion_sonar}{Gráfico que muestra la evolución del código}
+
+Gracias al uso de esta herramienta, se ha conseguido reducir los \textit{code smells} hasta el punto de poseer una calificación de A.
