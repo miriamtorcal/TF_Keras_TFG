@@ -75,8 +75,8 @@ def load_weights(model, weights_file, model_name='yolov4', is_tiny=False):
 def read_class_names(class_file_name):
     names = {}
     with open(class_file_name, 'r') as data:
-        for ID, name in enumerate(data):
-            names[ID] = name.strip('\n')
+        for id, name in enumerate(data):
+            names[id] = name.strip('\n')
     return names
 
 def load_config(FLAGS):

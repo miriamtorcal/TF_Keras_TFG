@@ -3,47 +3,47 @@ from core.utils import read_class_names
 import csv
 
 def count_objects(data: list, by_class: bool = True,  allowed_classes: list = list(read_class_names(cfg.YOLO.CLASSES).values())) -> dict:
-    boxes, scores, classes, numObjects = data
+    boxes, scores, classes, num_objects = data
     counts = dict()
 
     # byClass = True => count objects per class
     if by_class:
-        classNames = read_class_names(cfg.YOLO.CLASSES)
-        for i in range(numObjects):
-            classIndex = int(classes[i])
-            className = classNames[classIndex]
-            if className in allowed_classes:
-                counts[className] = counts.get(className, 0) + 1
+        class_names = read_class_names(cfg.YOLO.CLASSES)
+        for i in range(num_objects):
+            class_index = int(classes[i])
+            class_name = class_names[class_index]
+            if class_name in allowed_classes:
+                counts[class_name] = counts.get(class_name, 0) + 1
             else:
                 continue
 
     # count all objects
     else:
-        counts['all objects'] = numObjects
+        counts['all objects'] = num_objects
     
     return counts
 
 
 def count_objects_img(data: list, by_class: bool = True,  allowed_classes: list = list(read_class_names(cfg.YOLO.CLASSES).values())) -> dict:
-    boxes, scores, classes, numObjects = data
+    boxes, scores, classes, num_objects = data
     counts = dict()
     classes = classes[0]
-    numObjects = numObjects[0]
+    num_objects = num_objects[0]
 
     # by_class = True => count objects per class
     if by_class:
-        classNames = read_class_names(cfg.YOLO.CLASSES)
+        class_names = read_class_names(cfg.YOLO.CLASSES)
         for i in range(numObjects):
-            classIndex = int(classes[i])
-            className = classNames[classIndex]
-            if className in allowed_classes:
-                counts[className] = counts.get(className, 0) + 1
+            class_index = int(classes[i])
+            class_name = class_names[class_index]
+            if class_name in allowed_classes:
+                counts[class_name] = counts.get(class_name, 0) + 1
             else:
                 continue
 
     # count all objects
     else:
-        counts['all objects'] = numObjects
+        counts['all objects'] = num_objects
     return counts
 
 
@@ -53,8 +53,8 @@ def generate_csv(info: list, name_csv: str):
     name_csv = name_csv.replace('.jpg', '.csv')
 
     with open(name_csv, 'w', newline='') as csvfile:
-        fieldNames = ['Time', 'NumberObject', 'TypeObject', 'Positions']
-        writer = csv.DictWriter(csvfile, fieldnames = fieldNames)
+        field_names = ['Time', 'NumberObject', 'TypeObject', 'Positions']
+        writer = csv.DictWriter(csvfile, fieldnames = field_names)
         writer.writeheader()
         for i in info:
             writer.writerow({
