@@ -127,16 +127,16 @@ def main(_argv):
             # count objects found
             counted_classes = count_objects(
                 pred_bbox, by_class=True, allowed_classes=FLAGS.allowed_classes)
-            image, registroPos = utils.draw_bbox_info(
+            image, registro_pos = utils.draw_bbox_info(
                 frame, pred_bbox, allowed_classes=FLAGS.allowed_classes)
             for key, value in counted_classes.items():
                 # print("Number of {}s: {}".format(key, value))
-                for k, v in registroPos.items():
+                for k, v in registro_pos.items():
                     if key == k:
                         results.append([datetime.now(), key, value, v[:]])
             generate_csv(results, FLAGS.video)
         else:
-            image, registroPos = utils.draw_bbox_info(
+            image, registro_pos = utils.draw_bbox_info(
                 frame, pred_bbox, allowed_classes=FLAGS.allowed_classes)
 
         curr_time = time.time()

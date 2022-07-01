@@ -91,7 +91,6 @@ def main(_argv):
                 results.append([datetime.now(), key, value, v[:]])
     generate_csv(results, FLAGS.image)
 
-    # image = utils.draw_bbox(image_data*255, pred_bbox)
     image = Image.fromarray(image.astype(np.uint8))
     image.show()
     image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)

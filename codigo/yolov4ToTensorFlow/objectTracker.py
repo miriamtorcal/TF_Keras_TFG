@@ -22,7 +22,7 @@ from deep_sort import preprocessing, nn_matching
 from deep_sort.detection import Detection
 from deep_sort.tracker import Tracker
 from tools import generate_detections as gdet
-from core.functions import *
+from core.functions import generate_csv, count_objects
 
 flags.DEFINE_string('framework', 'tf', '(tf, tflite, trt')
 flags.DEFINE_string('weights', './checkpoints/custom-416',
@@ -181,7 +181,7 @@ def main(_argv):
             # count objects found
             counted_classes = count_objects(
                 pred_bbox, by_class=True, allowed_classes=FLAGS.allowed_classes)
-            image, registro_pos = utils.draw_bbox_info(
+            registro_pos = utils.registro_pos_tracker(
                 frame, pred_bbox, allowed_classes=FLAGS.allowed_classes)
             for key, value in counted_classes.items():
                 # print("Number of {}s: {}".format(key, value))
