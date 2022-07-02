@@ -181,8 +181,7 @@ def main(_argv):
             # count objects found
             counted_classes = count_objects(
                 pred_bbox, by_class=True, allowed_classes=FLAGS.allowed_classes)
-            registro_pos = utils.registro_pos_tracker(
-                frame, pred_bbox, allowed_classes=FLAGS.allowed_classes)
+            registro_pos = utils.registro_pos_tracker(pred_bbox, allowed_classes=FLAGS.allowed_classes)
             for key, value in counted_classes.items():
                 # print("Number of {}s: {}".format(key, value))
                 for k, v in registro_pos.items():
