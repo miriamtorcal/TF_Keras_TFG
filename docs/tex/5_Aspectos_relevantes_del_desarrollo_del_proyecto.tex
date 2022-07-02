@@ -55,8 +55,22 @@ En este aprtado veremos los resultados que se han ido obteniendo, los cuáles se
 
 A través, del dashboard que posee \textit{SonarCloud} para el proyetco, podemos obtener más información sobre la calidad y vulnerabilidades que posee el código.
 
-\imagen{dashboard_sonar}{Resultados mostrados desde el \textit{Dashboard} de SonarCloud}
+\imagen{dashboard_sonar}{Resultados mostrados desde el \textit{Dashboard} de SonarCloud} \label{dashboard}
 
 \imagen{evaluacion_sonar}{Gráfico que muestra la evolución del código}
 
 Gracias al uso de esta herramienta, se ha conseguido reducir los \textit{code smells} hasta el punto de poseer una calificación de A.
+
+En la \textit{Figura} \ref{dashboard} se muestra el dashboard de la herramienta, dónde cada uno de los elementos representa:
+
+\begin{list}{\textbullet}{ %
+    \addtolength{\itemsep}{-2mm} %
+    \setlength{\itemindent}{2mm}}
+
+    \item \textit{Reliability} Representa la fiabilidad del código, en este aparatdo se encuentran los \textit{bugs} que posee el código.
+    \item \textit{Maintainability} Representa la mantenibilidad del código, es decir, el código es fácil de mantener y de modificar. En este apartado, se encuentran los \textit{code smells}, los cuáles son indicaciones de que el código, puede suponer un problema en el futuro, ya que a pesar de que posean esta indicación el código no deja de funcionar.
+    \item \textit{Security} Indica el nivel de seguridad que posee el código, a este nivel se encuentran las vulnerabilidades del código, las cuáles indican problemas de seguridad tanto a corto como a largo plazo y deben de ser solventados lo antes posible.
+    \item \textit{Security Review} Informan sobre las revisiones de seguridad, es decir, informan sobre posibles vulnerabilidades de seguridad, las cuáles deben de ser revisadas por un humano, para calificar si son o no posibles vulnerabilidades de seguridad.
+    \item \textit{Coverage} Indica la cobertura del código con respecto a test realizados, es decir, nos muestra el porcentaje de código que supera los tests.
+    \item \textit{Duplication Lines} Muestra el porcentaje de lineas que hay duplicadas a lo largo del código.
+\end{list}
