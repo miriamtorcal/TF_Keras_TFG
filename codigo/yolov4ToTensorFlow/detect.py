@@ -6,7 +6,7 @@ from absl import app, flags
 from absl.flags import FLAGS
 import core.utils as utils
 from core.yolov4 import filter_boxes
-from core.functions import *
+from core.functions import count_objects_img, generate_csv
 from core.config import cfg
 from tensorflow.python.saved_model import tag_constants
 from PIL import Image
@@ -39,10 +39,8 @@ def main(_argv):
     original_image = cv2.imread(image_path)
     original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
 
-    # image_data = utils.image_preprocess(np.copy(original_image), [input_size, input_size])
     image_data = cv2.resize(original_image, (input_size, input_size))
     image_data = image_data / 255.
-    # image_data = image_data[np.newaxis, ...].astype(np.float32)
 
     images_data = []
     for _ in range(1):
@@ -84,9 +82,9 @@ def main(_argv):
     pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
 
     counted_classes = count_objects_img(pred_bbox, by_class=True, allowed_classes=FLAGS.allowed_classes)
-    image, registroPos = utils.draw_bbox_img(original_image, pred_bbox, allowed_classes=FLAGS.allowed_classes)
+    image, registro_pos = utils.draw_bbox_img(original_image, pred_bbox, allowed_classes=FLAGS.allowed_classes)
     for key, value in counted_classes.items():
-        for k, v in registroPos.items():
+        for k, v in registro_pos.items():
             if key == k:
                 results.append([datetime.now(), key, value, v[:]])
     generate_csv(results, FLAGS.image)

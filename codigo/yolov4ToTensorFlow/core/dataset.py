@@ -82,7 +82,6 @@ class Dataset(object):
 
     def __next__(self):
         with tf.device("/cpu:0"):
-            # self.train_input_size = random.choice(self.train_input_sizes)
             self.train_input_size = cfg.TRAIN.INPUT_SIZE
             self.train_output_sizes = self.train_input_size // self.strides
 

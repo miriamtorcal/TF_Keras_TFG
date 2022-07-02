@@ -155,11 +155,7 @@ def draw_bbox_info(image, bboxes, show_label=True, allowed_classes = list(read_c
         font_scale = 0.5
         score = out_scores[i]
         class_ind = int(out_classes[i])
-        # bbox_color = colors[class_ind]
-        class_name = classes[class_ind]
-        # bbox_thick = int(0.6 * (image_h + image_w) / 600)
-        # c1, c2 = (coor[0], coor[1]), (coor[2], coor[3])
-        # cv2.rectangle(image, c1, c2, bbox_color, bbox_thick) 
+        class_name = classes[class_ind] 
         registro_pos_info.setdefault(class_name, [])
 
         if class_name not in allowed_classes:
@@ -185,7 +181,6 @@ def draw_bbox_info(image, bboxes, show_label=True, allowed_classes = list(read_c
 def registro_pos_tracker(image, bboxes, allowed_classes = list(read_class_names(cfg.YOLO.CLASSES).values())):
     classes=read_class_names(cfg.YOLO.CLASSES)
     num_classes = len(classes)
-    image_h, image_w, _ = image.shape
     hsv_tuples = [(1.0 * x / num_classes, 1., 1.) for x in range(num_classes)]
     colors = list(map(lambda x: colorsys.hsv_to_rgb(*x), hsv_tuples))
     colors = list(map(lambda x: (int(x[0] * 255), int(x[1] * 255), int(x[2] * 255)), colors))
@@ -234,11 +229,8 @@ def draw_bbox_img(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), all
         coor[1] = int(coor[1] * image_w)
         coor[3] = int(coor[3] * image_w)
 
-
         font_scale = 0.5
         score = out_scores[0][i]
-        # class_ind = int(out_classes[0][i])
-        # class_name = classes[class_ind]
 
         registro_pos_img.setdefault(class_name, [])
 

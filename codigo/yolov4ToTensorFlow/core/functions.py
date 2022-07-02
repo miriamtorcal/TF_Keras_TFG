@@ -33,7 +33,7 @@ def count_objects_img(data: list, by_class: bool = True,  allowed_classes: list 
     # by_class = True => count objects per class
     if by_class:
         class_names = read_class_names(cfg.YOLO.CLASSES)
-        for i in range(numObjects):
+        for i in range(num_objects):
             class_index = int(classes[i])
             class_name = class_names[class_index]
             if class_name in allowed_classes:
