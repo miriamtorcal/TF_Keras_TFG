@@ -18,6 +18,18 @@ Conclusiones a las que se llega tras el posterior desarrollo del proyecto.
     \item La creación de un modelo de detección, así como su respectivo dataset de entremiento ha permitido aumentar el conocmiento que se tenia sobre la detección de objetos, así cmo trabajar con herramientas que al inicio del proyecto eran totalmente desconcoidas. 
 \end{itemize}
 
-Como \textbf{conclusión} cabe destacar, la oportunidad tanto de aprendizaje como la de poder trabajar en un proyecto nuevo ha supuesto. Desde el inicio ha sido necesario dominar ciertas tecnologías vistas (y nuevas) a lo largo de todo el Grado, incluso a la hora de escribir la documentación.
+Como \textbf{conclusión} cabe destacar, la oportunidad tanto de aprendizaje como la de trabajar en un proyecto nuevo ha supuesto. Desde el inicio ha sido necesario dominar ciertas tecnologías vistas (y nuevas) a lo largo de todo el Grado, incluso a la hora de escribir la documentación.
 
 \section{Líneas de trabajo futuras}
+Dadas las características del proyecto, existen diferentes líneas de mejora y trabajo futuras.
+
+\begin{list}{\textbullet}{ %
+    \addtolength{\itemsep}{-2mm} %
+    \setlength{\itemindent}{2mm}}
+    \item Crear scripts de entrenamiento, conversión y adaptación de los scripts de detección a YOLOv5.
+    \item Permitir la importación y conversión a otros algoritmos diferentes de YOLO y sus versiones.
+    \item Crear funciones que permitan apoyar la detección de los objetos, y en función de la clase o clases que se vayan a detectar se realize unas u otros, por ejemplo, en el detector de matrículas que permita leerlas y exportalas a un fichero, en modelos que permitan detectar vehículos contar vehículos en ambas direcciones, con el objetivo de contar los que entran y salen de una carretera y exportarlos a un fichero \textit{csv}.
+    \item Realizar un proceso de refactorización código, ya que si el proyecto crece y por ende, aumentan sus funcionalidades.
+    \item Tras la adaptaciones a otros algoritmos de detección, adaptarlo en función de cada algortimo, con el objetivo de tratarlo como una librería y subirlo a PIP \cite{pip}.
+    \item Mostrar los resultados de la detcción de una forma más visual, es decir, mostrar un \textit{dashboard} que muestre las diferentes clases que se van a detectar y por cada una de ellas el número de detecciones que ha tenido lugar, así como el intervarlo de tiempo en el que se han producido dichas detecciones.
+\end{list}
