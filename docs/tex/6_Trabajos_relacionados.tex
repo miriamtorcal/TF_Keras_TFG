@@ -1,3 +1,24 @@
 \capitulo{6}{Trabajos relacionados}
 
-Este apartado sería parecido a un estado del arte de una tesis o tesina. En un trabajo final grado no parece obligada su presencia, aunque se puede dejar a juicio del tutor el incluir un pequeño resumen comentado de los trabajos y proyectos ya realizados en el campo del proyecto en curso. 
+En esta sección se van a comentar los trabajos relacionados.
+
+A lo largo del proceso previo de investigación, se encontraron diferentes proyectos relacionados con el Object Detection y algunos tambien con Object Detection en dispositivos de Edge Computing.
+
+\begin{list}{\textbullet}{ %
+    \addtolength{\itemsep}{-2mm} %
+    \setlength{\itemindent}{2mm}}
+    \item \textbf{Deep Learning Approaches for Detecting Objects from Images: A Review} \cite{Pathak2018}
+    
+    En este proyecto se puede ver el procedimeinto de creación de un modelo de detección a través de una red convuluvional, del algortitmo Fast-RCNN y del algoritmo YOLO.
+    Así como una comprativa de los resultados obtenidos desde el dataset COCO y desde el dataset de VOC.
+    \item \textbf{Deep Learning With Edge Computing: A Review} \cite{Chen2019}
+    
+    En este trabajo se muestra las ventajas de optar por una herramienta de Edge Computing, sobre no hacerlo, asi como la importancia de la \textit{latecnia}, de la \textit{escalabilidad} y de la \textit{privacidad}, ya que estás características hacen del Edge Computing una opción viable de cara al control de estos tres puntos.
+
+    \item \textbf{Making accurate object detection at the edge: review and new approach} \cite{Huang2021}
+    
+    A lo largo de este trabajo se muestra las diferentes medidas de \textit{accuracy} de diferentes modelos de detección a través de su comparativa de tiempo en una Raspberry Pi 3B+ y en una 4B+. A su vez, a lo largo del trabajo se diseña una nueva red neuronal la CNN-RIS, la cuál posee la arquitectura, que se muestra a continuación y usa el algoritmo de entrenamiento que se muestra seguidamente, con la cuál consigue mejorar los resultados obtenidos de los otros modelos tanto en velocidad como en \textit{accuracy}(concretamente en la Raspberry PI 4B+)
+    \imagen{arq_cnn-ris}{Arquitectura Red CNN-RIS} 
+    \imagen{arq_cnn-ris_table}{Contenido Arquitectura Red CNN-RIS} 
+    \imagen{alg_training_cnn-ris}{Algoritmo de entrenamiento Red CNN-RIS}
+\end{list}
