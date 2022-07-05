@@ -2,8 +2,18 @@
 
 \section{Introducción}
 En este apéndice van a describirse de forma detallada la documentación técnica de programación. Se describirá la estructura de directorios que posee, la instalación y ejecución, así como las pruebas que se han llevado a cabo. 
-
 \section{Estructura de directorios}
+\begin{itemize}
+    \tightlist
+    \item \texttt{/}: es la raíz del proyecto dónde se encuentran tanto el README, la licencia y las carpetas contenedoras del código, documentación y las pruebas previas.
+    \item \texttt{/codigo}: es la carpeta que contiene todo el código funcional del proyecto.
+    \item \texttt{/codigo/checkpoints}: es la carpeta contenedora de los modelos de detección en formato Tensorflow, Tensorflow Lite y Tensor-RT.
+    \item \texttt{/codigo/checkpoints/custom-416}: carpeta que contiene el modelo de detección de las matrículas, que posee el tamaño 416.
+    \item \texttt{/codigo/checkpoints/custom-416/saved\_model.pb}: modelo en formato Tensorflow(.pb) de las matrículas.
+    \item \texttt{/codigo/checkpoints/heads-416}: carpeta con el modelo de las cabezas en formato Tensorflow.
+    \item \texttt{/codigo/checkpoints/heads-416/keras\_metadata.pb}: punto de control del modelo de conversión a .pb.
+    \item \texttt{/codigo/checkpoints/heads-416/saved\_model.pb}: modelo detector de cabezas en formato Tensorflow(.pb)    
+\end{itemize}
 
 \section{Manual del programador}
 
