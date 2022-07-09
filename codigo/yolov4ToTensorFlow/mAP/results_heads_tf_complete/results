@@ -1,3 +1,3 @@
 
 # Number of predicted objects per class
-head: 2116 (tp:888, fp:1228)
+head: 2074 (tp:1614, fp:460)

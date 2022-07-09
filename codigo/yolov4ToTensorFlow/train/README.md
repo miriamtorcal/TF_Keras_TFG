@@ -14,3 +14,5 @@ La carpeta yolov4 y su contenido deberá de encontrarse en Drive, ya que su cont
 train.ipynb es el fichero a utilizar para el entrenamiento del modelo 
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mtc1003/TF_Keras_TFG/blob/main/codigo/yolov4ToTensorFlow/train/train.ipynb)
+
+posicionCsvToTxt.py script que permite obtener las posiciones de un CSV y pasarlo a un .txt único 

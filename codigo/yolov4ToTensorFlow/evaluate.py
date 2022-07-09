@@ -169,11 +169,10 @@ def main(_argv):
                     cv2.putText(image, "IoU: {:.4f}".format(iou),  (c1[0], np.float32(c1[1] - 2)), cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (238, 255, 3), 2, lineType=cv2.LINE_AA)
             print(num, num_lines)
-
-            data_predict_result_path = os.path.join(data_path, 'data' + str(num) + '.txt')
-            with open(data_predict_result_path, 'w') as d:
-                textIoU = f"IoU {iou}"
-                d.write(textIoU + ' ' + bbox_mess)
+            # data_predict_result_path = os.path.join(data_path, 'data' + str(num) + '.txt')
+            # with open(data_predict_result_path, 'w') as d:
+            #     textIoU = f"IoU {iou}"
+            #     d.write(textIoU + ' ' + bbox_mess)
 
             image = Image.fromarray(image.astype(np.uint8))
             # image.show()
