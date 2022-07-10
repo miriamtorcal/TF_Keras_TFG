@@ -178,7 +178,7 @@ def draw_bbox_info(image, bboxes, show_label=True, allowed_classes = list(read_c
                             font_scale, (0, 0, 0), bbox_thick // 2, lineType=cv2.LINE_AA)
     return image, registro_pos_info
 
-def registro_pos_tracker(image, bboxes, allowed_classes = list(read_class_names(cfg.YOLO.CLASSES).values())):
+def registro_pos_tracker(bboxes, allowed_classes = list(read_class_names(cfg.YOLO.CLASSES).values())):
     classes=read_class_names(cfg.YOLO.CLASSES)
     num_classes = len(classes)
     hsv_tuples = [(1.0 * x / num_classes, 1., 1.) for x in range(num_classes)]

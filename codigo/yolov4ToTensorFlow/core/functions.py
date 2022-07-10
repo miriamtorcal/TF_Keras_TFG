@@ -51,6 +51,7 @@ def generate_csv(info: list, name_csv: str):
     name_csv = name_csv.replace('.mp4', '.csv')
     name_csv = name_csv.replace('.png', '.csv')
     name_csv = name_csv.replace('.jpg', '.csv')
+    name_csv = name_csv.replace('.jpeg', '.csv')
 
     with open(name_csv, 'w', newline='') as csvfile:
         field_names = ['Time', 'NumberObject', 'TypeObject', 'Positions']
