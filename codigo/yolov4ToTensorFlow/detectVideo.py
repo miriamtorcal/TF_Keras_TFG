@@ -6,7 +6,7 @@ import cv2
 from PIL import Image
 from tensorflow.python.saved_model import tag_constants
 from core.functions import generate_csv, count_objects
-from core.yolov4 import filter_boxes
+from core.yolov4 import filter_boxes, decode
 from core.config import cfg
 import core.utils as utils
 from absl.flags import FLAGS
@@ -21,6 +21,7 @@ flags.DEFINE_string('framework', 'tf', '(tf, tflite, trt')
 flags.DEFINE_string('weights', './checkpoints/yolov4-416', 'path to weights file')
 flags.DEFINE_integer('size', 416, 'resize images to')
 flags.DEFINE_boolean('tiny', False, 'yolo or yolo-tiny')
+flags.DEFINE_boolean('quality', False, 'improve quality for tflite')
 flags.DEFINE_string('model', 'yolov4', 'yolov3 or yolov4')
 flags.DEFINE_string('video', './data/videos/road.mp4', 'path to input video')
 flags.DEFINE_float('iou', 0.45, 'iou threshold')
@@ -95,6 +96,24 @@ def main(_argv):
             interpreter.invoke()
             pred = [interpreter.get_tensor(
                 output_details[i]['index']) for i in range(len(output_details))]
+
+            if FLAGS.quality == True:
+                bbox_tensors = []
+                prob_tensors = []
+
+                for i, fm in enumerate(pred):
+                    if i == 0:
+                        output_tensors = decode(pred[2], input_size // 8, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                    elif i == 1:
+                        output_tensors = decode(pred[0], input_size // 16, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                    else:
+                        output_tensors = decode(pred[1], input_size // 32, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                    bbox_tensors.append(output_tensors[0])
+                    prob_tensors.append(output_tensors[1])
+                pred_bbox = tf.concat(bbox_tensors, axis=1)
+                pred_prob = tf.concat(prob_tensors, axis=1)
+                pred = (pred_bbox, pred_prob)
+
             if FLAGS.model == 'yolov3' and FLAGS.tiny == True:
                 boxes, pred_conf = filter_boxes(pred[1], pred[0], score_threshold=0.25,
                                                 input_shape=tf.constant([input_size, input_size]))
