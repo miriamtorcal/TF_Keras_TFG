@@ -123,7 +123,6 @@ def main(_argv):
             if FLAGS.quality == True:
                 bbox_tensors = []
                 prob_tensors = []
-
                 for i, fm in enumerate(pred):
                     if i == 0:
                         output_tensors = decode(pred[2], input_size // 8, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
@@ -136,7 +135,6 @@ def main(_argv):
                 pred_bbox = tf.concat(bbox_tensors, axis=1)
                 pred_prob = tf.concat(prob_tensors, axis=1)
                 pred = (pred_bbox, pred_prob)
-
 
             # run detections using yolov3 if flag is set
             if FLAGS.model == 'yolov3' and FLAGS.tiny == True:
