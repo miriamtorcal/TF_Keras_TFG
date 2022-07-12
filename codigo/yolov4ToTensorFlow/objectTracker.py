@@ -119,7 +119,7 @@ def main(_argv):
             interpreter.invoke()
             pred = [interpreter.get_tensor(output_details[i]['index']) for i in range(len(output_details))]
 
-
+            # improve tflite model quality
             if FLAGS.quality == True:
                 bbox_tensors = []
                 prob_tensors = []

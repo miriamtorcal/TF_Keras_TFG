@@ -58,7 +58,7 @@ def main(_argv):
         interpreter.set_tensor(input_details[0]['index'], images_data)
         interpreter.invoke()
         pred = [interpreter.get_tensor(output_details[i]['index']) for i in range(len(output_details))]
-
+        # tflite model settings
         if FLAGS.quality == True:
             bbox_tensors = []
             prob_tensors = []
