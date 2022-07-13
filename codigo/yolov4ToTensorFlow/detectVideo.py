@@ -101,7 +101,7 @@ def main(_argv):
                 bbox_tensors = []
                 prob_tensors = []
 
-                for i, fm in enumerate(pred):
+                for i, _ in enumerate(pred):
                     if i == 0:
                         output_tensors = decode(pred[2], input_size // 8, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
                     elif i == 1:
