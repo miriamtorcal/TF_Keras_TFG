@@ -243,7 +243,7 @@ def get_video_detections():
         height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
         fps = int(vid.get(cv2.CAP_PROP_FPS))
         codec = cv2.VideoWriter_fourcc(*'XVID')
-        out = cv2.VideoWriter(output_path, codec, fps, (width, height))
+        out = cv2.VideoWriter(output_path + video_name[0:len(video_name)-4] + '.avi', codec, fps, (width, height))
 
         if framework == 'tflite':
             interpreter.allocate_tensors()
@@ -262,7 +262,6 @@ def get_video_detections():
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 image = Image.fromarray(frame)
             else:
-                print(f"Frame Id: {frame_id} \t cv2 frame: {vid.get(cv2.CAP_PROP_FRAME_COUNT)}")
                 if frame_id == vid.get(cv2.CAP_PROP_FRAME_COUNT):
                     print("Video processing complete")
                     break
@@ -311,14 +310,20 @@ def get_video_detections():
 
             t1 = time.time()
             boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
-            boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
-            scores=tf.reshape(
-                pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
-            max_output_size_per_class=50,
-            max_total_size=50,
-            iou_threshold=iou,
-            score_threshold=score
+                boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
+                scores=tf.reshape(
+                    pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
+                max_output_size_per_class=50,
+                max_total_size=50,
+                iou_threshold=iou,
+                score_threshold=score
             )
+            
+            original_h, original_w, _ = frame.shape
+            bboxes = utils.format_boxes(boxes.numpy()[0], original_h, original_w)
+            pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0],
+                        valid_detections.numpy()[0]]
+
             t2 = time.time()
             class_names = utils.read_class_names(cfg.YOLO.CLASSES)
             print('time: {}'.format(t2 - t1))
@@ -333,13 +338,13 @@ def get_video_detections():
                 "detections": responses
             })
 
-            original_h, original_w, _ = frame.shape
-            bboxes = utils.format_boxes(boxes.numpy()[0], original_h, original_w)
-            pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0],
-                        valid_detections.numpy()[0]]
+            class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+
+            allowed_classes = allow_classes
+
             results = []
-            counted_classes = count_objects(pred_bbox, by_class=True, allowed_classes=allow_classes)
-            image, registro_pos = utils.draw_bbox_info(frame, pred_bbox, allowed_classes=allow_classes)
+            counted_classes = count_objects(pred_bbox, by_class=True, allowed_classes=allowed_classes)
+            image, registro_pos = utils.draw_bbox_info(frame, pred_bbox, allowed_classes=allowed_classes)
             for key, value in counted_classes.items():
                 for k, v in registro_pos.items():
                     if key == k:
@@ -364,10 +369,7 @@ def get_video_detections():
             out.write(result)
 
             frame_id += 1
-        # # Remove temporary images
-        # for name in video_path_list:
-        #     os.remove(name)
-        try:
-            return Response(response=json.dumps({"response": response}), mimetype="application/json")
-        except FileNotFoundError:
-            abort(404)
+    try:
+        return Response(response=json.dumps({"response": response}), mimetype="application/json")
+    except FileNotFoundError:
+        abort(404)

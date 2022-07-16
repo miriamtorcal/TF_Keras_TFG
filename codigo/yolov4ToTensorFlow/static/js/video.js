@@ -18,7 +18,7 @@ window.onload = () => {
 					console.log("upload error" , data);
 					console.log(data.getAllResponseHeaders());
 				},
-				success: function(data){
+				success: function(){
 					let filename = $('input[type=file]').val().split('\\').pop();
 					console.log(filename)
 					let tarr = filename.split('/');   
