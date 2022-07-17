@@ -26,7 +26,7 @@ window.onload = () => {
 					file = file.replace("mp4","avi")
 					let csv = file
 					csv = csv.replace("avi","csv")
-					imagebox.attr('src' , '..//static//detections//' + file);
+					imagebox.attr('src', '..//static//detections//' + file);
 					$("#link").css("display", "block");
          			$("#download").attr("href", '..//static//detections//' + file);
 					$("#csv").attr("href", '..//static//detections//' + csv);
