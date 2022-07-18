@@ -228,6 +228,7 @@ def get_video_detections():
 
     for count, video_path in enumerate(video_path_list):
         responses = []
+        results = []
         try:
             vid = cv2.VideoCapture(int(video_path))
         except cv2.error:
@@ -342,7 +343,6 @@ def get_video_detections():
 
             allowed_classes = allow_classes
 
-            results = []
             counted_classes = count_objects(pred_bbox, by_class=True, allowed_classes=allowed_classes)
             image, registro_pos = utils.draw_bbox_info(frame, pred_bbox, allowed_classes=allowed_classes)
             for key, value in counted_classes.items():
