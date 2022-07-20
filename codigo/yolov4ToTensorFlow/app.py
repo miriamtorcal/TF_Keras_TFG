@@ -243,8 +243,8 @@ def get_video_detections():
         width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
         fps = int(vid.get(cv2.CAP_PROP_FPS))
-        codec = cv2.VideoWriter_fourcc(*'MP4V')
-        out = cv2.VideoWriter(output_path + video_name[0:len(video_name)-4] + '.mp4', codec, fps, (width, height))
+        codec = cv2.VideoWriter_fourcc(*'XVID')
+        out = cv2.VideoWriter(output_path + video_name[0:len(video_name)-4] + '.mp4', -1, fps, (width, height))
 
         if framework == 'tflite':
             interpreter.allocate_tensors()
@@ -370,6 +370,7 @@ def get_video_detections():
 
             frame_id += 1
         vid.release()
+
         cv2.destroyAllWindows()
     # Remove temporary images
     for name in video_path_list:

@@ -1,5 +1,6 @@
 window.onload = () => {
 	$('#sendbutton').click(() => {
+		console.log("Detectando....")
 		imagebox = $('#imagebox')
 		input = $('#imageinput')[0]
 		if(input.files && input.files[0])
@@ -14,7 +15,6 @@ window.onload = () => {
 				processData:false,
 				contentType:false,
 				error: function(data){
-					console.log(data)
 					console.log("upload error" , data);
 					console.log(data.getAllResponseHeaders());
 				},
@@ -23,13 +23,14 @@ window.onload = () => {
 					console.log(filename)
 					let tarr = filename.split('/');   
 					let file = tarr[tarr.length-1]; 
-					file = file.replace("mp4","avi")
+					// file = file.replace("mp4","avi")
 					let csv = file
 					csv = csv.replace("avi","csv")
 					imagebox.attr('src', '..//static//detections//' + file);
 					$("#link").css("display", "block");
          			$("#download").attr("href", '..//static//detections//' + file);
 					$("#csv").attr("href", '..//static//detections//' + csv);
+					console.log("Fin deteccion")
 				}
 			});
 		}
