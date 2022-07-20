@@ -1,6 +1,7 @@
 window.onload = () => {
 	$('#sendbutton').click(() => {
 		console.log("Detectando....")
+		$("#detecting").css("display", "block");
 		imagebox = $('#imagebox')
 		input = $('#imageinput')[0]
 		if(input.files && input.files[0])
@@ -25,11 +26,12 @@ window.onload = () => {
 					let file = tarr[tarr.length-1]; 
 					// file = file.replace("mp4","avi")
 					let csv = file
-					csv = csv.replace("avi","csv")
+					csv = csv.replace("mp4","csv")
 					imagebox.attr('src', '..//static//detections//' + file);
 					$("#link").css("display", "block");
          			$("#download").attr("href", '..//static//detections//' + file);
 					$("#csv").attr("href", '..//static//detections//' + csv);
+					$("#detecting").css("display", "none");
 					console.log("Fin deteccion")
 				}
 			});

@@ -63,4 +63,7 @@ html {
   #link {
     display: none;
   }
-  
+
+  #detecting{
+    display: none;
+  }
