@@ -8,7 +8,7 @@ window.onload = () => {
 			let formData = new FormData();
 			formData.append('images' , input.value);
 			$.ajax({
-				url: "/image_url", // fix this to your liking
+				url: "/image_url", 
 				type:"POST",
 				data: formData,
 				cache: false,

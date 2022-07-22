@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/image_video.css">
     <script
 			  src="https://code.jquery.com/jquery-3.3.1.min.js"
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -20,7 +20,7 @@
             </u></p>
             <div className="pre_img">
                 <span>
-                    <video id="imagebox" controls alt=""></video>
+                    <video id="videobox" controls alt=""></video>
                 </span>
             </div>
             <div id="detecting">
@@ -32,7 +32,7 @@
              <a href="" id="csv" download>Download CSV</a>
             </div>
             <form>
-                <input id="imageinput" type="file" name="image" onchange="readUrl(this)">
+                <input id="videoinput" type="file" name="video" onchange="readUrl(this)">
             </form>
             <button name="send" id = "sendbutton">Send</button>
         </header>

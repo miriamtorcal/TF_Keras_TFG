@@ -2,8 +2,8 @@ window.onload = () => {
 	$('#sendbutton').click(() => {
 		console.log("Detectando....")
 		$("#detecting").css("display", "block");
-		imagebox = $('#imagebox')
-		input = $('#imageinput')[0]
+		videobox = $('#videobox')
+		input = $('#videoinput')[0]
 		if(input.files && input.files[0])
 		{
 			let formData = new FormData();
@@ -27,7 +27,7 @@ window.onload = () => {
 					// file = file.replace("mp4","avi")
 					let csv = file
 					csv = csv.replace("mp4","csv")
-					imagebox.attr('src', '..//static//detections//' + file);
+					videobox.attr('src', '..//static//detections//' + file);
 					$("#link").css("display", "block");
          			$("#download").attr("href", '..//static//detections//' + file);
 					$("#csv").attr("href", '..//static//detections//' + csv);
@@ -42,14 +42,14 @@ window.onload = () => {
 
 
 function readUrl(input){
-	imagebox = $('#imagebox')
+	videobox = $('#videobox')
 	console.log("evoked readUrl")
 	if(input.files && input.files[0]){
 		let reader = new FileReader();
 		reader.onload = function(e){		
-			imagebox.attr('src',e.target.result); 
-			imagebox.height(500);
-			imagebox.width(800);
+			videobox.attr('src',e.target.result); 
+			videobox.height(500);
+			videobox.width(800);
 		}
 		reader.readAsDataURL(input.files[0]);
 	}

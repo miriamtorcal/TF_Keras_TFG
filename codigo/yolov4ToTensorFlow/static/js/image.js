@@ -7,7 +7,7 @@ window.onload = () => {
 			let formData = new FormData();
 			formData.append('images' , input.files[0]);
 			$.ajax({
-				url: "/image/detections", // fix this to your liking
+				url: "/image/detections", 
 				type:"POST",
 				data: formData,
 				cache: false,
