@@ -1,14 +1,17 @@
 # Flask dependecies
+import tensorflow as tf
+physical_devices = tf.config.experimental.list_physical_devices('GPU')
+if len(physical_devices) > 0:
+    tf.config.experimental.set_memory_growth(physical_devices[0], True)
+
 import csv
 from datetime import datetime
 from http.client import responses
 from flask import Flask, request, redirect, url_for, render_template, abort, Response
-
-import tensorflow as tf
+from deep_sort.tracker import Tracker
 from core.functions import count_objects, count_objects_img
-physical_devices = tf.config.experimental.list_physical_devices('GPU')
-if len(physical_devices) > 0:
-    tf.config.experimental.set_memory_growth(physical_devices[0], True)
+from deep_sort import nn_matching
+from tools import generate_detections as gdet
 import core.utils as utils
 from core.config import cfg
 from core.yolov4 import decode, filter_boxes
@@ -61,6 +64,10 @@ print("app loaded")
 @app.route('/')
 def home():
     return render_template('./index.html')
+
+@app.route('/image')
+def image():
+    return render_template('./image.html')
 
 # Returns the image with detections on it
 @app.route('/image/detections', methods=['POST'])
@@ -213,7 +220,7 @@ def get_image_detections():
 
 @app.route('/video')
 def video():
-    return render_template('./od_video.html')
+    return render_template('./video.html')
 
 @app.route('/video/detections', methods=['POST'])
 def get_video_detections():
@@ -230,13 +237,11 @@ def get_video_detections():
         responses = []
         results = []
         try:
-            vid = cv2.VideoCapture(int(video_path))
+            vid = cv2.VideoCapture(video_path)
         except cv2.error:
             for name in video_path_list:
                 os.remove(name)
-            abort(404, "it is not a video file or video file is an unsupported format. try mp4")
-        except:
-            vid = cv2.VideoCapture(video_path)   
+            abort(404, "it is not a video file or video file is an unsupported format. try mp4")  
 
         out = None
 
