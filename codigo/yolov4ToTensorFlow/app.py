@@ -557,3 +557,116 @@ def get_image_detections_url():
         return Response(response=json.dumps({"response": response}), mimetype="application/json")
     except FileNotFoundError:
         abort(404)
+
+@app.route('/track')
+def track():
+    return render_template('track')
+
+@app.route('/track/detections', methods=['POST'])
+def get_track_detections():
+    max_cosine_distance = 0.4
+    nn_budget = None
+    nms_max_overlap = 1.0
+    
+    # initialize deep sort
+    model_filename = 'model_data/mars-small128.pb'
+    encoder = gdet.create_box_encoder(model_filename, batch_size=1)
+    # calculate cosine distance metric
+    metric = nn_matching.NearestNeighborDistanceMetric("cosine", max_cosine_distance, nn_budget)
+    # initialize tracker
+    tracker = Tracker(metric)
+
+    videos = request.files.getlist('videos')
+    video_path_list = []
+    for video in videos:
+        video_name = video.filename
+        video_path_list.append("./temp/" + video_name)
+        video.save(os.path.join(os.getcwd(), "temp/", video_name))
+
+    response = []
+
+    for count, video_path in enumerate(video_path_list):
+        responses = []
+        results = []
+        try:
+            vid = cv2.VideoCapture(video_path)
+        except cv2.error:
+            for name in video_path_list:
+                os.remove(name)
+            abort(404, "it is not a video file or video file is an unsupported format. try mp4")  
+
+        out = None
+
+        width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        fps = int(vid.get(cv2.CAP_PROP_FPS))
+        codec = cv2.VideoWriter_fourcc(*'XVID')
+        out = cv2.VideoWriter(output_path + video_name[0:len(video_name)-4] + '.mp4', -1, fps, (width, height))
+        frame_num = 0
+
+        if framework == 'tflite':
+            interpreter = tf.lite.Interpreter(model_path=FLAGS.weights)
+            interpreter.allocate_tensors()
+            input_details = interpreter.get_input_details()
+            output_details = interpreter.get_output_details()
+            print(input_details)
+            print(output_details)
+        # otherwise load standard tensorflow saved model
+        else:
+            saved_model_loaded = tf.saved_model.load(FLAGS.weights, tags=[tag_constants.SERVING])
+            infer = saved_model_loaded.signatures['serving_default']
+
+    # while video is running
+    while True:
+        return_value, frame = vid.read()
+        if return_value:
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            image = Image.fromarray(frame)
+        else:
+            if frame_num == vid.get(cv2.CAP_PROP_FRAME_COUNT):
+                print('Video processing complete')
+                break
+            raise ValueError("No image! Try with another video format")
+        frame_num +=1
+        print('Frame #: ', frame_num)
+        frame_size = frame.shape[:2]
+        image_data = cv2.resize(frame, (input_size, input_size))
+        image_data = image_data / 255.
+        image_data = image_data[np.newaxis, ...].astype(np.float32)
+        start_time = time.time()
+
+        # run detections on tflite if flag is set
+        if framework == 'tflite':
+            interpreter.set_tensor(input_details[0]['index'], image_data)
+            interpreter.invoke()
+            pred = [interpreter.get_tensor(output_details[i]['index']) for i in range(len(output_details))]
+
+            if improve_quality == True:
+                bbox_tensors = []
+                prob_tensors = []
+                for i, _ in enumerate(pred):
+                    if i == 0:
+                        output_tensors = decode(pred[2], input_size // 8, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                    elif i == 1:
+                        output_tensors = decode(pred[0], input_size // 16, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                    else:
+                        output_tensors = decode(pred[1], input_size // 32, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                    bbox_tensors.append(output_tensors[0])
+                    prob_tensors.append(output_tensors[1])
+                pred_bbox = tf.concat(bbox_tensors, axis=1)
+                pred_prob = tf.concat(prob_tensors, axis=1)
+                pred = (pred_bbox, pred_prob)
+
+            # run detections using yolov3 if flag is set
+            if model == 'yolov3' and tiny == True:
+                boxes, pred_conf = filter_boxes(pred[1], pred[0], score_threshold=0.25,
+                                                input_shape=tf.constant([input_size, input_size]))
+            else:
+                boxes, pred_conf = filter_boxes(pred[0], pred[1], score_threshold=0.25,
+                                                input_shape=tf.constant([input_size, input_size]))
+        else:
+            batch_data = tf.constant(image_data)
+            pred_bbox = infer(batch_data)
+            for key, value in pred_bbox.items():
+                boxes = value[:, :, 0:4]
+                pred_conf = value[:, :, 4:]
