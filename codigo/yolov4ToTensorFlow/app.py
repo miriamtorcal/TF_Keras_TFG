@@ -805,3 +805,190 @@ def get_track_detections():
         return Response(response=json.dumps({"response": response}), mimetype="application/json")
     except FileNotFoundError:
         abort(404)
+
+@app.route('/url_video')
+def url_video():
+    return render_template('./url_video.html')
+
+@app.route('/video_url', methods=['POST'])
+def get_video_detections_url():
+    video_urls = request.values.getlist('videos')
+    raw_video_list = []
+    if not isinstance(video_urls, list):
+        abort(400, "can't find video list")
+    video_names = []
+    custom_headers = {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+    }
+    for i, video_url in enumerate(video_urls):
+        orig = video_url.index('https://')
+        end = video_url.index('.es') if video_url.find('.es') != -1 else video_url.index('.com')
+        video_name = video_url[orig:end]
+        video_name = video_name.replace('https://', '')
+        video_names.append(video_name)
+        try:
+            resp = requests.get(video_url, headers=custom_headers)
+            video_raw = np.asarray(bytearray(resp.content), dtype="uint8")
+            print(video_raw)
+            # video_raw = cv2.imdecode(video_raw, cv2.IMREAD_COLOR)
+            # print(video_raw)
+        except cv2.error:
+            abort(404, "it is not video url or that video is an unsupported format. try mp4")
+        except requests.exceptions.MissingSchema:
+            abort(400, "it is not url form")
+        except Exception as e:
+            print(e.__class__)
+            print(e)
+            abort(500)
+        raw_video_list.append(video_raw)
+
+    response = []
+    for _, raw_video in enumerate(raw_video_list):
+        print(raw_video)
+        responses = []
+        results = []
+        try:
+            vid = cv2.VideoCapture(raw_video)
+        except cv2.error:
+            for name in raw_video_list:
+                os.remove(name)
+            abort(404, "it is not a video file or video file is an unsupported format. try mp4")  
+
+        out = None
+
+        width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        fps = int(vid.get(cv2.CAP_PROP_FPS))
+        codec = cv2.VideoWriter_fourcc(*'XVID')
+        out = cv2.VideoWriter(output_path + video_name[0:len(video_name)-4] + '.mp4', -1, fps, (width, height))
+
+        if framework == 'tflite':
+            interpreter.allocate_tensors()
+            input_details = interpreter.get_input_details()
+            output_details = interpreter.get_output_details()
+            print(input_details)
+            print(output_details)
+        else:
+            t1 = time.time()
+            infer = saved_model_loaded.signatures['serving_default']
+        
+        frame_id = 0
+        while True:
+            return_value, frame = vid.read()
+            if return_value:
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                image = Image.fromarray(frame)
+            else:
+                if frame_id == vid.get(cv2.CAP_PROP_FRAME_COUNT):
+                    print("Video processing complete")
+                    break
+                raise ValueError("No image! Try with another video format")
+
+            frame_size = frame.shape[:2]
+            image_data = cv2.resize(frame, (input_size, input_size))
+            image_data = image_data / 255.
+            image_data = image_data[np.newaxis, ...].astype(np.float32)
+
+            if framework == 'tflite':
+                interpreter.set_tensor(input_details[0]['index'], image_data)
+                interpreter.invoke()
+                pred = [interpreter.get_tensor(
+                    output_details[i]['index']) for i in range(len(output_details))]
+                if improve_quality == True:
+                    bbox_tensors = []
+                    prob_tensors = []
+                    for i, _ in enumerate(pred):
+                        if i == 0:
+                            output_tensors = decode(pred[2], input_size // 8, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                        elif i == 1:
+                            output_tensors = decode(pred[0], input_size // 16, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                        else:
+                            output_tensors = decode(pred[1], input_size // 32, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                        bbox_tensors.append(output_tensors[0])
+                        prob_tensors.append(output_tensors[1])
+                    pred_bbox = tf.concat(bbox_tensors, axis=1)
+                    pred_prob = tf.concat(prob_tensors, axis=1)
+                    pred = (pred_bbox, pred_prob)
+
+                if model == 'yolov3' and tiny == True:
+                    boxes, pred_conf = filter_boxes(pred[1], pred[0], score_threshold=0.25,
+                                                    input_shape=tf.constant([input_size, input_size]))
+                else:
+                    boxes, pred_conf = filter_boxes(pred[0], pred[1], score_threshold=0.25,
+                                                    input_shape=tf.constant([input_size, input_size]))
+            else:
+                batch_data = tf.constant(image_data)
+                pred_bbox = infer(batch_data)
+                for _, value in pred_bbox.items():
+                    boxes = value[:, :, 0:4]
+                    pred_conf = value[:, :, 4:]
+                t2 = time.time()
+                print('time: {}'.format(t2 - t1))
+
+            t1 = time.time()
+            boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
+                boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
+                scores=tf.reshape(
+                    pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
+                max_output_size_per_class=50,
+                max_total_size=50,
+                iou_threshold=iou,
+                score_threshold=score
+            )
+            
+            original_h, original_w, _ = frame.shape
+            bboxes = utils.format_boxes(boxes.numpy()[0], original_h, original_w)
+            pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0],
+                        valid_detections.numpy()[0]]
+
+            t2 = time.time()
+            class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+            print('time: {}'.format(t2 - t1))
+            for i in range(valid_detections[0]):
+                responses.append({
+                    "class": class_names[int(classes[0][i])],
+                    "confidence": float("{0:.2f}".format(np.array(scores[0][i]) * 100)),
+                    "box": np.array(boxes[0][i]).tolist()
+                })
+            response.append({
+                "video": video_name + '.mp4',
+                "detections": responses
+            })
+
+            class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+
+            allowed_classes = allow_classes
+
+            counted_classes = count_objects(pred_bbox, by_class=True, allowed_classes=allowed_classes)
+            image, registro_pos = utils.draw_bbox_info(frame, pred_bbox, allowed_classes=allowed_classes)
+            for key, value in counted_classes.items():
+                for k, v in registro_pos.items():
+                    if key == k:
+                        results.append([datetime.now(), key, value, v[:]])
+            name_csv = output_path + video_name[0:len(video_name)-4] + '.csv'
+            with open(name_csv, 'w', newline='') as csvfile:
+                field_names = ['Time', 'NumberObject', 'TypeObject', 'Positions']
+                writer = csv.DictWriter(csvfile, fieldnames = field_names)
+                writer.writeheader()
+                for i in results:
+                    writer.writerow({
+                        'Time': i[0], 
+                        'NumberObject': i[2], 
+                        'TypeObject': i[1],
+                        'Positions': str(i[3]),
+                    })
+            del writer
+            csvfile.close()
+
+            result = np.asarray(image)
+            result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            out.write(result)
+
+            frame_id += 1
+        vid.release()
+
+        cv2.destroyAllWindows()
+    try:
+        return Response(response=json.dumps({"response": response}), mimetype="application/json")
+    except FileNotFoundError:
+        abort(404)

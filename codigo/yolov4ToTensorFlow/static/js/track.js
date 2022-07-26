@@ -26,7 +26,6 @@ window.onload = () => {
 					filename = name + "_track" + ".mp4"
 					let tarr = filename.split('/');   
 					let file = tarr[tarr.length-1]; 
-					console.log(file)
 					let csv = file
 					csv = csv.replace("mp4","csv")
 					videobox.attr('src', '..//static//detections//' + file);
