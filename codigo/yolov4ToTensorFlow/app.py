@@ -27,6 +27,7 @@ import time
 import os
 import json
 import requests
+import pafy
 
 # Basic configuration
 framework = 'tf'
@@ -821,17 +822,14 @@ def get_video_detections_url():
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
     }
     for i, video_url in enumerate(video_urls):
-        orig = video_url.index('https://')
-        end = video_url.index('.es') if video_url.find('.es') != -1 else video_url.index('.com')
-        video_name = video_url[orig:end]
+        # orig = video_url.index('https://')
+        # end = video_url.index('.es') if video_url.find('.es') != -1 else video_url.index('.com')
+        video_name = video_url
         video_name = video_name.replace('https://', '')
+        video_name = video_name.replace('/', '_')
         video_names.append(video_name)
         try:
-            resp = requests.get(video_url, headers=custom_headers)
-            video_raw = np.asarray(bytearray(resp.content), dtype="uint8")
-            print(video_raw)
-            # video_raw = cv2.imdecode(video_raw, cv2.IMREAD_COLOR)
-            # print(video_raw)
+            video_raw = pafy.new(video_url).streams[-1]
         except cv2.error:
             abort(404, "it is not video url or that video is an unsupported format. try mp4")
         except requests.exceptions.MissingSchema:
@@ -844,11 +842,12 @@ def get_video_detections_url():
 
     response = []
     for _, raw_video in enumerate(raw_video_list):
+        print(_)
         print(raw_video)
         responses = []
         results = []
         try:
-            vid = cv2.VideoCapture(raw_video)
+            vid = cv2.VideoCapture(raw_video.url)
         except cv2.error:
             for name in raw_video_list:
                 os.remove(name)
@@ -879,6 +878,7 @@ def get_video_detections_url():
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 image = Image.fromarray(frame)
             else:
+                print(f"frame_id: {frame_id}\tvid: {vid.get(cv2.CAP_PROP_FRAME_COUNT)}")
                 if frame_id == vid.get(cv2.CAP_PROP_FRAME_COUNT):
                     print("Video processing complete")
                     break
