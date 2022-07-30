@@ -827,11 +827,23 @@ def get_video_detections_url():
         video_name = video_url
         video_name = video_name.replace('https://', '')
         video_name = video_name.replace('/', '_')
+
+        if os.path.exists(output_path + video_name + '.mp4'):
+            numb = 1
+            while True:
+                new_video_name = video_name + '_' + str(numb)
+                if os.path.exists(output_path + new_video_name + '.mp4'):
+                    numb += 1 
+                else:
+                    break
+            video_name = new_video_name
         video_names.append(video_name)
         try:
             # video_raw = pafy.new(video_url).streams[-1]
             video_pafy = pafy.new(video_url)
             video_raw = video_pafy.getbest()
+            video_path = "./temp/" + video_name + ".mp4"
+            video_raw.download(filepath="./temp/" + video_name + ".mp4")
         except cv2.error:
             abort(404, "it is not video url or that video is an unsupported format. try mp4")
         except requests.exceptions.MissingSchema:
@@ -840,7 +852,7 @@ def get_video_detections_url():
             print(e.__class__)
             print(e)
             abort(500)
-        raw_video_list.append(video_raw)
+        raw_video_list.append(video_path)
 
     response = []
     for _, raw_video in enumerate(raw_video_list):
@@ -849,7 +861,7 @@ def get_video_detections_url():
         responses = []
         results = []
         try:
-            vid = cv2.VideoCapture(raw_video.url)
+            vid = cv2.VideoCapture(raw_video)
         except cv2.error:
             for name in raw_video_list:
                 os.remove(name)
@@ -881,10 +893,10 @@ def get_video_detections_url():
                 image = Image.fromarray(frame)
             else:
                 # print(f"frame_id: {frame_id}\tvid: {vid.get(cv2.CAP_PROP_FRAME_COUNT)}")
-                # if frame_id == vid.get(cv2.CAP_PROP_FRAME_COUNT):
-                print("Video processing complete")
-                break
-                # raise ValueError("No image! Try with another video format")
+                if frame_id == vid.get(cv2.CAP_PROP_FRAME_COUNT):
+                    print("Video processing complete")
+                    break
+                raise ValueError("No image! Try with another video format")
 
             frame_size = frame.shape[:2]
             image_data = cv2.resize(frame, (input_size, input_size))
@@ -947,18 +959,6 @@ def get_video_detections_url():
             class_names = utils.read_class_names(cfg.YOLO.CLASSES)
             print('time: {}'.format(t2 - t1))
 
-            if os.path.exists(output_path + video_name + '.mp4'):
-                numb = 1
-                while True:
-                    new_video_name = video_name + '_' + str(numb)
-                    if os.path.exists(output_path + new_video_name + '.mp4'):
-                        numb += 1 
-                    else:
-                        break
-                video_name = new_video_name
-
-            print(video_name)
-
             for i in range(valid_detections[0]):
                 responses.append({
                     "class": class_names[int(classes[0][i])],
@@ -1003,9 +1003,12 @@ def get_video_detections_url():
         vid.release()
 
         cv2.destroyAllWindows()
+
+    # Remove temporary images
+    for name in raw_video_list:
+        os.remove(name)
     try:
         print('pre response')
         return Response(response=json.dumps({"response": response}), mimetype="application/json")
-        print('pos response')
     except FileNotFoundError:
         abort(404)
