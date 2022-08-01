@@ -1,5 +1,6 @@
 window.onload = () => {
 	$('#sendbutton').click(() => {
+		$("#detecting").css("display", "block");
 		imagebox = $('#imagebox')
 		input = $('#imageinput')[0]
 		console.log(input.value)
@@ -17,16 +18,19 @@ window.onload = () => {
 				error: function(data){
 					console.log("upload error" , data);
 					console.log(data.getAllResponseHeaders());
+					$("#detecting").css("display", "none");
 				},
 				success: function(data){
-					console.log(data)
+					console.log(data['response'][0].video)
 					let file = data['response'][0].video
 					let csv = file
-					csv = csv.replace(".mp4","csv")
+					csv = csv.replace(".mp4",".csv")
+					$("#imagebox").css("display", "block");
 					imagebox.attr('src' , '..//static//detections//' + file);
 					$("#link").css("display", "block");
          			$("#download").attr("href", '..//static//detections//' + file);
 					$("#csv").attr("href", '..//static//detections//' + csv);
+					$("#detecting").css("display", "none");
 				}
 			});
 		}
@@ -47,6 +51,4 @@ function readUrl(input){
 		}
 		reader.readAsDataURL(input.files[0]);
 	}
-
-	
 }

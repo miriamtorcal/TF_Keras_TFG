@@ -9,3 +9,4 @@ pillow
 Flask
 pafy
 youtube-dl
+keyboard

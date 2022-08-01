@@ -28,6 +28,7 @@ import os
 import json
 import requests
 import pafy
+import keyboard
 
 # Basic configuration
 framework = 'tf'
@@ -44,8 +45,8 @@ allow_classes = list(utils.read_class_names(cfg.YOLO.CLASSES).values())
 class Flag:
     tiny = tiny
     model = model
-    
-    
+
+
 config = ConfigProto()
 config.gpu_options.allow_growth = True
 session = InteractiveSession(config=config)
@@ -59,10 +60,14 @@ if framework == 'tflite':
 else:
     saved_model_loaded = tf.saved_model.load(weights, tags=[tag_constants.SERVING])
 
-# Initialize Flask app     
+# Initialize Flask app
 app = Flask(__name__)
 app.config["CACHE_TYPE"] = "null"
 print("app loaded")
+
+# @app.route('/favicon.ico')
+# def favicon():
+#     return send_from_directory(os.path.join(app.root_path, 'static/imgs'),'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/')
 def home():
@@ -191,7 +196,7 @@ def get_image_detections():
             for k, v in pos.items():
                 if key == k:
                     results.append([datetime.now(), key, value, v[:]])
-                
+
         name_csv = output_path + img_name[0:len(img_name)-4] + '.csv'
         with open(name_csv, 'w', newline='') as csvfile:
             field_names = ['Time', 'NumberObject', 'TypeObject', 'Positions']
@@ -199,8 +204,8 @@ def get_image_detections():
             writer.writeheader()
             for i in results:
                 writer.writerow({
-                    'Time': i[0], 
-                    'NumberObject': i[2], 
+                    'Time': i[0],
+                    'NumberObject': i[2],
                     'TypeObject': i[1],
                     'Positions': str(i[3]),
                 })
@@ -244,7 +249,7 @@ def get_video_detections():
         except cv2.error:
             for name in video_path_list:
                 os.remove(name)
-            abort(404, "it is not a video file or video file is an unsupported format. try mp4")  
+            abort(404, "it is not a video file or video file is an unsupported format. try mp4")
 
         out = None
 
@@ -263,7 +268,7 @@ def get_video_detections():
         else:
             t1 = time.time()
             infer = saved_model_loaded.signatures['serving_default']
-        
+
         frame_id = 0
         while True:
             return_value, frame = vid.read()
@@ -327,7 +332,7 @@ def get_video_detections():
                 iou_threshold=iou,
                 score_threshold=score
             )
-            
+
             original_h, original_w, _ = frame.shape
             bboxes = utils.format_boxes(boxes.numpy()[0], original_h, original_w)
             pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0],
@@ -364,8 +369,8 @@ def get_video_detections():
                 writer.writeheader()
                 for i in results:
                     writer.writerow({
-                        'Time': i[0], 
-                        'NumberObject': i[2], 
+                        'Time': i[0],
+                        'NumberObject': i[2],
                         'TypeObject': i[1],
                         'Positions': str(i[3]),
                     })
@@ -503,7 +508,7 @@ def get_image_detections_url():
             while True:
                 new_image_name = image_name + '_' + str(numb)
                 if os.path.exists(output_path + new_image_name + '.png'):
-                    numb += 1 
+                    numb += 1
                 else:
                     break
             image_name = new_image_name
@@ -534,7 +539,7 @@ def get_image_detections_url():
             for k, v in pos.items():
                 if key == k:
                     results.append([datetime.now(), key, value, v[:]])
-        
+
         name_csv = output_path + image_name + '.csv'
         with open(name_csv, 'w', newline='') as csvfile:
             field_names = ['Time', 'NumberObject', 'TypeObject', 'Positions']
@@ -542,18 +547,18 @@ def get_image_detections_url():
             writer.writeheader()
             for i in results:
                 writer.writerow({
-                    'Time': i[0], 
-                    'NumberObject': i[2], 
+                    'Time': i[0],
+                    'NumberObject': i[2],
                     'TypeObject': i[1],
                     'Positions': str(i[3]),
                 })
         del writer
         csvfile.close()
-        
+
         image = Image.fromarray(image.astype(np.uint8))
 
         image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
-        
+
         cv2.imwrite(output_path + image_name + '.png', image)
 
     try:
@@ -570,7 +575,7 @@ def get_track_detections():
     max_cosine_distance = 0.4
     nn_budget = None
     nms_max_overlap = 1.0
-    
+
     # initialize deep sort
     model_filename = 'model_data/mars-small128.pb'
     encoder = gdet.create_box_encoder(model_filename, batch_size=1)
@@ -596,7 +601,7 @@ def get_track_detections():
         except cv2.error:
             for name in video_path_list:
                 os.remove(name)
-            abort(404, "it is not a video file or video file is an unsupported format. try mp4")  
+            abort(404, "it is not a video file or video file is an unsupported format. try mp4")
 
         out = None
 
@@ -743,8 +748,8 @@ def get_track_detections():
                 writer.writeheader()
                 for i in results:
                     writer.writerow({
-                        'Time': i[0], 
-                        'NumberObject': i[2], 
+                        'Time': i[0],
+                        'NumberObject': i[2],
                         'TypeObject': i[1],
                         'Positions': str(i[3]),
                     })
@@ -767,7 +772,7 @@ def get_track_detections():
             scores = np.array([d.confidence for d in detections])
             classes = np.array([d.class_name for d in detections])
             indices = preprocessing.non_max_suppression(boxs, classes, nms_max_overlap, scores)
-            detections = [detections[i] for i in indices] 
+            detections = [detections[i] for i in indices]
 
             # Call the tracker
             tracker.predict()
@@ -776,10 +781,10 @@ def get_track_detections():
             # update tracks
             for track in tracker.tracks:
                 if not track.is_confirmed() or track.time_since_update > 1:
-                    continue 
+                    continue
                 bbox = track.to_tlbr()
                 class_name = track.get_class()
-                
+
             # draw bbox on screen
                 color = colors[int(track.track_id) % len(colors)]
                 color = [i * 255 for i in color]
@@ -794,7 +799,7 @@ def get_track_detections():
             info = "time: %.2f ms" % (1000*exec_time)
             print(info)
             result = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-            
+
             out.write(result)
             if cv2.waitKey(1) & 0xFF == ord('q'): break
         vid.release()
@@ -818,9 +823,9 @@ def get_video_detections_url():
     if not isinstance(video_urls, list):
         abort(400, "can't find video list")
     video_names = []
-    custom_headers = {
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
-    }
+    # custom_headers = {
+    #     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+    # }
     for i, video_url in enumerate(video_urls):
         # orig = video_url.index('https://')
         # end = video_url.index('.es') if video_url.find('.es') != -1 else video_url.index('.com')
@@ -828,20 +833,12 @@ def get_video_detections_url():
         video_name = video_name.replace('https://', '')
         video_name = video_name.replace('/', '_')
 
-        if os.path.exists(output_path + video_name + '.mp4'):
-            numb = 1
-            while True:
-                new_video_name = video_name + '_' + str(numb)
-                if os.path.exists(output_path + new_video_name + '.mp4'):
-                    numb += 1 
-                else:
-                    break
-            video_name = new_video_name
         video_names.append(video_name)
         try:
             # video_raw = pafy.new(video_url).streams[-1]
             video_pafy = pafy.new(video_url)
             video_raw = video_pafy.getbest()
+            print(video_raw.extension)
             video_path = "./temp/" + video_name + ".mp4"
             video_raw.download(filepath="./temp/" + video_name + ".mp4")
         except cv2.error:
@@ -865,15 +862,25 @@ def get_video_detections_url():
         except cv2.error:
             for name in raw_video_list:
                 os.remove(name)
-            abort(404, "it is not a video file or video file is an unsupported format. try mp4")  
+            abort(404, "it is not a video file or video file is an unsupported format. try mp4")
 
         out = None
+
+        if os.path.exists(output_path + video_name + '.mp4'):
+            numb = 1
+            while True:
+                new_video_name = video_name + '_' + str(numb)
+                if os.path.exists(output_path + new_video_name + '.mp4'):
+                    numb += 1
+                else:
+                    break
+            video_name = new_video_name
 
         width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
         fps = int(vid.get(cv2.CAP_PROP_FPS))
         codec = cv2.VideoWriter_fourcc(*'XVID')
-        out = cv2.VideoWriter(output_path + video_name[0:len(video_name)-4] + '.mp4', -1, fps, (width, height))
+        out = cv2.VideoWriter(output_path + video_name + '.mp4', -1, fps, (width, height))
 
         if framework == 'tflite':
             interpreter.allocate_tensors()
@@ -884,7 +891,7 @@ def get_video_detections_url():
         else:
             t1 = time.time()
             infer = saved_model_loaded.signatures['serving_default']
-        
+
         frame_id = 0
         while True:
             return_value, frame = vid.read()
@@ -949,7 +956,7 @@ def get_video_detections_url():
                 iou_threshold=iou,
                 score_threshold=score
             )
-            
+
             original_h, original_w, _ = frame.shape
             bboxes = utils.format_boxes(boxes.numpy()[0], original_h, original_w)
             pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0],
@@ -958,6 +965,16 @@ def get_video_detections_url():
             t2 = time.time()
             class_names = utils.read_class_names(cfg.YOLO.CLASSES)
             print('time: {}'.format(t2 - t1))
+
+            # if os.path.exists(output_path + video_name + '.mp4'):
+            #     numb = 1
+            #     while True:
+            #         new_video_name = video_name + '_' + str(numb)
+            #         if os.path.exists(output_path + new_video_name + '.mp4'):
+            #             numb += 1
+            #         else:
+            #             break
+            #     video_name = new_video_name
 
             for i in range(valid_detections[0]):
                 responses.append({
@@ -980,15 +997,16 @@ def get_video_detections_url():
                 for k, v in registro_pos.items():
                     if key == k:
                         results.append([datetime.now(), key, value, v[:]])
-            name_csv = output_path + video_name[0:len(video_name)-4] + '.csv'
+
+            name_csv = output_path + video_name + '.csv'
             with open(name_csv, 'w', newline='') as csvfile:
                 field_names = ['Time', 'NumberObject', 'TypeObject', 'Positions']
                 writer = csv.DictWriter(csvfile, fieldnames = field_names)
                 writer.writeheader()
                 for i in results:
                     writer.writerow({
-                        'Time': i[0], 
-                        'NumberObject': i[2], 
+                        'Time': i[0],
+                        'NumberObject': i[2],
                         'TypeObject': i[1],
                         'Positions': str(i[3]),
                     })
@@ -999,8 +1017,13 @@ def get_video_detections_url():
             result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             out.write(result)
 
+            # Press 'q' to exit
+            if keyboard.is_pressed('q'):
+                break
+
             frame_id += 1
         vid.release()
+        out.release()
 
         cv2.destroyAllWindows()
 
@@ -1008,7 +1031,6 @@ def get_video_detections_url():
     for name in raw_video_list:
         os.remove(name)
     try:
-        print('pre response')
         return Response(response=json.dumps({"response": response}), mimetype="application/json")
     except FileNotFoundError:
         abort(404)

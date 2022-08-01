@@ -22,6 +22,7 @@ window.onload = () => {
 					let file = data['response'][0].image
 					let csv = file
 					csv = csv.replace("png","csv")
+					$("#imagebox").css("display", "block");
 					imagebox.attr('src' , '..//static//detections//' + file);
 					$("#link").css("display", "block");
          			$("#download").attr("href", '..//static//detections//' + file);
