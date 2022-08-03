@@ -65,9 +65,9 @@ app = Flask(__name__)
 app.config["CACHE_TYPE"] = "null"
 print("app loaded")
 
-# @app.route('/favicon.ico')
-# def favicon():
-#     return send_from_directory(os.path.join(app.root_path, 'static/imgs'),'favicon.ico', mimetype='image/vnd.microsoft.icon')
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static/imgs'),'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/')
 def home():
