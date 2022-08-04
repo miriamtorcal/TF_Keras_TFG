@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/css/image_video.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+	<script type="text/javascript" src="../static/js/webcam.js"></script>
+    <title>OBJECT DETECTECTION</title>
+</head>
+<body>
+    <div>
+        <button style="text-align:center; float:left; background-color:#282c34; border: none">
+            <a href="{{url_for('home')}}" style="color:#4CAF50">
+                <i class="fas fa-arrow-left"> volver al home</i>
+            </a>
+        </button>
+    </div>
+    <div class="app">
+        <header class="app-header">
+            <p><u>
+                Object Detection Webcam
+            </u></p>
+            <div className="pre_img">
+                <span>
+                    <img id="videobox" src="{{url_for('get_webcam_detections')}}"></img>
+                </span>
+            </div>
+            <div id="detecting">
+                Detectando...
+            </div>
+            <div id="link">
+             <a href="" id="download" download>Download</a>
+             <br>
+             <a href="" id="csv" download>Download CSV</a>
+            </div>
+            <!-- <button name="send" id = "sendbutton"><a href="{{url_for('webcam')}}">Send</a></button> -->
+        </header>
+    </div>
+</body>
+</html>

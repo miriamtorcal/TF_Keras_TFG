@@ -1,4 +1,5 @@
 # Flask dependecies
+from cv2 import CAP_DSHOW
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from deep_sort.detection import Detection
@@ -9,7 +10,7 @@ if len(physical_devices) > 0:
 import csv
 from datetime import datetime
 from http.client import responses
-from flask import Flask, request, redirect, url_for, render_template, abort, Response
+from flask import Flask, request, redirect, url_for, render_template, abort, Response, send_from_directory
 from deep_sort.tracker import Tracker
 from core.functions import count_objects, count_objects_img
 from deep_sort import nn_matching, preprocessing
@@ -392,6 +393,179 @@ def get_video_detections():
         return Response(response=json.dumps({"response": response}), mimetype="application/json")
     except FileNotFoundError:
         abort(404)
+
+@app.route('/webcam')
+def webcam():
+    return render_template('./webcam.html')
+
+def webcam_detections():
+    # videos = request.files.getlist('videos')
+    # video_path_list = []
+    # for video in videos:
+    #     video_name = video.filename
+    #     video_path_list.append("./temp/" + video_name)
+    #     video.save(os.path.join(os.getcwd(), "temp/", video_name))
+    video_name = "webcam"
+    response = []
+
+    # for count, video_path in enumerate(video_path_list):
+    responses = []
+    results = []
+    try:
+        vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    except cv2.error:
+        abort(404, "it is not a video file or video file is an unsupported format. try mp4")
+
+    out = None
+
+    width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = int(vid.get(cv2.CAP_PROP_FPS))
+    codec = cv2.VideoWriter_fourcc(*'XVID')
+    out = cv2.VideoWriter(output_path + video_name + '.mp4', -1, fps, (width, height))
+
+    if framework == 'tflite':
+        interpreter.allocate_tensors()
+        input_details = interpreter.get_input_details()
+        output_details = interpreter.get_output_details()
+        print(input_details)
+        print(output_details)
+    else:
+        t1 = time.time()
+        infer = saved_model_loaded.signatures['serving_default']
+
+    frame_id = 0
+    while True:
+        return_value, frame = vid.read()
+        if return_value:
+            # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            image = Image.fromarray(frame)
+        else:
+            if frame_id == vid.get(cv2.CAP_PROP_FRAME_COUNT):
+                print("Video processing complete")
+                break
+            raise ValueError("No image! Try with another video format")
+
+        frame_size = frame.shape[:2]
+        image_data = cv2.resize(frame, (input_size, input_size))
+        image_data = image_data / 255.
+        image_data = image_data[np.newaxis, ...].astype(np.float32)
+
+        if framework == 'tflite':
+            interpreter.set_tensor(input_details[0]['index'], image_data)
+            interpreter.invoke()
+            pred = [interpreter.get_tensor(
+                output_details[i]['index']) for i in range(len(output_details))]
+            if improve_quality == True:
+                bbox_tensors = []
+                prob_tensors = []
+                for i, _ in enumerate(pred):
+                    if i == 0:
+                        output_tensors = decode(pred[2], input_size // 8, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                    elif i == 1:
+                        output_tensors = decode(pred[0], input_size // 16, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                    else:
+                        output_tensors = decode(pred[1], input_size // 32, NUM_CLASS, STRIDES, ANCHORS, i, XYSCALE, 'tflite')
+                    bbox_tensors.append(output_tensors[0])
+                    prob_tensors.append(output_tensors[1])
+                pred_bbox = tf.concat(bbox_tensors, axis=1)
+                pred_prob = tf.concat(prob_tensors, axis=1)
+                pred = (pred_bbox, pred_prob)
+
+            if model == 'yolov3' and tiny == True:
+                boxes, pred_conf = filter_boxes(pred[1], pred[0], score_threshold=0.25,
+                                                input_shape=tf.constant([input_size, input_size]))
+            else:
+                boxes, pred_conf = filter_boxes(pred[0], pred[1], score_threshold=0.25,
+                                                input_shape=tf.constant([input_size, input_size]))
+        else:
+            batch_data = tf.constant(image_data)
+            pred_bbox = infer(batch_data)
+            for _, value in pred_bbox.items():
+                boxes = value[:, :, 0:4]
+                pred_conf = value[:, :, 4:]
+            t2 = time.time()
+            print('time: {}'.format(t2 - t1))
+
+        t1 = time.time()
+        boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
+            boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
+            scores=tf.reshape(
+                pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
+            max_output_size_per_class=50,
+            max_total_size=50,
+            iou_threshold=iou,
+            score_threshold=score
+        )
+
+        original_h, original_w, _ = frame.shape
+        bboxes = utils.format_boxes(boxes.numpy()[0], original_h, original_w)
+        pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0],
+                    valid_detections.numpy()[0]]
+
+        t2 = time.time()
+        class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+        print('time: {}'.format(t2 - t1))
+        for i in range(valid_detections[0]):
+            responses.append({
+                "class": class_names[int(classes[0][i])],
+                "confidence": float("{0:.2f}".format(np.array(scores[0][i]) * 100)),
+                "box": np.array(boxes[0][i]).tolist()
+            })
+        response.append({
+            "video": video_name,
+            "detections": responses
+        })
+
+        class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+
+        allowed_classes = allow_classes
+
+        counted_classes = count_objects(pred_bbox, by_class=True, allowed_classes=allowed_classes)
+        image, registro_pos = utils.draw_bbox_info(frame, pred_bbox, allowed_classes=allowed_classes)
+        for key, value in counted_classes.items():
+            for k, v in registro_pos.items():
+                if key == k:
+                    results.append([datetime.now(), key, value, v[:]])
+        name_csv = output_path + video_name + '.csv'
+        with open(name_csv, 'w', newline='') as csvfile:
+            field_names = ['Time', 'NumberObject', 'TypeObject', 'Positions']
+            writer = csv.DictWriter(csvfile, fieldnames = field_names)
+            writer.writeheader()
+            for i in results:
+                writer.writerow({
+                    'Time': i[0],
+                    'NumberObject': i[2],
+                    'TypeObject': i[1],
+                    'Positions': str(i[3]),
+                })
+        del writer
+        csvfile.close()
+
+        # cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
+        result = np.asarray(image)
+        result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+        # cv2.imshow("result", result)
+        _, bufer = cv2.imencode(".jpg", frame)
+        imagen = bufer.tobytes()
+
+        out.write(result)
+
+        yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + imagen + b"\r\n"
+
+        if keyboard.is_pressed('q'):
+            break
+
+        frame_id += 1
+
+    vid.release()
+    cv2.destroyAllWindows()
+
+
+@app.route('/webcam/detections')
+def get_webcam_detections():
+    return Response(webcam_detections(),
+          mimetype = "multipart/x-mixed-replace; boundary=frame")
 
 @app.route('/url')
 def url():
