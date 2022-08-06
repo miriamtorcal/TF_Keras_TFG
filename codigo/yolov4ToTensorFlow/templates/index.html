@@ -1,21 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OBJECT DETECTION</title>
-</head>
-<body>
-    <h1 style="text-align:center">Bienvenid@ a OD-PJR</h1>
-
-    <div>
-        <a href="{{url_for('image')}}"> <img src="../static/imgs/od_img.jpg" height ="280" width="300" title="Detecta objetos sobre una imagen" alt="" /> </a> &nbsp;&nbsp;&nbsp;
-        <a href="{{url_for('video')}}"> <img src="../static/imgs/od_video.jpg" height ="280" width="300" title="Detecta objetos sobre un video" alt="" /> </a> &nbsp;&nbsp;&nbsp;
-        <a href="{{url_for('track')}}"> <img src="../static/imgs/od_track.jpg" height ="280" width="300" title="Detecta objetos (mediante Object Tracking) sobre un video" alt="" /> </a> <br>
-        <a href="{{url_for('url')}}"> <img src="../static/imgs/od_img.jpg" height ="280" width="300" title="Detecta objetos sobre una imagen obtenida mendiante una url" alt="" /> </a> &nbsp;&nbsp;&nbsp;
-        <a href="{{url_for('url_video')}}"> <img src="../static/imgs/od_img.jpg" height ="280" width="300" title="Detecta objetos sobre una url de un video de YouTube" alt="" /> </a> &nbsp;&nbsp;&nbsp;
-        <a href="{{url_for('webcam')}}"> <img src="../static/imgs/od_img.jpg" height ="280" width="300" title="Detecta objetos sobre una url de un video de YouTube" alt="" /> </a> <br>
-    </div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Object detection</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div id="main-container">
+            <h1>Bienvenid@ a OD-PJR</h1>
+            <div class="images-grid">
+                <a href="{{url_for('image')}}" data-title="Detecta objetos sobre una imagen">
+                    <img src="static/imgs/od_img.jpg" alt="Coches en una autopista" />
+                </a>
+                <a href="{{url_for('video')}}" data-title="Detecta objetos sobre un video">
+                    <img src="static/imgs/od_video.jpg" alt="Coches antiguos en carretera" />
+                </a>
+                <a href="{{url_for('track')}}" data-title="Detecta objetos (mediante Object Tracking) sobre un video">
+                    <img src="static/imgs/od_track.jpg" alt="Coches antiguos en carretera" />
+                </a>
+                <a href="{{url_for('url')}}" data-title="Detecta objetos sobre una imagen obtenida mendiante una url">
+                    <img src="static/imgs/od_img.jpg" alt="Coches en una autopista" />
+                </a>
+                <a href="{{url_for('url_video')}}" data-title="Detecta objetos sobre una url de un video de YouTube">
+                    <img src="static/imgs/od_img.jpg" alt="Coches en una autopista" />
+                </a>
+                <a href="{{url_for('webcam')}}" data-title="Detecta objetos desde la webcam">
+                    <img src="static/imgs/od_img.jpg" alt="Coches en una autopista" />
+                </a>
+            </div>
+        </div>
+    </body>
 </html>
