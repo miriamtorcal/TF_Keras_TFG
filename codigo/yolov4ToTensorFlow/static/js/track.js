@@ -2,7 +2,7 @@ window.onload = () => {
 	$('#sendbutton').click(() => {
 		$("#detecting").css("display", "block");
 		videobox = $('#videobox')
-		input = $('#videoinput')[0]
+		input = $('#videoinput1')[0]
 		if(input.files && input.files[0])
 		{
 			let formData = new FormData();
@@ -45,6 +45,7 @@ window.onload = () => {
 function readUrl(input){
 	videobox = $('#videobox')
 	console.log("evoked readUrl")
+	$('#msg_span').text(input.files[0].name)
 	if(input.files && input.files[0]){
 		let reader = new FileReader();
 		reader.onload = function(e){		

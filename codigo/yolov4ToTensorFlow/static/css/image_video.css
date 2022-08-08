@@ -34,7 +34,7 @@ html {
   }
   
   input[type=file]{
-    background-color: #4CAF50;
+    /* background-color: #b9d339;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -43,12 +43,59 @@ html {
     display: inline-block;
     font-size: 16px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    margin: 40px 40px;
-    /* display: none; */
+    margin: 40px 40px; */
+
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+
+    /* display:none; */
+  }
+  .imageinput + label{
+
+    max-width: 80%;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.625rem 1.25rem;
+  }
+
+  .imageinput + label figure {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #b9d339;
+    display: block;
+    padding: 20px;
+    margin: 0 auto 10px;
+  }
+
+  .imageinput + label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    /* 4px */
+    margin-right: 0.25em;
+    /* 4px */
+    width: 100%;
+    height: 100%;
+    fill: #f1e5e6;
+  }
+
+  .span {
+    color:white;
   }
   
   #pre{
-    background-color: #4CAF50; /* Green */
+    background-color: #b9d339; /* Green */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -76,7 +123,7 @@ html {
   #sendbutton{
     text-align:center; 
     float:left; 
-    color:#4CAF50; 
+    color:#b9d339; 
     border: none;
     background: none;
     font-size: 16px;

@@ -1,7 +1,7 @@
 window.onload = () => {
 	$('#sendbutton').click(() => {
 		imagebox = $('#imagebox')
-		input = $('#imageinput')[0]
+		input = $('#imageinput1')[0]
 		if(input.files && input.files[0])
 		{
 			let formData = new FormData();
@@ -39,7 +39,8 @@ window.onload = () => {
 
 function readUrl(input){
 	imagebox = $('#imagebox')
-	console.log("evoked readUrl")
+	console.log(input.files[0])
+	$('#msg_span').text(input.files[0].name)
 	if(input.files && input.files[0]){
 		let reader = new FileReader();
 		reader.onload = function(e){			
