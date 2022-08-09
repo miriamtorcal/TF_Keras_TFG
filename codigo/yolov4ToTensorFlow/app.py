@@ -382,6 +382,9 @@ def get_video_detections():
             result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             out.write(result)
 
+            if keyboard.is_pressed('q'):
+                break
+
             frame_id += 1
         vid.release()
 

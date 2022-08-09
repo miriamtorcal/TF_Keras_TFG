@@ -54,6 +54,4 @@ function readUrl(input){
 		}
 		reader.readAsDataURL(input.files[0]);
 	}
-
-	
 }
