@@ -19,7 +19,7 @@
 <body>
     <div>
         <button style="text-align:center; float:left; background-color:#282c34; border: none">
-            <a href="{{url_for('home')}}" style="color:#4CAF50">
+            <a href="{{url_for('home')}}" style="color:#b9d339">
                 <i class="fas fa-arrow-left"> volver al home</i>
             </a>
         </button>
@@ -43,9 +43,9 @@
              <a href="" id="csv" download>Download CSV</a>
             </div>
             <form>
-                <input id="imageinput" type="url" name="image" onchange="readUrl(this)">
+                <input id="imageinput" type="url" name="image" placeholder="Introduce la URL del video" onchange="readUrl(this)">
             </form>
-            <button name="send" id = "sendbutton"><strong>Detectar</strong></button>
+            <button name="send" id = "sendbutton" style="display:none;"><strong>Detectar</strong></button>
         </header>
     </div>
 </body>

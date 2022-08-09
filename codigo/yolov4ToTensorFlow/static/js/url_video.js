@@ -2,26 +2,24 @@ window.onload = () => {
 	$('#sendbutton').click(() => {
 		$("#detecting").css("display", "block");
 		imagebox = $('#imagebox')
-		input = $('#imageinput')[0]
-		console.log(input.value)
-		if(input.value)
+		input = $('#imageinput').val();
+		if(input)
 		{
 			let formData = new FormData();
-			formData.append('videos' , input.value);
+			formData.append('videos' , input);
 			$.ajax({
 				url: "/video_url", 
 				type:"POST",
 				data: formData,
 				cache: false,
-				processData:false,
-				contentType:false,
+				processData: false,
+				contentType: false,
 				error: function(data){
 					console.log("upload error" , data);
 					console.log(data.getAllResponseHeaders());
 					$("#detecting").css("display", "none");
 				},
 				success: function(data){
-					console.log(data['response'][0].video)
 					let file = data['response'][0].video
 					let csv = file
 					csv = csv.replace(".mp4",".csv")
@@ -51,4 +49,5 @@ function readUrl(input){
 		}
 		reader.readAsDataURL(input.files[0]);
 	}
+	$('#sendbutton').css("display", "block")
 }

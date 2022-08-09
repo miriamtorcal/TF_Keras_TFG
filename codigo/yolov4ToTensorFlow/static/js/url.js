@@ -1,8 +1,8 @@
 window.onload = () => {
 	$('#sendbutton').click(() => {
 		imagebox = $('#imagebox')
+		console.log($('#imageinput'))
 		input = $('#imageinput')[0]
-		console.log(input.value)
 		if(input.value)
 		{
 			let formData = new FormData();
@@ -47,6 +47,5 @@ function readUrl(input){
 		}
 		reader.readAsDataURL(input.files[0]);
 	}
-
-	
+	$('#sendbutton').css("display", "block")
 }

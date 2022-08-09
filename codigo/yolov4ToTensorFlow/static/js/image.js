@@ -50,4 +50,5 @@ function readUrl(input){
 		}
 		reader.readAsDataURL(input.files[0]);
 	}
+	$('#sendbutton').css("display", "block")
 }
