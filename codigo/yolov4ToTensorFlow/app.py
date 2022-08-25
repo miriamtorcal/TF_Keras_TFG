@@ -74,6 +74,10 @@ def favicon():
 def home():
     return render_template('./index.html')
 
+@app.route('/add_model')
+def add_model():
+    return render_template('./modal_add.html')
+
 @app.route('/image')
 def image():
     return render_template('./image.html')
