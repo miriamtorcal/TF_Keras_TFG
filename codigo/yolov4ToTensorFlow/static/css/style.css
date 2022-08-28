@@ -34,7 +34,7 @@ h1 {
       -ms-flex-pack: center;
           justify-content: center;
   font-size: clamp(22px, 5vw, 55px);
-  font-family: 'Gloria Hallelujah', cursive;
+  font-family: 'Quicksand', cursive;
 }
 @media (max-width: 675px) {
   h1 {
@@ -208,4 +208,14 @@ input[type=file]{
   border: none;
   background: none;
   font-size: 14px;
+}
+
+#folder_name::placeholder{
+  color:#000
+}
+
+#folder_name {
+  background-color:#b9d339; 
+  width:90%; 
+  border: none
 }

@@ -1,5 +1,6 @@
 # Flask dependecies
 from cv2 import CAP_DSHOW
+# from importlib import reload
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from deep_sort.detection import Detection
@@ -34,6 +35,8 @@ import keyboard
 # Basic configuration
 framework = 'tf'
 weights = './checkpoints/yolov4-416'
+# weights = './checkpoints/fodler'
+file_name = cfg.YOLO.CLASSES
 size = 416
 tiny = False
 model = 'yolov4'
@@ -41,7 +44,7 @@ improve_quality = False
 output_path = './static/detections/'
 iou = 0.45
 score = 0.25
-allow_classes = list(utils.read_class_names(cfg.YOLO.CLASSES).values())
+allow_classes = list(utils.read_class_names(file_name).values())
 
 class Flag:
     tiny = tiny
@@ -72,11 +75,89 @@ def favicon():
 
 @app.route('/')
 def home():
-    return render_template('./index.html')
+    return render_template('./index.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop())
+
+@app.route('/add_names')
+def add_names():
+    return render_template('./modal_names.html')
+
+@app.route('/names_add', methods=['POST'])
+def add_names_file():
+    files = request.files.getlist('files')
+    for file in files:
+        filename = file.filename
+        file.save(os.path.join("./data/classes", filename))
+    return Response(status=200)
+
+@app.route('/change_names_file')
+def change_names_file():
+    names_files = os.listdir("./data/classes/")
+    selected_file = file_name.split('/')[-1]
+    return render_template('./change_names_file.html', names_files=names_files, selected_file=selected_file)
+
+@app.route('/names_file', methods=['POST'])
+def names_file():
+    new_file_selected = request.values['new_file']
+    global file_name
+    file_name = "./data/classes/" + new_file_selected
+    return Response(response=json.dumps({"new_file_selected": new_file_selected}), mimetype="application/json", status=200)
+
+@app.route('/change_model_file')
+def change_model_file():
+    names_files = os.listdir("./checkpoints/")
+    selected_file = weights.split('/')[-1]
+    return render_template('./change_model_file.html', names_files=names_files, selected_file=selected_file)
+
+@app.route('/model_file', methods=['POST'])
+def model_file():
+    new_file_selected = request.values['new_file']
+    global weights, interpreter, saved_model_loaded
+    weights = "./checkpoints/" + new_file_selected
+
+    if framework == 'tflite':
+        interpreter = tf.lite.Interpreter(model_path=weights)
+    else:
+        saved_model_loaded = tf.saved_model.load(weights, tags=[tag_constants.SERVING])
+
+    return Response(response=json.dumps({"new_file_selected": new_file_selected}), mimetype="application/json", status=200)
 
 @app.route('/add_model')
 def add_model():
     return render_template('./modal_add.html')
+
+@app.route('/model_add', methods=['POST'])
+def add_model_file():
+    folder = request.values['folder_name']
+    files = request.files.getlist('files')
+    print(len(files))
+    if (len(files) > 1):
+        if os.path.exists("./checkpoints/" + folder):
+            numb = 1
+            while True:
+                new_folder = folder + '_' + str(numb)
+                if os.path.exists("./checkpoints/" + new_folder):
+                    numb += 1
+                else:
+                    break
+            folder = new_folder
+        folder_path = os.path.join("./checkpoints/", folder)
+        os.mkdir(folder_path)
+        os.mkdir(folder_path + '/variables')
+        for file in files:
+            print(file.filename)
+            print(file.filename.split('.'))
+            if (file.filename.split('.').pop() == 'pb'):
+                print('if')
+                filename = file.filename.split('/')[-1]
+                file.save(os.path.join(folder_path, filename))
+            if (file.filename.split('/')[-1].split('.')[0] == 'variables'):
+                filename = file.filename.split('/')[-1]
+                file.save(os.path.join(folder_path + '/variables', filename))
+    else:
+        for file in files:
+            filename = file.filename
+            file.save(os.path.join("./checkpoints", filename))
+    return Response(status=200)
 
 @app.route('/image')
 def image():
@@ -85,6 +166,8 @@ def image():
 # Returns the image with detections on it
 @app.route('/image/detections', methods=['POST'])
 def get_image_detections():
+    print(file_name)
+    allow_classes = list(utils.read_class_names(file_name).values())
     imgs = request.files.getlist('images')
     img_path_list = []
     for img in imgs:
@@ -173,8 +256,11 @@ def get_image_detections():
             iou_threshold=iou,
             score_threshold=score
         )
+        print(classes)
         t2 = time.time()
-        class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+        class_names = utils.read_class_names(file_name)
+        # print(cfg.YOLO.CLASSES)
+        print(class_names)
         print('time: {}'.format(t2 - t1))
         for i in range(valid_detections[0]):
             responses.append({
@@ -189,12 +275,12 @@ def get_image_detections():
         pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
 
         # read in all class names from config
-        class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+        # class_names = utils.read_class_names(cfg.YOLO.CLASSES)
 
         allowed_classes = allow_classes
 
-        counted_classes = count_objects_img(pred_bbox, by_class=True, allowed_classes=allowed_classes)
-        image, pos = utils.draw_bbox_img(original_img, pred_bbox, allowed_classes=allowed_classes)
+        counted_classes = count_objects_img(pred_bbox, by_class=True, class_names=class_names, allowed_classes=allowed_classes)
+        image, pos = utils.draw_bbox_img(original_img, pred_bbox, classes=class_names, allowed_classes=allowed_classes)
         results = []
 
         for key, value in counted_classes.items():
@@ -220,6 +306,9 @@ def get_image_detections():
         image = Image.fromarray(image.astype(np.uint8))
 
         image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
+        if os.path.exists(output_path + img_name[0:len(img_name)-4] + '.png'):
+            print('---')
+            os.remove(output_path + img_name[0:len(img_name)-4] + '.png')
         cv2.imwrite(output_path + img_name[0:len(img_name)-4] + '.png', image)
 
     # Remove temporary images
@@ -237,6 +326,7 @@ def video():
 
 @app.route('/video/detections', methods=['POST'])
 def get_video_detections():
+    allow_classes = list(utils.read_class_names(file_name).values())
     videos = request.files.getlist('videos')
     video_path_list = []
     for video in videos:
@@ -344,7 +434,7 @@ def get_video_detections():
                         valid_detections.numpy()[0]]
 
             t2 = time.time()
-            class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+            class_names = utils.read_class_names(file_name)
             print('time: {}'.format(t2 - t1))
             for i in range(valid_detections[0]):
                 responses.append({
@@ -357,12 +447,12 @@ def get_video_detections():
                 "detections": responses
             })
 
-            class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+            # class_names = utils.read_class_names(cfg.YOLO.CLASSES)
 
             allowed_classes = allow_classes
 
-            counted_classes = count_objects(pred_bbox, by_class=True, allowed_classes=allowed_classes)
-            image, registro_pos = utils.draw_bbox_info(frame, pred_bbox, allowed_classes=allowed_classes)
+            counted_classes = count_objects(pred_bbox, by_class=True, class_names=class_names, allowed_classes=allowed_classes)
+            image, registro_pos = utils.draw_bbox_info(frame, pred_bbox, classes=class_names, allowed_classes=allowed_classes)
             for key, value in counted_classes.items():
                 for k, v in registro_pos.items():
                     if key == k:
@@ -412,6 +502,7 @@ def webcam_detections():
     #     video_name = video.filename
     #     video_path_list.append("./temp/" + video_name)
     #     video.save(os.path.join(os.getcwd(), "temp/", video_name))
+    allow_classes = list(utils.read_class_names(file_name).values())
     video_name = "webcam"
     response = []
 
@@ -429,7 +520,7 @@ def webcam_detections():
     height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = int(vid.get(cv2.CAP_PROP_FPS))
     codec = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter(output_path + video_name + '.mp4', -1, fps, (width, height))
+    out = cv2.VideoWriter(output_path + video_name + '.avi', codec, fps, (width, height))
 
     if framework == 'tflite':
         interpreter.allocate_tensors()
@@ -511,7 +602,7 @@ def webcam_detections():
                     valid_detections.numpy()[0]]
 
         t2 = time.time()
-        class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+        class_names = utils.read_class_names(file_name)
         print('time: {}'.format(t2 - t1))
         for i in range(valid_detections[0]):
             responses.append({
@@ -524,12 +615,12 @@ def webcam_detections():
             "detections": responses
         })
 
-        class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+        # class_names = utils.read_class_names(cfg.YOLO.CLASSES)
 
         allowed_classes = allow_classes
 
-        counted_classes = count_objects(pred_bbox, by_class=True, allowed_classes=allowed_classes)
-        image, registro_pos = utils.draw_bbox_info(frame, pred_bbox, allowed_classes=allowed_classes)
+        counted_classes = count_objects(pred_bbox, by_class=True, class_names=class_names, allowed_classes=allowed_classes)
+        image, registro_pos = utils.draw_bbox_info(frame, pred_bbox, classes=class_names, allowed_classes=allowed_classes)
         for key, value in counted_classes.items():
             for k, v in registro_pos.items():
                 if key == k:
@@ -557,16 +648,17 @@ def webcam_detections():
         imagen = bufer.tobytes()
 
         out.write(result)
+        
+        frame_id += 1
 
         yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + imagen + b"\r\n"
 
         if keyboard.is_pressed('q'):
+            out.release()
+            cv2.destroyAllWindows()
             break
-
-        frame_id += 1
-
-    vid.release()
-    cv2.destroyAllWindows()
+    print('out')
+       
 
 
 @app.route('/webcam/detections')
@@ -580,6 +672,7 @@ def url():
 
 @app.route('/image_url', methods=['POST'])
 def get_image_detections_url():
+    allow_classes = list(utils.read_class_names(file_name).values())
     image_urls = request.values.getlist('images')
     raw_image_list = []
     if not isinstance(image_urls, list):
@@ -681,7 +774,7 @@ def get_image_detections_url():
             score_threshold=score
         )
         t2 = time.time()
-        class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+        class_names = utils.read_class_names(file_name)
         print('time: {}'.format(t2 - t1))
 
         if os.path.exists(output_path + image_name + '.png'):
@@ -707,13 +800,13 @@ def get_image_detections_url():
         pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
 
         # read in all class names from config
-        class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+        # class_names = utils.read_class_names(cfg.YOLO.CLASSES)
 
         # by default allow all classes in .names file
         allowed_classes = allow_classes
 
-        counted_classes = count_objects_img(pred_bbox, by_class=True, allowed_classes=allowed_classes)
-        image, pos = utils.draw_bbox_img(original_image, pred_bbox, allowed_classes=allowed_classes)
+        counted_classes = count_objects_img(pred_bbox, by_class=True, class_names=class_names, allowed_classes=allowed_classes)
+        image, pos = utils.draw_bbox_img(original_image, pred_bbox, classes=class_names, allowed_classes=allowed_classes)
         results = []
 
         for key, value in counted_classes.items():
@@ -753,6 +846,7 @@ def track():
 
 @app.route('/track/detections', methods=['POST'])
 def get_track_detections():
+    allow_classes = list(utils.read_class_names(file_name).values())
     max_cosine_distance = 0.4
     nn_budget = None
     nms_max_overlap = 1.0
@@ -874,7 +968,7 @@ def get_track_detections():
 
             t2 = time.time()
             # read in all class names from config
-            class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+            class_names = utils.read_class_names(file_name)
             allowed_classes = allow_classes
             print('time: {}'.format(t2 - t1))
             for i in range(valid_detections[0]):
@@ -915,8 +1009,8 @@ def get_track_detections():
             # cv2.putText(frame, "Objects being tracked: {}".format(count), (5, 35), cv2.FONT_HERSHEY_COMPLEX_SMALL, 2, (0, 255, 0), 2)
             # count objects found
             counted_classes = count_objects(
-                pred_bbox, by_class=True, allowed_classes=allowed_classes)
-            registro_pos = utils.registro_pos_tracker(pred_bbox, allowed_classes=allowed_classes)
+                pred_bbox, by_class=True, class_names=class_names, allowed_classes=allowed_classes)
+            registro_pos = utils.registro_pos_tracker(pred_bbox, classes=class_names, allowed_classes=allowed_classes)
             for key, value in counted_classes.items():
                 # print("Number of {}s: {}".format(key, value))
                 for k, v in registro_pos.items():
@@ -999,6 +1093,7 @@ def url_video():
 
 @app.route('/video_url', methods=['POST'])
 def get_video_detections_url():
+    allow_classes = list(utils.read_class_names(file_name).values())
     video_urls = request.values.getlist('videos')
     raw_video_list = []
     if not isinstance(video_urls, list):
@@ -1144,7 +1239,7 @@ def get_video_detections_url():
                         valid_detections.numpy()[0]]
 
             t2 = time.time()
-            class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+            class_names = utils.read_class_names(file_name)
             print('time: {}'.format(t2 - t1))
 
             # if os.path.exists(output_path + video_name + '.mp4'):
@@ -1168,12 +1263,12 @@ def get_video_detections_url():
                 "detections": responses
             })
 
-            class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+            # class_names = utils.read_class_names(cfg.YOLO.CLASSES)
 
             allowed_classes = allow_classes
 
-            counted_classes = count_objects(pred_bbox, by_class=True, allowed_classes=allowed_classes)
-            image, registro_pos = utils.draw_bbox_info(frame, pred_bbox, allowed_classes=allowed_classes)
+            counted_classes = count_objects(pred_bbox, by_class=True, class_names=class_names, allowed_classes=allowed_classes)
+            image, registro_pos = utils.draw_bbox_info(frame, pred_bbox, classes=class_names, allowed_classes=allowed_classes)
             for key, value in counted_classes.items():
                 for k, v in registro_pos.items():
                     if key == k:

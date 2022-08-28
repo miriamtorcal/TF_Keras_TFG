@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+{% block modal %}
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> Seleccione el modelo de deteccion</h5>
+          <!-- <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+          <a href="{{url_for('home')}}">
+            <i class="fas fa-times" style="color: grey;"></i>
+          </a>
+        </div>
+        <div class="modal-body">
+          <div style="text-align: center">
+            <form style="text-align: center;">
+              <select id="model_selected">
+                {% for file in names_files %}
+                  {% if file == selected_file %}
+                    <option value="{{file}}" selected>{{file}}</option>
+                  {% else %}
+                    <option value="{{file}}">{{file}}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </form>
+            <button name="send" id="sendbutton"><strong>Cambiar modelo</strong></button>
+            <!-- <div style="border: 1px solid greenyellow; text-align: center;"> -->
+            <!-- </div> -->
+            <br>
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+    console.log("window is loaded")
+    $("#exampleModal").modal("show")
+})
+</script>
+{% endblock %}

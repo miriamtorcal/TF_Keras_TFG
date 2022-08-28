@@ -16,10 +16,10 @@
           <div style="text-align: center;">
             <form style="text-align:center">
               <div> 
-                <input id="folder_name" type="text" placeholder="Nombre de la carpeta donde se guardara el modelo" style="background-color:#b9d339; color:black; width:90%">
+                <input id="folder_name" type="text" placeholder="Nombre de la carpeta donde se guardara el modelo">
               </div>
-              <input id="imageinput1" type="file" name="image" class='imageinput' onchange="readUrl(this)" accept=".pb, .tflite">
-              <!-- <input id="imageinput1" webkitdirectory directory multiple type="file" name="image" class='imageinput' onchange="readUrl(this)"> -->
+              <!-- <input id="imageinput1" type="file" name="image" class='imageinput' onchange="readUrl(this)" accept=".pb, .tflite"> -->
+              <input id="imageinput1" webkitdirectory directory multiple type="file" name="image" class='imageinput' onchange="readUrl(this)" accept=".tflite">
               <label for='imageinput1'>
                 <figure>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" 
