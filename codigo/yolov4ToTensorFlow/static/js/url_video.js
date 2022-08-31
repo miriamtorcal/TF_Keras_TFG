@@ -1,5 +1,6 @@
 window.onload = () => {
 	$('#sendbutton').click(() => {
+		
 		$("#detecting").css("display", "block");
 		imagebox = $('#imagebox')
 		input = $('#imageinput').val();

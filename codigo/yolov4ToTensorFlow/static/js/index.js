@@ -1,12 +1,143 @@
 window.onload = () => {
+	const dragArea = document.querySelector(".input");
+	let file; 
+	var files = [];
+	let fileType;
+
+	if(dragArea != undefined || dragArea != null){
+
+		dragArea.addEventListener('dragover', (event) => {
+			event.preventDefault();
+			// console.log('file in drag area');
+		})
+
+		dragArea.addEventListener('dragleave', () => {
+			// console.log('file out drag area');
+		})
+
+		dragArea.addEventListener('drop', async (event) => {
+			event.preventDefault();
+			file = event.dataTransfer.files[0];
+			let items = event.dataTransfer.items;
+
+			console.log(file)
+			fileType = file.name.split('.').pop();
+			fileType = file.name == fileType  ? 'folder' : fileType;
+
+			let validExtensions = ['tflite', 'folder']
+			if(validExtensions.includes(fileType)){
+				if(fileType === 'folder'){
+					for (let i=0; i<items.length; i++){
+						await verifyItems(items[i].webkitGetAsEntry(), files)
+						.then(_ => {
+							console.log(_)
+						})
+					}
+					$('#msg_span').text('Cargando los archivos seleccionados')
+					$('#sendbutton').css("display", "block")
+				}
+				else{
+					$('#msg_span').text(file.name)
+					let fileReader = new FileReader()
+					fileReader.readAsDataURL(file);
+					$('#sendbutton').css("display", "block")
+				}
+			}
+		}, false)
+	}
+
+	console.log(files.length)
+
 	$('#sendbutton').click(() => {
 		input = $('#imageinput1')[0]
 		folder = $('#folder_name').val()
 		select = $('#file_selected').val()
 		model = $('#model_selected').val()
 
+		$('#circle').css("display", "block")
+
 		if(input != undefined){
-			if(input.files && input.files[0])
+			if (input.files.length == 0 && file != undefined){
+				let formData = new FormData();
+				formData.append('folder_name', folder)
+				console.log(formData)
+				if(fileType === 'tflite'){
+					formData.append('files', file);
+					$.ajax({
+						url: "/model_add", 
+						type:"POST",
+						data: formData,
+						cache: false,
+						processData:false,
+						contentType:false,
+						error: function(data){
+							$('#circle').css("display", "none")
+							console.log("upload error" , data);
+							console.log(data.getAllResponseHeaders());
+						},
+						success: function(){
+							Swal.fire({
+								text: 'Fichero subido correctamente',
+								icon: 'success',
+								confirmButtonText: 'OK',
+							})
+							.then(function() {
+								$('#msg_span').text('Escoge un modelo')
+								$('#imageinput1').val('')
+								file = ''
+								files = []
+								$('#folder_name').val('')
+								$('#sendbutton').css("display", "none")
+								$('#circle').css("display", "none")
+							})
+						}
+					})
+				}
+				if(fileType === 'folder'){
+					$('#msg_span').text(files.length + ' archivos seleccionados')
+					for (let i = 0; i < files.length; i++) {
+						console.log(files[i])
+						// formData.append('files' , files[i]);
+				
+						formData.append('files', files[i])
+						
+					}
+					// formData['files'] = files
+					formData.append('files', files)
+					formData.append('folder_name', folder)
+					console.log(formData)
+					$.ajax({
+						url: "/model_add", 
+						type:"POST",
+						data: formData,
+						cache: false,
+						processData:false,
+						contentType:false,
+						error: function(data){
+							$('#circle').css("display", "none")
+							console.log("upload error" , data);
+							console.log(data.getAllResponseHeaders());
+						},
+						success: function(){
+							Swal.fire({
+								text: 'Fichero subido correctamente',
+								icon: 'success',
+								confirmButtonText: 'OK',
+							})
+							.then(function() {
+								$('#msg_span').text('Escoge un modelo')
+								$('#imageinput1').val('')
+								$('#folder_name').val('')
+								$('#sendbutton').css("display", "none")
+								$('#circle').css("display", "none")
+								file = ''
+								files = []
+							})
+						}
+					})
+				}
+			} 
+			else if(input.files && input.files[0])
 			{
 				let formData = new FormData();
 				if (input.files.length == 1){
@@ -29,6 +160,7 @@ window.onload = () => {
 						processData:false,
 						contentType:false,
 						error: function(data){
+							$('#circle').css("display", "none")
 							console.log("upload error" , data);
 							console.log(data.getAllResponseHeaders());
 						},
@@ -43,6 +175,7 @@ window.onload = () => {
 								$('#msg_span').text('Escoge un fichero de nombres')
 								$('#imageinput1').val('')
 								$('#sendbutton').css("display", "none")
+								$('#circle').css("display", "none")
 							})
 						}
 					})
@@ -71,6 +204,7 @@ window.onload = () => {
 								$('#imageinput1').val('')
 								$('#folder_name').val('')
 								$('#sendbutton').css("display", "none")
+								$('#circle').css("display", "none")
 							})
 						}
 					})
@@ -101,6 +235,7 @@ window.onload = () => {
 					.then(function() {
 						console.log(data.new_file_selected)
 						$('#file_selected').val(data.new_file_selected)
+						$('#circle').css("display", "none")
 					})
 				}
 			})
@@ -129,13 +264,13 @@ window.onload = () => {
 					.then(function() {
 						console.log(data.new_file_selected)
 						$('#model_selected').val(data.new_file_selected)
+						$('#circle').css("display", "none")
 					})
 				}
 			})
 		}
 	});
 };
-
 
 
 function readUrl(input){
@@ -152,4 +287,29 @@ function readUrl(input){
 		reader.readAsDataURL(input.files[0]);
 	}
 	$('#sendbutton').css("display", "block")
+}
+
+async function verifyItems(item, files){
+	if (item.isDirectory) {
+		directoryReader = item.createReader();
+		directoryReader.readEntries(async function (entries){
+			for (let k=0; k<entries.length; k++){
+				f = entries[k]
+				if(f.isFile){
+					f.file (async function (file) {
+						files.push(await file)
+					})
+
+				}
+				// }
+				if(f.isDirectory){
+					if (f.name != 'assets'){
+						await verifyItems(await f,files)
+					}
+				}
+			}
+			return files;
+		});
+	}
+	return files;
 }

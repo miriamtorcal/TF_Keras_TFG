@@ -1,5 +1,6 @@
 window.onload = () => {
 	$('#sendbutton').click(() => {
+		
 		console.log("Detectando....")
 		$("#detecting").css("display", "block");
 		videobox = $('#videobox')
@@ -40,7 +41,6 @@ window.onload = () => {
 };
 
 
-
 function readUrl(input){
 	videobox = $('#videobox')
 	console.log("evoked readUrl")
@@ -55,4 +55,12 @@ function readUrl(input){
 		reader.readAsDataURL(input.files[0]);
 	}
 	$('#sendbutton').css("display", "block")
+}
+
+function clickKey(){
+	var e = $.Event('keypress');
+	e.which = 81;
+	e.keyCode = 81;
+	console.log(e)
+	document.dispatchEvent(e)
 }

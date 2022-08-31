@@ -85,7 +85,18 @@ def add_names():
 def add_names_file():
     files = request.files.getlist('files')
     for file in files:
-        filename = file.filename
+        filename = file.filename.split('.')[0]
+        ext = file.filename.split('.').pop()
+
+        if os.path.exists("./data/classes/" + filename + '.' + ext):
+            numb = 1
+            while True:
+                new_filename = filename + '_' + str(numb) + '.' + ext
+                if os.path.exists("./data/classes/" + new_filename):
+                    numb += 1
+                else:
+                    break
+            filename = new_filename
         file.save(os.path.join("./data/classes", filename))
     return Response(status=200)
 
@@ -111,7 +122,13 @@ def change_model_file():
 @app.route('/model_file', methods=['POST'])
 def model_file():
     new_file_selected = request.values['new_file']
-    global weights, interpreter, saved_model_loaded
+    global weights, interpreter, saved_model_loaded, framework, improve_quality
+
+    if(new_file_selected.split('.').pop() == 'tflite'):
+        framework = 'tflite'
+        improve_quality = True
+    else:
+        framework = 'tf'
     weights = "./checkpoints/" + new_file_selected
 
     if framework == 'tflite':
@@ -125,11 +142,11 @@ def model_file():
 def add_model():
     return render_template('./modal_add.html')
 
-@app.route('/model_add', methods=['POST'])
+@app.route('/model_add', methods=['GET', 'POST'])
 def add_model_file():
     folder = request.values['folder_name']
     files = request.files.getlist('files')
-    print(len(files))
+
     if (len(files) > 1):
         if os.path.exists("./checkpoints/" + folder):
             numb = 1
@@ -144,10 +161,7 @@ def add_model_file():
         os.mkdir(folder_path)
         os.mkdir(folder_path + '/variables')
         for file in files:
-            print(file.filename)
-            print(file.filename.split('.'))
             if (file.filename.split('.').pop() == 'pb'):
-                print('if')
                 filename = file.filename.split('/')[-1]
                 file.save(os.path.join(folder_path, filename))
             if (file.filename.split('/')[-1].split('.')[0] == 'variables'):
@@ -156,17 +170,27 @@ def add_model_file():
     else:
         for file in files:
             filename = file.filename
+            name = file.filename.split('.')[0]
+            ext = file.filename.split('.').pop()
+            if os.path.exists("./checkpoints/" + name + '.' + ext):
+                numb = 1
+                while True:
+                    new_filename = name + '_' + str(numb) + '.' + ext
+                    if os.path.exists("./checkpoints/" + new_filename):
+                        numb += 1
+                    else:
+                        break
+                filename = new_filename
             file.save(os.path.join("./checkpoints", filename))
     return Response(status=200)
 
 @app.route('/image')
 def image():
-    return render_template('./image.html')
+    return render_template('./image.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop())
 
 # Returns the image with detections on it
 @app.route('/image/detections', methods=['POST'])
 def get_image_detections():
-    print(file_name)
     allow_classes = list(utils.read_class_names(file_name).values())
     imgs = request.files.getlist('images')
     img_path_list = []
@@ -256,11 +280,9 @@ def get_image_detections():
             iou_threshold=iou,
             score_threshold=score
         )
-        print(classes)
         t2 = time.time()
         class_names = utils.read_class_names(file_name)
         # print(cfg.YOLO.CLASSES)
-        print(class_names)
         print('time: {}'.format(t2 - t1))
         for i in range(valid_detections[0]):
             responses.append({
@@ -307,7 +329,6 @@ def get_image_detections():
 
         image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
         if os.path.exists(output_path + img_name[0:len(img_name)-4] + '.png'):
-            print('---')
             os.remove(output_path + img_name[0:len(img_name)-4] + '.png')
         cv2.imwrite(output_path + img_name[0:len(img_name)-4] + '.png', image)
 
@@ -322,7 +343,7 @@ def get_image_detections():
 
 @app.route('/video')
 def video():
-    return render_template('./video.html')
+    return render_template('./video.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop())
 
 @app.route('/video/detections', methods=['POST'])
 def get_video_detections():
@@ -493,15 +514,9 @@ def get_video_detections():
 
 @app.route('/webcam')
 def webcam():
-    return render_template('./webcam.html')
+    return render_template('./webcam.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop())
 
 def webcam_detections():
-    # videos = request.files.getlist('videos')
-    # video_path_list = []
-    # for video in videos:
-    #     video_name = video.filename
-    #     video_path_list.append("./temp/" + video_name)
-    #     video.save(os.path.join(os.getcwd(), "temp/", video_name))
     allow_classes = list(utils.read_class_names(file_name).values())
     video_name = "webcam"
     response = []
@@ -643,21 +658,24 @@ def webcam_detections():
         # cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
         result = np.asarray(image)
         result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+        
+        out.write(result)
         # cv2.imshow("result", result)
         _, bufer = cv2.imencode(".jpg", frame)
         imagen = bufer.tobytes()
-
-        out.write(result)
         
         frame_id += 1
 
         yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + imagen + b"\r\n"
 
         if keyboard.is_pressed('q'):
-            out.release()
-            cv2.destroyAllWindows()
+            # out.release()
+            # cv2.destroyAllWindows()
             break
+    out.release()
+    cv2.destroyAllWindows()
     print('out')
+    return Response(status=200)
        
 
 
@@ -668,7 +686,7 @@ def get_webcam_detections():
 
 @app.route('/url')
 def url():
-    return render_template('./url.html')
+    return render_template('./url.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop())
 
 @app.route('/image_url', methods=['POST'])
 def get_image_detections_url():
@@ -682,10 +700,8 @@ def get_image_detections_url():
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
     }
     for i, image_url in enumerate(image_urls):
-        print(image_url)
         orig = image_url.index('https://')
         end = image_url.index('.es') if image_url.find('.es') != -1 else image_url.index('.com')
-        print(image_url[orig:end])
         image_name = image_url[orig:end]
         image_name = image_name.replace('https://', '')
         image_names.append(image_name)
@@ -842,7 +858,7 @@ def get_image_detections_url():
 
 @app.route('/track')
 def track():
-    return render_template('track.html')
+    return render_template('track.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop())
 
 @app.route('/track/detections', methods=['POST'])
 def get_track_detections():
@@ -1089,7 +1105,7 @@ def get_track_detections():
 
 @app.route('/url_video')
 def url_video():
-    return render_template('./url_video.html')
+    return render_template('./url_video.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop())
 
 @app.route('/video_url', methods=['POST'])
 def get_video_detections_url():
@@ -1129,8 +1145,6 @@ def get_video_detections_url():
 
     response = []
     for _, raw_video in enumerate(raw_video_list):
-        print(_)
-        print(raw_video)
         responses = []
         results = []
         try:

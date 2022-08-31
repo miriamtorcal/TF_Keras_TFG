@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="../static/css/url.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <!-- <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -23,6 +24,10 @@
                 <i class="fas fa-arrow-left"> volver al home</i>
             </a>
         </button>
+        <div style="text-align:right">
+            <strong><label style="color: white;">Fichero de nombres: <span style="color: #b9d339;">{{actual_names_file}}</span></label></strong>
+            <strong><label style="color: white;">Modelo de deteccion: <span style="color: #b9d339;">{{actual_model_file}}</span></label></strong>
+        </div>
     </div>
     <div class="app">
         <header class="app-header">
@@ -43,7 +48,11 @@
              <a href="" id="csv" style="color:#b9d339; font-family: Arial" download>Download CSV</a>
             </div>
             <form>
-                <input id="imageinput" type="url" name="image" placeholder="Introduce la URL del video" onchange="readUrl(this)">
+                <label>
+                    <img src="../static/imgs/YouTube_Logo.svg" style="height: 20px">
+                    <span style="font-family: Quicksand;">URL</span>
+                    <input id="imageinput" type="url" name="image" placeholder="Introduce la URL del video" onchange="readUrl(this)">
+                </label>
             </form>
             <button name="send" id = "sendbutton"><strong>Detectar</strong></button>
         </header>
