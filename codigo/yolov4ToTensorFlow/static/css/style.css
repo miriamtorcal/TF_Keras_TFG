@@ -166,7 +166,7 @@ input[type=file]{
   /* display:none; */
 }
 .imageinput + label{
-  max-width: 80%;
+  /* max-width: 80%; */
   font-size: 1.25rem;
   font-weight: 700;
   text-overflow: ellipsis;
@@ -202,12 +202,20 @@ input[type=file]{
 }
 
 #sendbutton{
-  text-align:center; 
-  /* float: left; */
   color:#000; 
   border: none;
-  background: none;
   font-size: 14px;
+  display: flex;
+  margin: 0 auto;
+  background: #b9d339;
+  padding: 5px 15px 3px 15px;
+  border-radius: 10px;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.15;
+  font-weight: bold;
 }
 
 #folder_name::placeholder{
@@ -215,9 +223,9 @@ input[type=file]{
 }
 
 #folder_name {
-  background-color:#b9d339; 
-  width:90%; 
-  border: none
+  border-color: #b9d339;
+  width:100%; 
+  padding: 2px;
 }
 
 .sk-circle {
@@ -340,4 +348,34 @@ input[type=file]{
     -webkit-transform: scale(1);
             transform: scale(1);
   }
+}
+
+.file_list{
+  margin-bottom: 10px;
+  border-radius: 7px;
+  border-color: #b9d339;
+}
+
+.btns-header{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  /* gap: 12%; */
+  margin-bottom: 7px;
+}
+.btns-header > button{
+  color:#000; 
+  border: none;
+  font-size: 14px;
+  display: flex;
+  margin: 0 auto;
+  background: #b9d339;
+  padding: 5px 15px 3px 15px;
+  border-radius: 10px;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.15;
+  font-weight: bold;
 }

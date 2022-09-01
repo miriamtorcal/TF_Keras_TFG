@@ -21,9 +21,9 @@
                 <i class="fas fa-arrow-left"> volver al home</i>
             </a>
         </button>
-        <div style="text-align:right">
-            <strong><label style="color: white;">Fichero de nombres: <span style="color: #b9d339;">{{actual_names_file}}</span></label></strong>
-            <strong><label style="color: white;">Modelo de deteccion: <span style="color: #b9d339;">{{actual_model_file}}</span></label></strong>
+        <div style="text-align:right; margin-right: 7px;">
+            <label style="color: white;">Fichero de nombres: <strong style="color: #b9d339;">{{actual_names_file}}</strong></label>
+            <label style="color: white;">Modelo de deteccion: <strong style="color: #b9d339;">{{actual_model_file}}</strong></label>
         </div>
     </div>
     <div class="app">
@@ -44,7 +44,7 @@
              <br>
              <a href="" id="csv" style="color:#b9d339; font-family: sans-serif" download>Download CSV</a>
             </div>
-            <form>
+            <form style="display:flex;">
                 <input id="videoinput1" type="file" name="video" class="imageinput" onchange="readUrl(this)">
                 <label for='videoinput1'>
                     <figure>

@@ -46,13 +46,26 @@ window.onload = () => {
 		}, false)
 	}
 
-	console.log(files.length)
+	console.log($('#sendbutton'))
 
 	$('#sendbutton').click(() => {
 		input = $('#imageinput1')[0]
 		folder = $('#folder_name').val()
 		select = $('#file_selected').val()
 		model = $('#model_selected').val()
+
+		console.log('input')
+		console.log(input)
+
+		console.log('folder')
+		console.log(folder)
+
+		console.log('select')
+		console.log(select)
+
+		console.log('model')
+		console.log(model)
+
 
 		$('#circle').css("display", "block")
 
@@ -242,6 +255,7 @@ window.onload = () => {
 		}
 		if(model != undefined)
 		{
+			console.log('model')
 			let formData = new FormData();
 			formData.append('new_file', model)
 			$.ajax({

@@ -142,7 +142,7 @@ def model_file():
 def add_model():
     return render_template('./modal_add.html')
 
-@app.route('/model_add', methods=['GET', 'POST'])
+@app.route('/model_add', methods=['POST'])
 def add_model_file():
     folder = request.values['folder_name']
     files = request.files.getlist('files')
@@ -518,7 +518,7 @@ def webcam():
 
 def webcam_detections():
     allow_classes = list(utils.read_class_names(file_name).values())
-    video_name = "webcam"
+    video_name = "webcam_" + datetime.now().strftime("%d_%m_%Y__%H_%M_%S")
     response = []
 
     # for count, video_path in enumerate(video_path_list):
@@ -672,10 +672,10 @@ def webcam_detections():
             # out.release()
             # cv2.destroyAllWindows()
             break
-    out.release()
-    cv2.destroyAllWindows()
-    print('out')
-    return Response(status=200)
+    # out.release()
+    # cv2.destroyAllWindows()
+    # print('out')
+    # return Response(status=200)
        
 
 

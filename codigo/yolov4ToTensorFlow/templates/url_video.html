@@ -24,9 +24,9 @@
                 <i class="fas fa-arrow-left"> volver al home</i>
             </a>
         </button>
-        <div style="text-align:right">
-            <strong><label style="color: white;">Fichero de nombres: <span style="color: #b9d339;">{{actual_names_file}}</span></label></strong>
-            <strong><label style="color: white;">Modelo de deteccion: <span style="color: #b9d339;">{{actual_model_file}}</span></label></strong>
+        <div style="text-align:right; margin-right: 7px;">
+           <label style="color: white;">Fichero de nombres: <strong style="color: #b9d339;">{{actual_names_file}}</strong></label>
+           <label style="color: white;">Modelo de deteccion: <strong style="color: #b9d339;">{{actual_model_file}}</strong></label>
         </div>
     </div>
     <div class="app">
@@ -49,9 +49,11 @@
             </div>
             <form>
                 <label>
-                    <img src="../static/imgs/YouTube_Logo.svg" style="height: 20px">
-                    <span style="font-family: Quicksand;">URL</span>
-                    <input id="imageinput" type="url" name="image" placeholder="Introduce la URL del video" onchange="readUrl(this)">
+                    <div style="display: flex; align-items: center; gap: 5px">
+                        <img src="../static/imgs/YouTube_Logo.svg" style="height: 20px">
+                        <span style="font-family: Quicksand;"><strong>URL</strong></span>
+                    </div>
+                    <input id="imageinput" type="url" name="image" autofocus onchange="readUrl(this)">
                 </label>
             </form>
             <button name="send" id = "sendbutton"><strong>Detectar</strong></button>

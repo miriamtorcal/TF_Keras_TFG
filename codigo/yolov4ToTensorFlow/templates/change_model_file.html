@@ -15,7 +15,7 @@
         <div class="modal-body">
           <div style="text-align: center">
             <form style="text-align: center;">
-              <select id="model_selected">
+              <select id="model_selected" class="file_list">
                 {% for file in names_files %}
                   {% if file == selected_file %}
                     <option value="{{file}}" selected>{{file}}</option>
@@ -39,9 +39,7 @@
               <div class="sk-circle11 sk-child"></div>
               <div class="sk-circle12 sk-child"></div>
             </div>
-            <button name="send" id="sendbutton"><strong>Cambiar modelo</strong></button>
-            <!-- <div style="border: 1px solid greenyellow; text-align: center;"> -->
-            <!-- </div> -->
+            <button name="send" id="sendbutton">Cambiar modelo</button>
             <br>
           </div>
         </div>

@@ -25,31 +25,32 @@
     <body>
         <div id="main-container">
             <h1>Bienvenid@ a OD-MTC</h1>
-            <div style="width: 100%;">
-                <button style="text-align: left; background-color: white; border: none;">
+            <div class="btns-header">
+                <!-- <button style="text-align: left; background-color: white; border: none;"> -->
+                <button>
                     <a style="color: #000; text-decoration: none;" href="{{url_for('add_model')}}">
                         Añadir modelo de deteccion
                     </a>
                 </button>
-                <button style="text-align: left; background-color: white; border: none;">
+                <button>
                     <a style="color: #000; text-decoration: none;" href="{{url_for('add_names')}}">
                         Añadir fichero de nombres
                     </a>
                 </button>
-                <button style="text-align: left; background-color: white; border: none;">
+                <button>
                     <a style="color: #000; text-decoration: none;" href="{{url_for('change_names_file')}}">
                         Cambiar fichero de nombres
                     </a>
                 </button>
-                <button style="text-align: left; background-color: white; border: none;">
+                <button>
                     <a style="color: #000; text-decoration: none;" href="{{url_for('change_model_file')}}">
                         Cambiar modelo de deteccion
                     </a>
                 </button>
             </div>
             <div style="text-align:right">
-                <label>Fichero de nombres: {{actual_names_file}}</label>
-                <label>Modelo de deteccion: {{actual_model_file}}</label>
+                <label>Fichero de nombres: <strong>{{actual_names_file}}</strong></label>
+                <label>Modelo de deteccion: <strong>{{actual_model_file}}</strong></label>
             </div>
             <div class="images-grid">
                 <a href="{{url_for('image')}}" data-title="Detecta objetos sobre una imagen">
