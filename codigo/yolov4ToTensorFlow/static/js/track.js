@@ -14,10 +14,21 @@ window.onload = () => {
 				cache: false,
 				processData:false,
 				contentType:false,
-				error: function(data){
-					$("#detecting").css("display", "none");
-					console.log("upload error" , data);
-					console.log(data.getAllResponseHeaders());
+				// error: function(data){
+				// 	$("#detecting").css("display", "none");
+				// 	console.log("upload error" , data);
+				// 	console.log(data.getAllResponseHeaders());
+				// },
+				error: function(xhr, status, error) {
+					var err = xhr.responseText.split('<p>').pop()
+					Swal.fire({
+						text: err.replace('</p>', ''),
+						icon: 'error',
+						confirmButtonText: 'OK',
+					})
+					.then(_ => {
+						$("#detecting").css("display", "none");
+					})
 				},
 				success: function(){
 					let filename = $('input[type=file]').val().split('\\').pop();

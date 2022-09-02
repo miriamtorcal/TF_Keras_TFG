@@ -12,7 +12,7 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 	<script type="text/javascript" src="../static/js/webcam.js"></script>
-    <title>OBJECT DETECTECTION</title>
+    <title>Webcam Detection</title>
 </head>
 <body>
     <div>
@@ -31,6 +31,12 @@
             <p>
                 Object Detection Webcam
             </p>
+
+            <div>
+                <input type="text" value="{{init}}" id="isInit" style="display:none">
+                <input type="text" value="{{file}}" id="file" style="display:none">
+            </div>
+
             <div className="pre_img">
                 <span>
                     <img id="videobox" src="{{url_for('get_webcam_detections')}}"></img>

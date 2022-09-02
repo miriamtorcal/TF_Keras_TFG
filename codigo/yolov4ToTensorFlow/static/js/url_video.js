@@ -15,10 +15,21 @@ window.onload = () => {
 				cache: false,
 				processData: false,
 				contentType: false,
-				error: function(data){
-					console.log("upload error" , data);
-					console.log(data.getAllResponseHeaders());
-					$("#detecting").css("display", "none");
+				// error: function(data){
+				// 	console.log("upload error" , data);
+				// 	console.log(data.getAllResponseHeaders());
+				// 	$("#detecting").css("display", "none");
+				// },
+				error: function(xhr, status, error) {
+					var err = xhr.responseText.split('<p>').pop()
+					Swal.fire({
+						text: err.replace('</p>', ''),
+						icon: 'error',
+						confirmButtonText: 'OK',
+					})
+					.then(_ => {
+						$("#detecting").css("display", "none");
+					})
 				},
 				success: function(data){
 					let file = data['response'][0].video

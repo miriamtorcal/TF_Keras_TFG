@@ -2,6 +2,7 @@ html {
     text-align: center;
     background-color: #282c34;
     color: white;
+    font-family: "Montserrat", sans-serif;
   }
   
   .app-header {
@@ -30,7 +31,7 @@ html {
   }
   
   input[type=url]{
-    background-color: #b9d339;
+    background-color: white;
     border: none;
     color: #282c34;
     padding: 15px 32px;

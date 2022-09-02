@@ -13,9 +13,18 @@ window.onload = () => {
 				cache: false,
 				processData:false,
 				contentType:false,
-				error: function(data){
-					console.log("upload error" , data);
-					console.log(data.getAllResponseHeaders());
+				// error: function(data){
+				// 	console.log("upload error" , data);
+				// 	console.log(data.getAllResponseHeaders());
+				// 	console.log(data.response)
+				// },
+				error: function(xhr, status, error) {
+					var err = xhr.responseText.split('<p>').pop()
+					Swal.fire({
+						text: err.replace('</p>', ''),
+						icon: 'error',
+						confirmButtonText: 'OK',
+					})
 				},
 				success: function(data){
 					let filename = $('input[type=file]').val().split('\\').pop();

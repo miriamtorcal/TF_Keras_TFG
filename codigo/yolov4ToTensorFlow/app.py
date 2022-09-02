@@ -45,6 +45,8 @@ output_path = './static/detections/'
 iou = 0.45
 score = 0.25
 allow_classes = list(utils.read_class_names(file_name).values())
+init = True
+file = ''
 
 class Flag:
     tiny = tiny
@@ -285,6 +287,8 @@ def get_image_detections():
         # print(cfg.YOLO.CLASSES)
         print('time: {}'.format(t2 - t1))
         for i in range(valid_detections[0]):
+            if (int(classes[0][i]) > len(class_names)):
+                abort(422, 'El fichero de nombres no posee las clases suficientes')
             responses.append({
                 "class": class_names[int(classes[0][i])],
                 "confidence": float("{0:.2f}".format(np.array(scores[0][i]) * 100)),
@@ -458,6 +462,8 @@ def get_video_detections():
             class_names = utils.read_class_names(file_name)
             print('time: {}'.format(t2 - t1))
             for i in range(valid_detections[0]):
+                if (int(classes[0][i]) > len(class_names)):
+                    abort(422, 'El fichero de nombres no posee las clases suficientes')
                 responses.append({
                     "class": class_names[int(classes[0][i])],
                     "confidence": float("{0:.2f}".format(np.array(scores[0][i]) * 100)),
@@ -514,18 +520,23 @@ def get_video_detections():
 
 @app.route('/webcam')
 def webcam():
-    return render_template('./webcam.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop())
+    global init, file
+    init = True
+    file = "webcam_" + datetime.now().strftime("%d_%m_%Y__%H_%M_%S")
+    return render_template('./webcam.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop(), init=init)
 
 def webcam_detections():
+    global init
+
     allow_classes = list(utils.read_class_names(file_name).values())
-    video_name = "webcam_" + datetime.now().strftime("%d_%m_%Y__%H_%M_%S")
+    video_name = file
     response = []
 
     # for count, video_path in enumerate(video_path_list):
     responses = []
     results = []
     try:
-        vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        vid = cv2.VideoCapture(0)
     except cv2.error:
         abort(404, "it is not a video file or video file is an unsupported format. try mp4")
 
@@ -533,9 +544,11 @@ def webcam_detections():
 
     width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    _, f = vid.read()
+    h, w, none = f.shape
     fps = int(vid.get(cv2.CAP_PROP_FPS))
     codec = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter(output_path + video_name + '.avi', codec, fps, (width, height))
+    out = cv2.VideoWriter(output_path + video_name + '.avi', codec, fps, (w, h))
 
     if framework == 'tflite':
         interpreter.allocate_tensors()
@@ -657,11 +670,11 @@ def webcam_detections():
 
         # cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
         result = np.asarray(image)
-        result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+        # result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         
         out.write(result)
         # cv2.imshow("result", result)
-        _, bufer = cv2.imencode(".jpg", frame)
+        _, bufer = cv2.imencode(".jpg", cv2.flip(frame,1))
         imagen = bufer.tobytes()
         
         frame_id += 1
@@ -669,15 +682,17 @@ def webcam_detections():
         yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + imagen + b"\r\n"
 
         if keyboard.is_pressed('q'):
-            # out.release()
-            # cv2.destroyAllWindows()
+            init = False
+            out.release()
+            cv2.destroyAllWindows()
             break
-    # out.release()
-    # cv2.destroyAllWindows()
-    # print('out')
-    # return Response(status=200)
-       
+    print(init)
+    get_webcam_data()
 
+@app.route('/webcam_data', methods=['GET'])
+def get_webcam_data():
+    return Response(response=json.dumps({'file':file, 'init': init}), mimetype="application/json", status=200)
+       
 
 @app.route('/webcam/detections')
 def get_webcam_detections():
@@ -804,6 +819,8 @@ def get_image_detections_url():
             image_name = new_image_name
 
         for i in range(valid_detections[0]):
+            if (int(classes[0][i]) > len(class_names)):
+                abort(422, 'El fichero de nombres no posee las clases suficientes')
             responses.append({
                 "class": class_names[int(classes[0][i])],
                 "confidence": float("{0:.2f}".format(np.array(scores[0][i]) * 100)),
@@ -988,6 +1005,8 @@ def get_track_detections():
             allowed_classes = allow_classes
             print('time: {}'.format(t2 - t1))
             for i in range(valid_detections[0]):
+                if (int(classes[0][i]) > len(class_names)):
+                    abort(422, 'El fichero de nombres no posee las clases suficientes')
                 responses.append({
                     "class": class_names[int(classes[0][i])],
                     "confidence": float("{0:.2f}".format(np.array(scores[0][i]) * 100)),
@@ -1140,7 +1159,7 @@ def get_video_detections_url():
         except Exception as e:
             print(e.__class__)
             print(e)
-            abort(500)
+            abort(500, e)
         raw_video_list.append(video_path)
 
     response = []
@@ -1267,6 +1286,8 @@ def get_video_detections_url():
             #     video_name = new_video_name
 
             for i in range(valid_detections[0]):
+                if (int(classes[0][i]) > len(class_names)):
+                    abort(422, 'El fichero de nombres no posee las clases suficientes')
                 responses.append({
                     "class": class_names[int(classes[0][i])],
                     "confidence": float("{0:.2f}".format(np.array(scores[0][i]) * 100)),
@@ -1319,7 +1340,10 @@ def get_video_detections_url():
 
     # Remove temporary images
     for name in raw_video_list:
-        os.remove(name)
+        if (os.path.exists(name)):
+            os.remove(name)
+        else:
+            abort(500, 'El nombre del fichero contiene errores de sintaxis')
     try:
         return Response(response=json.dumps({"response": response}), mimetype="application/json")
     except FileNotFoundError:
