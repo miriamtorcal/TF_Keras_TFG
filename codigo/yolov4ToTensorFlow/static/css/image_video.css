@@ -118,6 +118,7 @@ html {
 
   #detecting{
     display: none;
+    font-family: 'Monserrat', sans-serif;
   }
 
   #sendbutton{
@@ -169,4 +170,21 @@ html {
     font-style: normal;
     text-transform: uppercase;
     font-family: "Montserrat", sans-serif;
+  }
+
+  #submitbutton{
+    color:#000; 
+    border: none;
+    font-size: 14px;
+    display: flex;
+    margin: 0 auto;
+    background: #b9d339;
+    padding: 5px 15px 3px 15px;
+    border-radius: 10px;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.15;
+    font-weight: bold;
   }

@@ -54,19 +54,6 @@ window.onload = () => {
 		select = $('#file_selected').val()
 		model = $('#model_selected').val()
 
-		console.log('input')
-		console.log(input)
-
-		console.log('folder')
-		console.log(folder)
-
-		console.log('select')
-		console.log(select)
-
-		console.log('model')
-		console.log(model)
-
-
 		$('#circle').css("display", "block")
 
 		if(input != undefined){
@@ -109,9 +96,6 @@ window.onload = () => {
 				if(fileType === 'folder'){
 					$('#msg_span').text(files.length + ' archivos seleccionados')
 					for (let i = 0; i < files.length; i++) {
-						console.log(files[i])
-						// formData.append('files' , files[i]);
-				
 						formData.append('files', files[i])
 						
 					}
@@ -213,7 +197,7 @@ window.onload = () => {
 							})
 							.then(function() {
 								console.log('pre reset input')
-								$('#msg_span').text('Escoge un modelo')
+								$('#msg_span').text('Arrastra/selecciona un modelo o carpeta')
 								$('#imageinput1').val('')
 								$('#folder_name').val('')
 								$('#sendbutton').css("display", "none")

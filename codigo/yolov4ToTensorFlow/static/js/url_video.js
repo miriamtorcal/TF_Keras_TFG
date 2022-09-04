@@ -15,11 +15,6 @@ window.onload = () => {
 				cache: false,
 				processData: false,
 				contentType: false,
-				// error: function(data){
-				// 	console.log("upload error" , data);
-				// 	console.log(data.getAllResponseHeaders());
-				// 	$("#detecting").css("display", "none");
-				// },
 				error: function(xhr, status, error) {
 					var err = xhr.responseText.split('<p>').pop()
 					Swal.fire({
@@ -36,7 +31,7 @@ window.onload = () => {
 					let csv = file
 					csv = csv.replace(".mp4",".csv")
 					$("#imagebox").css("display", "block");
-					imagebox.attr('src' , '..//static//detections//' + file);
+					imagebox.attr('src' , '..//static//detections//' + file + '?rand=' + Math.random());
 					$("#link").css("display", "block");
          			$("#download").attr("href", '..//static//detections//' + file);
 					$("#csv").attr("href", '..//static//detections//' + csv);

@@ -32,23 +32,23 @@
                 Object Detection Webcam
             </p>
 
-            <div>
-                <input type="text" value="{{init}}" id="isInit" style="display:none">
-                <input type="text" value="{{file}}" id="file" style="display:none">
-            </div>
+            <form method="post" action="{{ url_for('tasks') }}" style="display: flex; gap: 10px; margin-bottom: 12px;">
+                <input type="submit" id="submitbutton" value="Iniciar/Parar" name="stop" onclick="">
+                <input type="submit" id="submitbutton" value="Iniciar/Parar Grabación" name="rec">
+            </form>
+
+            <input type="text" value="{{hasUsed}}" id="hasUsed" style="display:none">
+            <input type="text" value="{{file}}" id="file" style="display:none">
 
             <div className="pre_img">
                 <span>
                     <img id="videobox" src="{{url_for('get_webcam_detections')}}"></img>
                 </span>
             </div>
-            <div id="detecting">
-                Detectando...
-            </div>
             <div id="link">
-             <a href="" id="download" download>Download</a>
+             <a href="" id="download" download style="color:#b9d339; font-family: Monserrat">Download</a>
              <br>
-             <a href="" id="csv" download>Download CSV</a>
+             <a href="" id="csv" download style="color:#b9d339; font-family: Monserrat">Download CSV</a>
             </div>
             <!-- <button name="send" id = "sendbutton"><a href="{{url_for('webcam')}}">Send</a></button> -->
         </header>

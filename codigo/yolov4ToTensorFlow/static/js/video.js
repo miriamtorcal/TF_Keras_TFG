@@ -16,10 +16,6 @@ window.onload = () => {
 				cache: false,
 				processData:false,
 				contentType:false,
-				// error: function(data){
-				// 	console.log("upload error" , data);
-				// 	console.log(data.getAllResponseHeaders());
-				// },
 				error: function(xhr, status, error) {
 					var err = xhr.responseText.split('<p>').pop()
 					Swal.fire({
@@ -36,15 +32,13 @@ window.onload = () => {
 					console.log(filename)
 					let tarr = filename.split('/');   
 					let file = tarr[tarr.length-1]; 
-					// file = file.replace("mp4","avi")
 					let csv = file
 					csv = csv.replace("mp4","csv")
-					videobox.attr('src', '..//static//detections//' + file);
+					videobox.attr('src', '..//static//detections//' + file + '?rand=' + Math.random());
 					$("#link").css("display", "block");
          			$("#download").attr("href", '..//static//detections//' + file);
 					$("#csv").attr("href", '..//static//detections//' + csv);
 					$("#detecting").css("display", "none");
-					console.log("Fin deteccion")
 				}
 			});
 		}

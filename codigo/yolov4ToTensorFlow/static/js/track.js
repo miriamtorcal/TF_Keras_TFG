@@ -39,7 +39,7 @@ window.onload = () => {
 					let file = tarr[tarr.length-1]; 
 					let csv = file
 					csv = csv.replace("mp4","csv")
-					videobox.attr('src', '..//static//detections//' + file);
+					videobox.attr('src', '..//static//detections//' + file + '?rand=' + Math.random());
 					$("#link").css("display", "block");
          			$("#download").attr("href", '..//static//detections//' + file);
 					$("#csv").attr("href", '..//static//detections//' + csv);

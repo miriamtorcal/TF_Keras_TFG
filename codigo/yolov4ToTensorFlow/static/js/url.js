@@ -31,7 +31,7 @@ window.onload = () => {
 					let csv = file
 					csv = csv.replace("png","csv")
 					$("#imagebox").css("display", "block");
-					imagebox.attr('src' , '..//static//detections//' + file);
+					imagebox.attr('src' , '..//static//detections//' + file + '?rand=' + Math.random());
 					$("#link").css("display", "block");
          			$("#download").attr("href", '..//static//detections//' + file);
 					$("#csv").attr("href", '..//static//detections//' + csv);

@@ -1,4 +1,5 @@
 # Flask dependecies
+from threading import Thread
 from cv2 import CAP_DSHOW
 # from importlib import reload
 import tensorflow as tf
@@ -11,7 +12,7 @@ if len(physical_devices) > 0:
 import csv
 from datetime import datetime
 from http.client import responses
-from flask import Flask, request, redirect, url_for, render_template, abort, Response, send_from_directory
+from flask import Flask, request, render_template, abort, Response, send_from_directory
 from deep_sort.tracker import Tracker
 from core.functions import count_objects, count_objects_img
 from deep_sort import nn_matching, preprocessing
@@ -45,8 +46,12 @@ output_path = './static/detections/'
 iou = 0.45
 score = 0.25
 allow_classes = list(utils.read_class_names(file_name).values())
-init = True
+global webcamOut, rec_frame, rec, file, switch, hasUsedV
 file = ''
+rec = 0
+switch = 0
+hasUsedV = False
+hasUsed = False
 
 class Flag:
     tiny = tiny
@@ -68,6 +73,9 @@ else:
 
 # Initialize Flask app
 app = Flask(__name__)
+
+webcamVid = cv2.VideoCapture(0)
+
 app.config["CACHE_TYPE"] = "null"
 print("app loaded")
 
@@ -520,14 +528,58 @@ def get_video_detections():
 
 @app.route('/webcam')
 def webcam():
-    global init, file
-    init = True
-    file = "webcam_" + datetime.now().strftime("%d_%m_%Y__%H_%M_%S")
-    return render_template('./webcam.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop(), init=init)
+    global hasUsed
+    hasUsed = False
+    return render_template('./webcam.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop(), hasUsed=hasUsed)
+
+def record(webcam_out):
+    global rec_frame
+    while(rec):
+        time.sleep(0.05)
+        webcam_out.write(rec_frame)
+
+@app.route('/webcam_', methods=['POST', 'GET'])
+def tasks():
+    global webcamOut, webcamVid, switch, hasUsedV, hasUsed, file, rec
+    
+    if request.method == 'POST':
+        if (request.form.get('stop') == 'Iniciar/Parar'):
+            if (switch == 1):
+                switch = 0
+                if(rec):
+                    rec = not rec
+                    hasUsedV = True
+                    webcamOut.release
+                webcamVid.release()
+                cv2.destroyAllWindows()
+                if(hasUsedV and hasUsed):
+                    hasUsedV = False
+                    return render_template('webcam.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop(), hasUsed=hasUsed, file=file)
+            else:
+                webcamVid = cv2.VideoCapture(0)
+                switch = 1
+                hasUsed = True
+        elif (request.form.get('rec') == 'Iniciar/Parar Grabación'):
+            rec = not rec
+            if (rec):
+                if(switch == 1):
+                    file = "webcam_" + datetime.now().strftime("%d_%m_%Y__%H_%M_%S")
+                    codec = cv2.VideoWriter_fourcc(*'XVID')
+                    fps = int(webcamVid.get(cv2.CAP_PROP_FPS))
+                    width = int(webcamVid.get(cv2.CAP_PROP_FRAME_WIDTH))
+                    height = int(webcamVid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                    webcamOut = cv2.VideoWriter(output_path + file + '.avi', codec, fps, (width, height))
+                    # thread = Thread(target = record, args=[webcamOut,])
+                    # thread.start()
+            elif(rec == False):
+                hasUsedV = True
+                webcamOut.release
+    elif request.method == 'GET':
+        return render_template('webcam.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop())
+    return render_template('webcam.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop())
 
 def webcam_detections():
-    global init
-
+    global webcamOut, webcamVid, file, rec_frame
     allow_classes = list(utils.read_class_names(file_name).values())
     video_name = file
     response = []
@@ -535,20 +587,6 @@ def webcam_detections():
     # for count, video_path in enumerate(video_path_list):
     responses = []
     results = []
-    try:
-        vid = cv2.VideoCapture(0)
-    except cv2.error:
-        abort(404, "it is not a video file or video file is an unsupported format. try mp4")
-
-    out = None
-
-    width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    _, f = vid.read()
-    h, w, none = f.shape
-    fps = int(vid.get(cv2.CAP_PROP_FPS))
-    codec = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter(output_path + video_name + '.avi', codec, fps, (w, h))
 
     if framework == 'tflite':
         interpreter.allocate_tensors()
@@ -562,12 +600,12 @@ def webcam_detections():
 
     frame_id = 0
     while True:
-        return_value, frame = vid.read()
+        return_value, frame = webcamVid.read()
         if return_value:
             # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             image = Image.fromarray(frame)
         else:
-            if frame_id == vid.get(cv2.CAP_PROP_FRAME_COUNT):
+            if frame_id == webcamVid.get(cv2.CAP_PROP_FRAME_COUNT):
                 print("Video processing complete")
                 break
             raise ValueError("No image! Try with another video format")
@@ -669,12 +707,17 @@ def webcam_detections():
         csvfile.close()
 
         # cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
-        result = np.asarray(image)
+        # result = np.asarray(image)
         # result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        
-        out.write(result)
+        # webcamOut.write(result)
+        if(rec):
+            rec_frame=frame
+            time.sleep(0.05)
+            webcamOut.write(rec_frame)
+            # frame=cv2.flip(frame,1)
+            
         # cv2.imshow("result", result)
-        _, bufer = cv2.imencode(".jpg", cv2.flip(frame,1))
+        _, bufer = cv2.imencode(".jpg", frame)
         imagen = bufer.tobytes()
         
         frame_id += 1
@@ -682,16 +725,10 @@ def webcam_detections():
         yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + imagen + b"\r\n"
 
         if keyboard.is_pressed('q'):
-            init = False
-            out.release()
+            webcamOut.release()
+            webcamVid.release()
             cv2.destroyAllWindows()
             break
-    print(init)
-    get_webcam_data()
-
-@app.route('/webcam_data', methods=['GET'])
-def get_webcam_data():
-    return Response(response=json.dumps({'file':file, 'init': init}), mimetype="application/json", status=200)
        
 
 @app.route('/webcam/detections')
@@ -1111,7 +1148,8 @@ def get_track_detections():
             result = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
             out.write(result)
-            if cv2.waitKey(1) & 0xFF == ord('q'): break
+            if keyboard.is_pressed('q'):
+                break
         vid.release()
         cv2.destroyAllWindows()
     # Remove temporary images
@@ -1348,3 +1386,6 @@ def get_video_detections_url():
         return Response(response=json.dumps({"response": response}), mimetype="application/json")
     except FileNotFoundError:
         abort(404)
+
+webcamVid.release()
+cv2.destroyAllWindows()    
