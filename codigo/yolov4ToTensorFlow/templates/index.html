@@ -27,29 +27,33 @@
             <h1>Bienvenid@ a OD-MTC</h1>
             <div class="btns-header">
                 <!-- <button style="text-align: left; background-color: white; border: none;"> -->
-                <button>
+                <button style="margin-left: -0.5px;">
                     <a style="color: #000; text-decoration: none;" href="{{url_for('add_model')}}">
                         Añadir modelo de deteccion
                     </a>
                 </button>
+                <i class="fas fa-info-circle" style="color: #b9d339; margin-left: -5%;" title="Añade el modelo que permitira detectar los objetos."></i>
                 <button>
                     <a style="color: #000; text-decoration: none;" href="{{url_for('add_names')}}">
-                        Añadir fichero de nombres
+                        Añadir fichero de etiquetas
                     </a>
                 </button>
+                <i class="fas fa-info-circle" style="color: #b9d339; margin-left: -5%;" title="Añade el fichero de etiquetas que permitira clasificar los objetos."></i>
                 <button>
                     <a style="color: #000; text-decoration: none;" href="{{url_for('change_names_file')}}">
-                        Cambiar fichero de nombres
+                        Cambiar fichero de etiquetas
                     </a>
                 </button>
+                <i class="fas fa-info-circle" style="color: #b9d339; margin-left: -5%;" title="Cambia el fichero de etiquetas, por uno de los disponibles."></i>
                 <button>
                     <a style="color: #000; text-decoration: none;" href="{{url_for('change_model_file')}}">
                         Cambiar modelo de deteccion
                     </a>
                 </button>
+                <i class="fas fa-info-circle" style="color: #b9d339; margin-left: -5%;" title="Cambia el modelo de detección por uno de los disponibles."></i>
             </div>
             <div style="text-align:right">
-                <label>Fichero de nombres: <strong>{{actual_names_file}}</strong></label>
+                <label>Fichero de etiquetas: <strong>{{actual_names_file}}</strong></label>
                 <label>Modelo de deteccion: <strong>{{actual_model_file}}</strong></label>
             </div>
             <div class="images-grid">
@@ -59,7 +63,7 @@
                 <a href="{{url_for('video')}}" data-title="Detecta objetos sobre un video">
                     <img src="static/imgs/od_video.jpg" alt="Coches antiguos en carretera" />
                 </a>
-                <a href="{{url_for('track')}}" data-title="Detecta objetos (mediante Object Tracking) sobre un video">
+                <a href="{{url_for('track')}}" data-title="Contabiliza objetos sobre un video">
                     <img src="static/imgs/od_track.jpg" alt="Coches antiguos en carretera" />
                 </a>
                 <a href="{{url_for('url')}}" data-title="Detecta objetos sobre una imagen obtenida mendiante una url">

@@ -1,4 +1,5 @@
 # Flask dependecies
+import shutil
 from threading import Thread
 from cv2 import CAP_DSHOW
 # from importlib import reload
@@ -52,6 +53,7 @@ rec = 0
 switch = 0
 hasUsedV = False
 hasUsed = False
+is_download = False
 
 class Flag:
     tiny = tiny
@@ -177,6 +179,10 @@ def add_model_file():
             if (file.filename.split('/')[-1].split('.')[0] == 'variables'):
                 filename = file.filename.split('/')[-1]
                 file.save(os.path.join(folder_path + '/variables', filename))
+            if ((file.filename.split('/')[-1].split('.')[0] != 'variables')
+                and (file.filename.split('.').pop() != 'pb')):
+                shutil.rmtree(folder_path)
+                return abort(422, 'Extensión no valida')
     else:
         for file in files:
             filename = file.filename
@@ -296,7 +302,7 @@ def get_image_detections():
         print('time: {}'.format(t2 - t1))
         for i in range(valid_detections[0]):
             if (int(classes[0][i]) > len(class_names)):
-                abort(422, 'El fichero de nombres no posee las clases suficientes')
+                abort(422, 'El fichero de etiquetas no posee las clases suficientes')
             responses.append({
                 "class": class_names[int(classes[0][i])],
                 "confidence": float("{0:.2f}".format(np.array(scores[0][i]) * 100)),
@@ -471,7 +477,7 @@ def get_video_detections():
             print('time: {}'.format(t2 - t1))
             for i in range(valid_detections[0]):
                 if (int(classes[0][i]) > len(class_names)):
-                    abort(422, 'El fichero de nombres no posee las clases suficientes')
+                    abort(422, 'El fichero de etiquetas no posee las clases suficientes')
                 responses.append({
                     "class": class_names[int(classes[0][i])],
                     "confidence": float("{0:.2f}".format(np.array(scores[0][i]) * 100)),
@@ -857,7 +863,7 @@ def get_image_detections_url():
 
         for i in range(valid_detections[0]):
             if (int(classes[0][i]) > len(class_names)):
-                abort(422, 'El fichero de nombres no posee las clases suficientes')
+                abort(422, 'El fichero de etiquetas no posee las clases suficientes')
             responses.append({
                 "class": class_names[int(classes[0][i])],
                 "confidence": float("{0:.2f}".format(np.array(scores[0][i]) * 100)),
@@ -1043,7 +1049,7 @@ def get_track_detections():
             print('time: {}'.format(t2 - t1))
             for i in range(valid_detections[0]):
                 if (int(classes[0][i]) > len(class_names)):
-                    abort(422, 'El fichero de nombres no posee las clases suficientes')
+                    abort(422, 'El fichero de etiquetas no posee las clases suficientes')
                 responses.append({
                     "class": class_names[int(classes[0][i])],
                     "confidence": float("{0:.2f}".format(np.array(scores[0][i]) * 100)),
@@ -1166,6 +1172,8 @@ def url_video():
 
 @app.route('/video_url', methods=['POST'])
 def get_video_detections_url():
+    global is_download
+    is_download = False
     allow_classes = list(utils.read_class_names(file_name).values())
     video_urls = request.values.getlist('videos')
     raw_video_list = []
@@ -1202,6 +1210,7 @@ def get_video_detections_url():
 
     response = []
     for _, raw_video in enumerate(raw_video_list):
+        is_download = True
         responses = []
         results = []
         try:
@@ -1386,6 +1395,12 @@ def get_video_detections_url():
         return Response(response=json.dumps({"response": response}), mimetype="application/json")
     except FileNotFoundError:
         abort(404)
+
+@app.route('/get_state')
+def get_state():
+    global is_download
+
+    return Response(response=json.dumps({"response": is_download}), mimetype="application/json")
 
 webcamVid.release()
 cv2.destroyAllWindows()    

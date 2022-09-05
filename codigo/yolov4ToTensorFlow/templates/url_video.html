@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
     <!-- <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -27,38 +28,43 @@
             </a>
         </button>
         <div style="text-align:right; margin-right: 7px;">
-           <label style="color: white;">Fichero de nombres: <strong style="color: #b9d339;">{{actual_names_file}}</strong></label>
+           <label style="color: white;">Fichero de etiquetas: <strong style="color: #b9d339;">{{actual_names_file}}</strong></label>
            <label style="color: white;">Modelo de deteccion: <strong style="color: #b9d339;">{{actual_model_file}}</strong></label>
         </div>
     </div>
     <div class="app">
         <header class="app-header">
             <p>
-                Object Detection YouTube Videos
+                Detección de Objetos sobre Vídeos de YouTube
             </p>
             <div className="pre_img">
                 <span><video id="imagebox" controls="" alt=""></span>
             </div>
+
+            <div id="pre_detecting" style="display: none; font-family: Monserrat;">
+                Leyendo el vídeo de YouTube...
+            </div>
+
             <div id="detecting">
                 Detectando...
 
-                Si desea detener la detección pulse 'Q'
+                Si desea detener la detección pulse la tecla Q
             </div>
             <div id="link">
-             <a href="" id="download" style="color:#b9d339; font-family: Arial" download>Download</a>
+             <a href="" id="download" style="color:#b9d339; font-family: Arial" download>Descargar Vídeo Etiquetado</a>
              <br>
-             <a href="" id="csv" style="color:#b9d339; font-family: Arial" download>Download CSV</a>
+             <a href="" id="csv" style="color:#b9d339; font-family: Arial" download>Descargar CSV</a>
             </div>
             <form>
                 <label>
                     <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px;">
                         <img src="../static/imgs/YouTube_Logo.svg" style="height: 20px">
-                        <span style="font-family: Quicksand;"><strong>URL</strong></span>
+                        <span style="font-family: Quicksand;"><strong style="font-family: Oswald; color: #b9d339">URL</strong></span>
                     </div>
-                    <input id="imageinput" type="url" name="image" placeholder="https://youtu.be/a69BQ7G2lo" autofocus onchange="readUrl(this)">
+                    <input id="imageinput" type="url" name="image" placeholder="https://youtu.be/a69BQ7G2lo" onchange="readUrl(this)">
                 </label>
             </form>
-            <button name="send" id = "sendbutton"><strong>Detectar</strong></button>
+            <button name="send" id = "sendbutton" style="display:none;"><strong>Detectar</strong></button>
         </header>
     </div>
 </body>

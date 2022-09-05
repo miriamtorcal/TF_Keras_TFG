@@ -63,9 +63,10 @@ function readUrl(input){
 }
 
 function clickKey(){
-	var e = $.Event('keypress');
-	e.which = 81;
-	e.keyCode = 81;
-	console.log(e)
-	document.dispatchEvent(e)
+	jQuery.event.trigger({
+		type: 'keypress',
+		which: 81,
+		keyCode: 81,
+		key: 'q'
+	});
 }

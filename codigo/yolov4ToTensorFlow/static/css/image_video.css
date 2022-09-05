@@ -118,16 +118,30 @@ html {
 
   #detecting{
     display: none;
-    font-family: 'Monserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
 
   #sendbutton{
-    text-align:center; 
+    /* text-align:center; 
     float:left; 
     color:#b9d339; 
     border: none;
     background: none;
-    font-size: 20px;
+    font-size: 20px; */
+    color:#000; 
+    border: none;
+    font-size: 14px;
+    display: flex;
+    margin: 0 auto;
+    background: #b9d339;
+    padding: 5px 15px 3px 15px;
+    border-radius: 10px;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.15;
+    font-weight: bold;
   }
 
   .key{

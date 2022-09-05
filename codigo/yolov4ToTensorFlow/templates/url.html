@@ -24,14 +24,14 @@
             </a>
         </button>
         <div style="text-align:right; margin-right: 7px;">
-            <label style="color: white;">Fichero de nombres: <strong style="color: #b9d339;">{{actual_names_file}}</strong></label>
+            <label style="color: white;">Fichero de etiquetas: <strong style="color: #b9d339;">{{actual_names_file}}</strong></label>
             <label style="color: white;">Modelo de deteccion: <strong style="color: #b9d339;">{{actual_model_file}}</strong></label>
         </div>
     </div>
     <div class="app">
         <header class="app-header">
             <p>
-                Object Detection Image-URL
+                Detección de Objetos en Imagen a través de su URL
             </p>
             <div className="pre_img">
                 <span><img id="imagebox" src="" alt=""></span>
@@ -40,9 +40,9 @@
                 Detectando...
             </div>
             <div id="link">
-             <a href="" id="download" style="color:#b9d339; font-family: Arial" download>Download</a>
+             <a href="" id="download" style="color:#b9d339; font-family: Arial" download>Descargar Imagen Etiquetada</a>
              <br>
-             <a href="" id="csv" style="color:#b9d339; font-family: Arial" download>Download CSV</a>
+             <a href="" id="csv" style="color:#b9d339; font-family: Arial" download>Descargar CSV</a>
             </div>
             <form>
                 <label>
@@ -52,7 +52,7 @@
                     <input id="imageinput" type="url" name="image" autofocus onchange="readUrl(this)">
                 </label>
             </form>
-            <button name="send" id = "sendbutton"><strong>Detectar</strong></button>
+            <button name="send" id = "sendbutton" style="display:none;"><strong>Detectar</strong></button>
         </header>
     </div>
 </body>

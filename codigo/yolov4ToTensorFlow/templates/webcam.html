@@ -22,14 +22,14 @@
             </a>
         </button>
         <div style="text-align:right; margin-right: 7px;">
-            <label style="color: white;">Fichero de nombres: <strong style="color: #b9d339;">{{actual_names_file}}</strong></label>
+            <label style="color: white;">Fichero de etiquetas: <strong style="color: #b9d339;">{{actual_names_file}}</strong></label>
             <label style="color: white;">Modelo de deteccion: <strong style="color: #b9d339;">{{actual_model_file}}</strong></label>
         </div>
     </div>
     <div class="app">
         <header class="app-header">
             <p>
-                Object Detection Webcam
+                Detección de Objetos a través de la Webcam
             </p>
 
             <form method="post" action="{{ url_for('tasks') }}" style="display: flex; gap: 10px; margin-bottom: 12px;">
@@ -46,9 +46,9 @@
                 </span>
             </div>
             <div id="link">
-             <a href="" id="download" download style="color:#b9d339; font-family: Monserrat">Download</a>
+             <a href="" id="download" download style="color:#b9d339; font-family: Monserrat">Descargar Vídeo Etiquetado</a>
              <br>
-             <a href="" id="csv" download style="color:#b9d339; font-family: Monserrat">Download CSV</a>
+             <a href="" id="csv" download style="color:#b9d339; font-family: Monserrat">Descargar CSV</a>
             </div>
             <!-- <button name="send" id = "sendbutton"><a href="{{url_for('webcam')}}">Send</a></button> -->
         </header>

@@ -1,7 +1,42 @@
 window.onload = () => {
 	$('#sendbutton').click(() => {
-		
-		$("#detecting").css("display", "block");
+		$("#imagebox").css("display", "none");
+
+		$(document).ready(function(){              
+			function getStatus()  {
+				$.ajax({
+					url: "/get_state", 
+					type:"GET",
+					cache: false,
+					processData: false,
+					contentType: false,
+					error: function(xhr, status, error) {
+						var err = xhr.responseText.split('<p>').pop()
+						Swal.fire({
+							text: err.replace('</p>', ''),
+							icon: 'error',
+							confirmButtonText: 'OK',
+						})
+						.then(_ => {
+							$("#detecting").css("display", "none");
+						})
+					},
+					success: function(data){
+						console.log(data)
+						let downloaded = data['response']
+						console.log(downloaded)
+						if (downloaded == true){
+							$("#pre_detecting").css("display", "none");
+							$("#detecting").css("display", "block");
+							clearInterval(id);
+						}
+					}
+				});
+			} 
+			var id = setInterval(getStatus, 10000)	
+		});
+		// $("#detecting").css("display", "block");
+		$("#pre_detecting").css("display", "block");
 		imagebox = $('#imagebox')
 		input = $('#imageinput').val();
 		if(input)

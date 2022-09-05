@@ -8,11 +8,10 @@ window.onload = () => {
 
 		dragArea.addEventListener('dragover', (event) => {
 			event.preventDefault();
-			// console.log('file in drag area');
 		})
 
 		dragArea.addEventListener('dragleave', () => {
-			// console.log('file out drag area');
+
 		})
 
 		dragArea.addEventListener('drop', async (event) => {
@@ -20,7 +19,6 @@ window.onload = () => {
 			file = event.dataTransfer.files[0];
 			let items = event.dataTransfer.items;
 
-			console.log(file)
 			fileType = file.name.split('.').pop();
 			fileType = file.name == fileType  ? 'folder' : fileType;
 
@@ -46,8 +44,6 @@ window.onload = () => {
 		}, false)
 	}
 
-	console.log($('#sendbutton'))
-
 	$('#sendbutton').click(() => {
 		input = $('#imageinput1')[0]
 		folder = $('#folder_name').val()
@@ -60,7 +56,6 @@ window.onload = () => {
 			if (input.files.length == 0 && file != undefined){
 				let formData = new FormData();
 				formData.append('folder_name', folder)
-				console.log(formData)
 				if(fileType === 'tflite'){
 					formData.append('files', file);
 					$.ajax({
@@ -70,10 +65,24 @@ window.onload = () => {
 						cache: false,
 						processData:false,
 						contentType:false,
-						error: function(data){
+						// error: function(data){
+						// 	
+						// 	console.log(data.responseText)
+						// 	console.log("upload error" , data);
+						// 	console.log(data.getAllResponseHeaders());
+						// },
+						error: function(xhr, status, error) {
+							$('#msg_span').text('Arrastra/selecciona un modelo o carpeta')
+							$('#imageinput1').val('')
+							$('#folder_name').val('')
+							$('#sendbutton').css("display", "none")
 							$('#circle').css("display", "none")
-							console.log("upload error" , data);
-							console.log(data.getAllResponseHeaders());
+							var err = xhr.responseText.split('<p>').pop()
+							Swal.fire({
+								text: err.replace('</p>', ''),
+								icon: 'error',
+								confirmButtonText: 'OK',
+							})
 						},
 						success: function(){
 							Swal.fire({
@@ -102,7 +111,6 @@ window.onload = () => {
 					// formData['files'] = files
 					formData.append('files', files)
 					formData.append('folder_name', folder)
-					console.log(formData)
 					$.ajax({
 						url: "/model_add", 
 						type:"POST",
@@ -110,10 +118,24 @@ window.onload = () => {
 						cache: false,
 						processData:false,
 						contentType:false,
-						error: function(data){
+						// error: function(data){
+						// 	
+						// 	console.log(data.responseText)
+						// 	console.log("upload error" , data);
+						// 	console.log(data.getAllResponseHeaders());
+						// },
+						error: function(xhr, status, error) {
+							$('#msg_span').text('Arrastra/selecciona un modelo o carpeta')
+							$('#imageinput1').val('')
+							$('#folder_name').val('')
+							$('#sendbutton').css("display", "none")
 							$('#circle').css("display", "none")
-							console.log("upload error" , data);
-							console.log(data.getAllResponseHeaders());
+							var err = xhr.responseText.split('<p>').pop()
+							Swal.fire({
+								text: err.replace('</p>', ''),
+								icon: 'error',
+								confirmButtonText: 'OK',
+							})
 						},
 						success: function(){
 							Swal.fire({
@@ -122,7 +144,7 @@ window.onload = () => {
 								confirmButtonText: 'OK',
 							})
 							.then(function() {
-								$('#msg_span').text('Escoge un modelo')
+								$('#msg_span').text('Arrastra/selecciona un modelo o carpeta')
 								$('#imageinput1').val('')
 								$('#folder_name').val('')
 								$('#sendbutton').css("display", "none")
@@ -156,10 +178,24 @@ window.onload = () => {
 						cache: false,
 						processData:false,
 						contentType:false,
-						error: function(data){
+						// error: function(data){
+						// 
+						// 	console.log(data.responseText)
+						// 	console.log("upload error" , data);
+						// 	console.log(data.getAllResponseHeaders());
+						// },
+						error: function(xhr, status, error) {	
+							$('#msg_span').text('Arrastra/selecciona un modelo o carpeta')
+							$('#imageinput1').val('')
+							$('#folder_name').val('')
+							$('#sendbutton').css("display", "none")
 							$('#circle').css("display", "none")
-							console.log("upload error" , data);
-							console.log(data.getAllResponseHeaders());
+							var err = xhr.responseText.split('<p>').pop()
+							Swal.fire({
+								text: err.replace('</p>', ''),
+								icon: 'error',
+								confirmButtonText: 'OK',
+							})
 						},
 						success: function(){
 							Swal.fire({
@@ -169,7 +205,7 @@ window.onload = () => {
 							})
 							.then(function() {
 								console.log('pre reset input')
-								$('#msg_span').text('Escoge un fichero de nombres')
+								$('#msg_span').text('Escoge un fichero de etiquetas')
 								$('#imageinput1').val('')
 								$('#sendbutton').css("display", "none")
 								$('#circle').css("display", "none")
@@ -185,18 +221,32 @@ window.onload = () => {
 						cache: false,
 						processData:false,
 						contentType:false,
-						error: function(data){
-							console.log("upload error" , data);
-							console.log(data.getAllResponseHeaders());
+						// error: function(data){
+						// 	console.log(data.responseText)
+						// 	console.log("upload error" , data);
+						// 	console.log(data.getAllResponseHeaders());
+						// },
+						error: function(xhr, status, error) {
+							$('#msg_span').text('Arrastra/selecciona un modelo o carpeta')
+							$('#imageinput1').val('')
+							$('#folder_name').val('')
+							$('#sendbutton').css("display", "none")
+							$('#circle').css("display", "none")
+							var err = xhr.responseText.split('<p>').pop()
+							Swal.fire({
+								text: err.replace('</p>', ''),
+								icon: 'error',
+								confirmButtonText: 'OK',
+							})
 						},
 						success: function(){
+							$('#circle').css("display", "none")
 							Swal.fire({
 								text: 'Fichero subido correctamente',
 								icon: 'success',
 								confirmButtonText: 'OK',
 							})
 							.then(function() {
-								console.log('pre reset input')
 								$('#msg_span').text('Arrastra/selecciona un modelo o carpeta')
 								$('#imageinput1').val('')
 								$('#folder_name').val('')
@@ -204,6 +254,20 @@ window.onload = () => {
 								$('#circle').css("display", "none")
 							})
 						}
+					})
+				}
+				else{
+					Swal.fire({
+						text: 'Extension no valida',
+						icon: 'error',
+						confirmButtonText: 'OK'
+					})
+					.then(function() {
+						$('#msg_span').text('Arrastra/selecciona un modelo o carpeta')
+						$('#imageinput1').val('')
+						$('#folder_name').val('')
+						$('#sendbutton').css("display", "none")
+						$('#circle').css("display", "none")
 					})
 				}
 			}
@@ -219,18 +283,27 @@ window.onload = () => {
 				cache: false,
 				processData:false,
 				contentType:false,
-				error: function(data){
-					console.log("upload error" , data);
-					console.log(data.getAllResponseHeaders());
+				// error: function(data){
+				// 	console.log(data.responseText)
+				// 	console.log("upload error" , data);
+				// 	console.log(data.getAllResponseHeaders());
+				// },
+				error: function(xhr, status, error) {
+					$('#circle').css("display", "none")
+					var err = xhr.responseText.split('<p>').pop()
+					Swal.fire({
+						text: err.replace('</p>', ''),
+						icon: 'error',
+						confirmButtonText: 'OK',
+					})
 				},
 				success: function(data){
 					Swal.fire({
-						text: 'Fichero de nombres cambiado correctamente',
+						text: 'Fichero de etiquetas cambiado correctamente',
 						icon: 'success',
 						confirmButtonText: 'OK',
 					})
 					.then(function() {
-						console.log(data.new_file_selected)
 						$('#file_selected').val(data.new_file_selected)
 						$('#circle').css("display", "none")
 					})
@@ -239,7 +312,6 @@ window.onload = () => {
 		}
 		if(model != undefined)
 		{
-			console.log('model')
 			let formData = new FormData();
 			formData.append('new_file', model)
 			$.ajax({
@@ -249,9 +321,19 @@ window.onload = () => {
 				cache: false,
 				processData:false,
 				contentType:false,
-				error: function(data){
-					console.log("upload error" , data);
-					console.log(data.getAllResponseHeaders());
+				// error: function(data){
+				// 	console.log(data.responseText)
+				// 	console.log("upload error" , data);
+				// 	console.log(data.getAllResponseHeaders());
+				// },
+				error: function(xhr, status, error) {
+					$('#circle').css("display", "none")
+					var err = xhr.responseText.split('<p>').pop()
+					Swal.fire({
+						text: err.replace('</p>', ''),
+						icon: 'error',
+						confirmButtonText: 'OK',
+					})
 				},
 				success: function(data){
 					Swal.fire({
