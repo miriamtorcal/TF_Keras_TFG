@@ -561,6 +561,9 @@ def tasks():
                 if(hasUsedV and hasUsed):
                     hasUsedV = False
                     return render_template('webcam.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop(), hasUsed=hasUsed, file=file)
+                if(hasUsedV == False and hasUsed):
+                    return render_template('webcam.html', actual_names_file=file_name.split('/').pop(), actual_model_file=weights.split('/').pop(), hasUsed=hasUsed, file=file, csvOnly=True)
+
             else:
                 webcamVid = cv2.VideoCapture(0)
                 switch = 1
@@ -587,7 +590,8 @@ def tasks():
 def webcam_detections():
     global webcamOut, webcamVid, file, rec_frame
     allow_classes = list(utils.read_class_names(file_name).values())
-    video_name = file
+    video_name = "webcam_" + datetime.now().strftime("%d_%m_%Y__%H_%M_%S") if(file == '') else file
+    file = video_name
     response = []
 
     # for count, video_path in enumerate(video_path_list):
