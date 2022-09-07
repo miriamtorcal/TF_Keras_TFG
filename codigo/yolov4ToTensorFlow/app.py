@@ -1406,5 +1406,8 @@ def get_state():
 
     return Response(response=json.dumps({"response": is_download}), mimetype="application/json")
 
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
+
 webcamVid.release()
-cv2.destroyAllWindows()    
+cv2.destroyAllWindows() 
