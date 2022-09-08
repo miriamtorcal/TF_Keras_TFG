@@ -2,13 +2,12 @@ from core.config import cfg
 from core.utils import read_class_names
 import csv
 
-def count_objects(data: list, by_class: bool = True,  allowed_classes: list = list(read_class_names(cfg.YOLO.CLASSES).values())) -> dict:
+def count_objects(data: list, by_class: bool = True,  class_names = read_class_names(cfg.YOLO.CLASSES), allowed_classes: list = list(read_class_names(cfg.YOLO.CLASSES).values())) -> dict:
     boxes, scores, classes, num_objects = data
     counts = dict()
 
     # byClass = True => count objects per class
     if by_class:
-        class_names = read_class_names(cfg.YOLO.CLASSES)
         for i in range(num_objects):
             class_index = int(classes[i])
             class_name = class_names[class_index]
@@ -24,7 +23,7 @@ def count_objects(data: list, by_class: bool = True,  allowed_classes: list = li
     return counts
 
 
-def count_objects_img(data: list, by_class: bool = True,  allowed_classes: list = list(read_class_names(cfg.YOLO.CLASSES).values())) -> dict:
+def count_objects_img(data: list, by_class: bool = True, class_names = read_class_names(cfg.YOLO.CLASSES), allowed_classes: list = list(read_class_names(cfg.YOLO.CLASSES).values())) -> dict:
     boxes, scores, classes, num_objects = data
     counts = dict()
     classes = classes[0]
@@ -32,7 +31,6 @@ def count_objects_img(data: list, by_class: bool = True,  allowed_classes: list 
 
     # by_class = True => count objects per class
     if by_class:
-        class_names = read_class_names(cfg.YOLO.CLASSES)
         for i in range(num_objects):
             class_index = int(classes[i])
             class_name = class_names[class_index]
