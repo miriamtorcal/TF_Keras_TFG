@@ -12,7 +12,51 @@ En este apéndice van a describirse de forma detallada la documentación técnic
     \item \texttt{/codigo/checkpoints/custom-416/saved\_model.pb}: modelo en formato Tensorflow(.pb) de las matrículas.
     \item \texttt{/codigo/checkpoints/heads-416}: carpeta con el modelo de las cabezas en formato Tensorflow.
     \item \texttt{/codigo/checkpoints/heads-416/keras\_metadata.pb}: punto de control del modelo de conversión a .pb.
-    \item \texttt{/codigo/checkpoints/heads-416/saved\_model.pb}: modelo detector de cabezas en formato Tensorflow(.pb)    
+    \item \texttt{/codigo/checkpoints/heads-416/saved\_model.pb}: modelo detector de cabezas en formato Tensorflow(.pb)
+    \item \texttt{/codigo/checkpoints/yolov4-416}: carpeta con el modelo oficial de YOLOv4 en formato Tensorflow.
+    \item \texttt{/codigo/checkpoints/yolov4-416/keras\_metadata.pb}: punto de control del modelo de conversión a .pb.
+    \item \texttt{/codigo/checkpoints/yolov4-416/saved\_model.pb}: modelo detector de YOLOv4 en formato Tensorflow(.pb)
+    \item \texttt{/codigo/checkpoints/custom\_tfl-416}: carpeta con el modelo de detección de las matrículas en formato Tensorflow previo a la conversióna TensorFlow Lite.
+    \item \texttt{/codigo/checkpoints/custom\_tfl-416/saved\_model.pb}: modelo detector de matrículas en formato Tensorflow(.pb) preparado para su conversión a .tflite.
+    \item \texttt{/codigo/checkpoints/custom\_tflv2-416}: carpeta con el modelo de detección de las matrículas en formato Tensorflow previo a la conversióna TensorFlow Lite.
+    \item \texttt{/codigo/checkpoints/custom\_tflv2-416/saved\_model.pb}: modelo detector de matrículas en formato Tensorflow(.pb) preparado para su conversión a .tflite.
+    \item \texttt{/codigo/checkpoints/custom-416-int8.tflite}: modelo de detección de las matrículas en formato TensorFlow Lite(.tflite).
+    \item \texttt{/codigo/checkpoints/custom-416v2.tflite.tflite}: modelo de detección de las matrículas en formato TensorFlow Lite(.tflite)
+    \item \texttt{/codigo/checkpoints/models\_trt.txt}: fichero con los enlaces de los modelos de TensorRT.
+    \item \texttt{/codigo/core}: carpeta con los ficheros de configuración utilizados durante el proyecto.
+    \item \texttt{/codigo/core/backbone.py}: fichero de Python que contine las funciones relacionadas con la red YOLOv4
+    \item \texttt{/codigo/core/commom.py}: fichero de Python que contine la clase BatchNormalization, para los ajustes de la red YOLOv4
+    \item \texttt{/codigo/core/config.py}: fichero de Python que contine permite la selección de los ficheros de etiquetas de cara al uso del modelo
+    \item \texttt{/codigo/core/functions.py}: fichero de Python que contine las funciones utilizadas en a lo largo de la detección de los objetos.
+    \item \texttt{/codigo/core/utils.py}: fichero de Python que contine las funciones relacionadas con la red YOLOv4.
+    \item \texttt{/codigo/core/yolov4.py}: fichero de Python que retorna el modelo de YOLO correspondiente.
+    \item \texttt{/codigo/data}: carpeta que contine la información necesaria para la detección.
+    \item \texttt{/codigo/data/anchors}: carpeta que contiene los anchors de lass diferentes redes.
+    \item \texttt{/codigo/data/anchors/basline\_anchors.txt}: fichero de anchors.
+    \item \texttt{/codigo/data/anchors/basline\_tiny\_anchors.txt}: fichero de anchors tiny.
+    \item \texttt{/codigo/data/anchors/yolov3\_anchors.txt}: fichero de anchors yolov3.
+    \item \texttt{/codigo/data/anchors/yolov3\_anchors.txt}: fichero de anchors yolov4.
+    \item \texttt{/codigo/data/classes}: carpeta que contiene los fichero de etiquetas de los diferentes modelos.
+    \item \texttt{/codigo/data/classes/coco.names}: fichero con las etiquetas del modelo oficial de YOLOV4.
+    \item \texttt{/codigo/data/classes/custom.names}: fichero con las etiquetas del modelo de detección de matrículas.
+    \item \texttt{/codigo/data/classes/heads.names}: fichero con las etiquetas del modelo de detección de las cabezas.
+    \item \texttt{/codigo/data/classes/voc.names}: fichero de etiquetas del modelo de voc.
+    \item \texttt{/codigo/data/classes/yymnist.names}: fichero de etiquetas del modelo de yymnist, detector de números.
+    \item \texttt{/codigo/data/dataset}: carpeta que contiene los ficheros etiquetados a la hora de evaluar un modelo (ruta de la imagen posición detectada y valor de la clase).
+    \item \texttt{/codigo/data/dataset/head.txt}: fichero de evaluacion del módelo de las cabezas. 
+    \item \texttt{/codigo/data/dataset/license\_plate.txt}: fichero de evaluación del modelo de las matrículas.
+    \item \texttt{/codigo/data/dataset/val2017.txt}: fichero de evaluación del modelo coco.
+    \item \texttt{/codigo/data/images}: carpeta que contiene diferentes imagenes para su detección.
+    \item \texttt{/codigo/data/video}: carpeta que contien diferentes vídeos para su detección/contabilización.
+    \item \texttt{/codigo/deep\_sort}: carpeta que contiene los diferentes ficheros en Python para su evaluacion con Object Tracking.
+    \item \texttt{/codigo/deep\_sort/detection.py}: fichero Python que contiene las funciones de detección para Obejct Tracking.
+    \item \texttt{/codigo/deep\_sort/iou\_matching.py}: fichero Python que tiene las funciones de la maedida iou para Object Tracking.
+    \item \texttt{/codigo/deep\_sort/kalman\_filter.py}: fichero Python que contiene el algoritmo del filtro de Kalman\cite{kalman_filter}.  
+    \item \texttt{/codigo/deep\_sort/linear\_assignment.py}: Fichero Python que contiene las funciones relacionadas con la asignación linear.
+    \item \texttt{/codigo/deep\_sort/nn\_matching.py}: Fichero Python con funciones de ajuste del algorimto de vecinos más cercanos\cite{knn}.
+    \item \texttt{/codigo/deep\_sort/preprocessing.py}: Fichero Python con las funciones del preprocesado para Object Tracking.
+    \item \texttt{/codigo/deep\_sort/track.py}: fichero Python que contiene las funciones necearias para detectar los objetos y sus etiquetas correspondeitnes, con su respectivo número de identificación.
+    \item \texttt{/codigo/deep\_sort/tracker.py}: fichero Python que contiene las funciones necearias para detectar los objetos y sus etiquetas correspondeitnes, con su respectivo número de identificación.     
 \end{itemize}
 
 \section{Manual del programador}
