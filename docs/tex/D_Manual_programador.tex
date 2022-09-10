@@ -2,6 +2,9 @@
 
 \section{Introducción}
 En este apéndice van a describirse de forma detallada la documentación técnica de programación. Se describirá la estructura de directorios que posee, la instalación y ejecución, así como las pruebas que se han llevado a cabo. 
+
+El repositorio del proyecto puede ser consultado en el siguiente enlace: \textbf~\url{https://github.com/mtc1003/TF_Keras_TFG}
+
 \section{Estructura de directorios}
 \begin{itemize}
     \tightlist
@@ -105,10 +108,120 @@ Para poder continuar con el desarrollo del proyecto, será necesario contar con 
     \item Python 3.7
     \item Bibliotecas de Python
     \item VSCode
+    
 \end{itemize}
 
 A continuación, se comentára de forma detallada la instalación de los diferentes requerimientos.
 
+\subsection{Python 3.7}
+La versión de Python 3.7, se encuentra dispnible desde \cite{pythonDownload}. Es muy importante que los ficheros binarios se encuentren en el PATH del sistema, para evitar así posibles problemas de ejecución.
+
+\subsection{Bibliotecas de Python}
+Este punto, es de los más importantes para hacer funcionar el proyecto, ya que son necesarias unas determiandas librerías y en unas versiones concretas, para que todo se integre correctamente y así funcione todo
+cómo un sistema homogéneo. Ver Tabla~\ref{tab:bibliotecas-python}
+
+\begin{table}[p]
+    \centering
+    \begin{tabular}{lcl}
+        \toprule
+        \textbf{Biblioteca} & \textbf{Versión} & \textbf{Descripción}\\
+        \midrule
+        \rowcolor[HTML]{EFEFEF} 
+        \texttt{absl-py} & 0.15.0 & Creación de aplaicaciones sencillas.\\
+        \texttt{flask} & 1.1.2 & Web \textit{framework}.\\ \rowcolor[HTML]{EFEFEF}
+        \texttt{numpy} & 1.22.3 & Computación de \textit{arrays}.\\
+        \texttt{pandas} & 0.25.1 & Estructuras de datos.\\ \rowcolor[HTML]{EFEFEF}
+        \texttt{requests} & 2.27.0 & \textit{Requests} para humanos.\\
+        \texttt{keyboard} & 0.13.5 & Interacción del teclado desde Python\\ \rowcolor[HTML]{EFEFEF}
+        \texttt{pafy} & 0.5.5 & Recuperar contenido y metadatos de YouTube\\        
+        \texttt{youtube-dll} & 2020.12.2 & Descargar vídeos de Youtube junto con su información\\ \rowcolor[HTML]{EFEFEF}
+        \texttt{pandas} & 1.3.5 & Potentes estructuras de datos para análisis de datos, series temporales y estadísticas\\
+        \texttt{numpy} & 1.21.6 & Paquete de computación matricial\\ \rowcolor[HTML]{EFEFEF}
+        \texttt{opencv-python} & 4.1.1.26 & Visión Artificial para el lenguaje Python\\
+        \texttt{tensorflow} & 2.8.0 & Framework dw Machine Learning\\ \rowcolor[HTML]{EFEFEF}
+        \texttt{tensorflow-gpu} & 2.3.0 & Framework de Machine Learning para GPU\\
+        \texttt{pillow} & 9.2.0 & Librería de imágenes\\ \rowcolor[HTML]{EFEFEF}
+        \texttt{easydict} & 1.9 & Acceso a los valores de un \textit{dict} como atributos\\
+        \texttt{matplotlib} & 3.5.3 & Trazado en Python\\ \rowcolor[HTML]{EFEFEF}
+        \bottomrule
+    \end{tabular}
+    \caption{Bibliotecas utilizadas y sus versiones.}\label{tab:bibliotecas-python}
+\end{table}
+
+Las versiones que se indican en la Tabla~\ref{tab:bibliotecas-python}, son las que se han utilizado a lo largo del desarrollo del proyecto, las cuáles pueden ser actualizadas a versiones futuras, siempre y cuando estás sean compatibles entre sí o con las páginas web con las que trabajan por debajo.
+
 \section{Compilación, instalación y ejecución del proyecto}
 
+En esta sección, se va a detallar el proceso a seguir para poder poseer el proyecto en local, y así poder utilizarlo y/o modificarlo. 
+
+\subsection{Adquisición del código fuente}
+El primer paso, es la obtención del código en el equipo, para ello podremos seguir una de las siguientes aproximaciones:
+
+\begin{itemize}
+    \item Mediante el uso de la terminal.
+    \begin{enumerate}
+    \tightlist
+    \item Apertura de la terminal.
+    \item Desplazarse al directorio en donde se desee clonar el repositorio (usando \texttt{cd} en Unix o \texttt{dir} en Windows).
+    \item Hacer uso del siguiente comando:\\
+    \texttt{git clone https://github.com/mtc1003/TF\_Keras\_TFG.git}
+    \item Se dispone de una copia idéntica a la alojada en el repositorio de \texttt{GitHub}.
+    \end{enumerate}
+    
+    \item Descarga desde el navegador.
+    \begin{itemize}
+    \tightlist
+    \item Apertura del navegador de preferencia.
+    \item Introducir en la barra de búsqueda la siguiente dirección:\\
+    \texttt{https://github.com/mtc1003/TF\_Keras\_TFG/archive/refs/heads/master.zip}
+    \item Aceptar la descarga en caso de tener habilitada la comprobación.
+    \item Navegar con el Explorador de archivos del sistema hasta el directorio de descarga.
+    \end{itemize}
+
+    \item Uso de \texttt{Fork}.
+    \begin{itemize}
+    \tightlist
+    \item Apertura de la aplicación.
+    \item Hacer \textit{click} en \textit{File} y del desplegable de opciones seleccionar \textit{Clone}.
+    \item Dentro de la ventana de \textit{Clone}:
+    \begin{itemize}
+    \item En \textit{Respository Url} introducir:\\ https://github.com/mtc1003/TF\_Keras\_TFG.git.
+    \item En \textit{Parent Folder} introducir: la ruta en la que se clonará el repositorio en local.
+    \item En \textit{Name} introducir: el nombre que recibirá el proyecto en lcoal.
+    \end{itemize}
+    \item Hacer \textit{click} en \textit{Clone}.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Creación de entorno virtual de trabajo}
+Para poder trabajar con este proyecto (independientemente de si es para desarrollo o producción) hacen falta una serie de bibliotecas concretas de Python (en unas versiones determinadas), las cuáles, como es lógico, deben estar en la máquina en la que se va a ejecutar, es decir, en la que se encuentra el código. 
+El proyecto está preparado para crear un entorno de \texttt{Conda} propio, de forma que no interfiera con otros proyectos y sea más sencillo de mantener y actualizar.
+
+Se recomienda que los binarios de anaconda o miniconda estén configurados en el \texttt{path} del sistema para poder utilizar el comando \texttt{conda} desde la línea de comandos.
+
+El proceso de creación del entrono virtual con \texttt{Conda} (trabajar con CPU) es el siguiente:
+\begin{enumerate}
+\tightlist
+\item Apertura de la terminal.
+\item Navegar hasta la raíz del proyecto.
+\item Crear el entorno con:\\
+\texttt{conda env create -f OD\_MTC\_CPU.yml}
+\item Cuando se desee utilizar se debe activar:\\
+\texttt{conda activate ODMTC}
+\end{enumerate}
+
+Por otro lado, el proceso de creación del entrono virtual con \texttt{Conda} (trabajar con GPU) es el siguiente:
+\begin{enumerate}
+\tightlist
+\item Apertura de la terminal.
+\item Navegar hasta la raíz del proyecto.
+\item Crear el entorno con:\\
+\texttt{conda env create -f OD\_MTC\_GPU.yml}
+\item Cuando se desee utilizar se debe activar:\\
+\texttt{conda activate ODMTC\_GPU}
+\end{enumerate}
+
+También se puede utilizar el procedimiento habitual para importar las bibliotecas al actual \texttt{venv} de la sesión de la terminal, pero se desaconseja su uso ya que un entorno 'genérico' antes o después se actualizará por otros proyectos, pudiendo generar incompatibilidades con el proyecto.
+
 \section{Pruebas del sistema}
+En está sección se van a describir las pruebas que se realizan con un modelo entrenado previamente, para así concoer su fiabilidad.
