@@ -18,6 +18,7 @@ window.onload = () => {
 							confirmButtonText: 'OK',
 						})
 						.then(_ => {
+							$("#pre_detecting").css("display", "none");
 							$("#detecting").css("display", "none");
 						})
 					},

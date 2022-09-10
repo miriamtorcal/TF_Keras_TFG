@@ -1,0 +1,22 @@
+name: ODMTC_GPU
+
+dependencies:
+  - python==3.7
+  - pip
+  - matplotlib
+  - opencv
+  - cudnn
+  - cudatoolkit==10.1.243
+  - pip:
+    - opencv-python==4.1.1.26
+    - tensorflow-gpu==2.3.0
+    - absl-py
+    - easydict
+    - pillow
+    - Flask
+    - pafy
+    - youtube-dl==2020.12.2
+    - keyboard
+    - requests
+    - pandas==1.1.5
+    - protobuf==3.19.4
