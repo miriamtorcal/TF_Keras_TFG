@@ -56,10 +56,58 @@ En este apéndice van a describirse de forma detallada la documentación técnic
     \item \texttt{/codigo/deep\_sort/nn\_matching.py}: Fichero Python con funciones de ajuste del algorimto de vecinos más cercanos\cite{knn}.
     \item \texttt{/codigo/deep\_sort/preprocessing.py}: Fichero Python con las funciones del preprocesado para Object Tracking.
     \item \texttt{/codigo/deep\_sort/track.py}: fichero Python que contiene las funciones necearias para detectar los objetos y sus etiquetas correspondeitnes, con su respectivo número de identificación.
-    \item \texttt{/codigo/deep\_sort/tracker.py}: fichero Python que contiene las funciones necearias para detectar los objetos y sus etiquetas correspondeitnes, con su respectivo número de identificación.     
+    \item \texttt{/codigo/deep\_sort/tracker.py}: fichero Python que contiene las funciones necearias para detectar los objetos y sus etiquetas correspondeitnes, con su respectivo número de identificación.
+    \item \texttt{/codigo/detections}: carpeta con el lso resultados de las detecciones obtenidas mediante la línea de comandos.
+    \item \texttt{/codigo/detections/images}: carpeta con el resultado de las imagenes detectadas.
+    \item \texttt{/codigo/detections/videos}: carpeta con el resultado de los vídeos detectados.
+    \item \texttt{/codigo/mAP}: carpeta que contiene lso resultados de la evaluaciones de los modelos, así como scripts de ayuda para ello.
+    \item \texttt{/codigo/mAP/extra}: carepeta con los cripts de ayuda para la evaluación del modelo.
+    \item \texttt{/codigo/mAP/extra/intersect-gt-and-pred.py}: fichero Python que calcula la intersección entre la posición real del objeto y la obtenida por el modelo, con el objetivo de evaluar la calidad del modelo.
+    \item \texttt{/codigo/mAP/extra/remove\_space.py}: fichero Python que elimina lso espacios de las etiquetas de las clases de los modelos.
+    \item \texttt{/codigo/mAP/ground-truth}: carpeta que contiene los ficheros .txt de cada imagen a evalaur con sus posiciones originales en formato YOLO, junto el nombre de la etiqueta que le corresponde.
+    \item \texttt{/codigo/mAP/predicted}: carpeta que contiene los ficheros .txt de cada imagen a evaluar con sus posiciones detectadas en formato YOLO, junto el nombre de la etiqueta que le corresponde.
+    \item \texttt{/codigo/mAP/results\_custom\_tf\_complete}: carpeta con los resultados de la evalaución del modelo de las matrículas.
+    \item \texttt{/codigo/mAP/results\_heads\_tf\_complete}: carpeta con los resultados de la evalaución del modelo de las cabezas.
+    \item \texttt{/codigo/mAP/main.py}: fichero Python que representa el resultado de la evalaución del modelo.
+    \item \texttt{/codigo/model\_data}: carpeta que contiene el modelo mars-small128.pb, utilizado en la inicialización de Obejct Tracking.
+    \item \texttt{/codigo/static}: carpeta que contiene los ficheros 'estaticos' para Flask.
+    \item \texttt{/codigo/static/css}: carpeta que contiene los diferentes ficheros de estilos\cite{css} usados a lo largo de la app Flask.
+    \item \texttt{/codigo/static/js}: carpeta que contiene los diferentes scripts de JavaScript\cite{js} utilizados a lo largo de la app Flask.
+    \item \texttt{/codigo/static/detections}: carpeta que contiene las imagenes, videos etiquetados tras su detección, así como los ficheros CSV de las posiciones.
+    \item \texttt{/codigo/static/imgs}: carpeta con todas las imagenes usadas a lo largo de la app Flask.
+    \item \texttt{/codigo/temp}: carpeta que almacena los ficheros de detección temporales, generados al inicio de las detecciones en la app Flask.
+    \item \texttt{/codigo/templates}: carpeta que contienelos ficheros .html usados a lo alrgo de la app Flask.
+    \item \texttt{/codigo/tools}: carpeta que contiene los scripts Python utilizados cómo herramientas a la hora de detectar.
+    \item \texttt{/codigo/tools/freeze\_model.py}: script Python que convierte el gráfico del modelo de TensorFlow a uno con extensión .pb.
+    \item \texttt{/codigo/tools/generate\_detections.py}: script Python que obtiene las 'cajas' en las cuáles se encuentran los objetos qu ehan sido detectados por el modelo.
+    \item \texttt{/codigo/train}: carpeta que tiene los scripts de Python y de GoogleColab, así como los ficheros neecsarios para llevar a cabo el entrenamiento de un modelo de YOLOv4.
+    \item \texttt{/codigo/trt}: carpeta que contiene el script de GoogleColab de conversión del fichero de pesos de YOLOv4 (.weights) a un modelo de TensorRT.
+    \item \texttt{/codigo/app.py}: fichero de Python que es la propia app de Flask.
+    \item \texttt{/codigo/convert\_tflite.py}: fichero de Python que convierte el modelo deseado a uno de TensorFlow Lite.
+    \item \texttt{/codigo/convert\_trt.py}: fichero de Python que convierte el modelo deseado a uno de TensorRT.
+    \item \texttt{/codigo/detect.py}: fichero de Python que detecta objetos en una imagen, según un modelo de detección.
+    \item \texttt{/codigo/detectVideo.py}: fichero de Python que detecta objetos en una vídeo, según un modelo de detección.
+    \item \texttt{/codigo/evaluate.py}: fichero de Python que evalua un modelo de detección, con el objetivo de medir su calidad a l hora de predeccir.
+    \item \texttt{/codigo/objectTracker.py}: fichero de Python que contabiliza objetos en un vídeo, según un modelo de detección.
+    \item \texttt{/codigo/preprocessDataEvaluate.py}: fichero de Python que obtiene las posiciones de las imágenes en el formato necesario apra su evalaución.
+    \item \texttt{/codigo/save\_model\_tflite.py}: fichero de Python que convierte un fichero de pesos en formato .weights a un modelo de TensorFlow Lite. 
+    \item \texttt{/codigo/save\_model.py}: fichero de Python que convierte un fichero de pesos en formato .weights a un modelo de TensorFlow.  
 \end{itemize}
 
 \section{Manual del programador}
+En esta subsección se describen todos los recursos utilizados para poder llevar a cabo el proyecto.
+De tal forma que un futuro desarrollador/mantenedor del proyecto no tenga inconvenientes a la hora de retomar el proyecto y conocerlo.
+
+\subsection{Entorno de desarrollo}
+Para poder continuar con el desarrollo del proyecto, será necesario contar con el siguiente \textit{software} instalado en el equipo:
+\begin{itemize}
+    \tightlist
+    \item Python 3.7
+    \item Bibliotecas de Python
+    \item VSCode
+\end{itemize}
+
+A continuación, se comentára de forma detallada la instalación de los diferentes requerimientos.
 
 \section{Compilación, instalación y ejecución del proyecto}
 
