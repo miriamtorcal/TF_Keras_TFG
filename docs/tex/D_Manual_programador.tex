@@ -199,29 +199,44 @@ El proyecto está preparado para crear un entorno de \texttt{Conda} propio, de f
 
 Se recomienda que los binarios de anaconda o miniconda estén configurados en el \texttt{path} del sistema para poder utilizar el comando \texttt{conda} desde la línea de comandos.
 
-El proceso de creación del entrono virtual con \texttt{Conda} (trabajar con CPU) es el siguiente:
+El proceso de creación del entrono virtual con \texttt{Conda} es el siguiente:
 \begin{enumerate}
 \tightlist
 \item Apertura de la terminal.
 \item Navegar hasta la raíz del proyecto.
 \item Crear el entorno con:\\
-\texttt{conda env create -f OD\_MTC\_CPU.yml}
+\texttt{conda env create -f OD\_MTC.yml}
 \item Cuando se desee utilizar se debe activar:\\
 \texttt{conda activate ODMTC}
-\end{enumerate}
-
-Por otro lado, el proceso de creación del entrono virtual con \texttt{Conda} (trabajar con GPU) es el siguiente:
-\begin{enumerate}
-\tightlist
-\item Apertura de la terminal.
-\item Navegar hasta la raíz del proyecto.
-\item Crear el entorno con:\\
-\texttt{conda env create -f OD\_MTC\_GPU.yml}
-\item Cuando se desee utilizar se debe activar:\\
-\texttt{conda activate ODMTC\_GPU}
 \end{enumerate}
 
 También se puede utilizar el procedimiento habitual para importar las bibliotecas al actual \texttt{venv} de la sesión de la terminal, pero se desaconseja su uso ya que un entorno 'genérico' antes o después se actualizará por otros proyectos, pudiendo generar incompatibilidades con el proyecto.
 
 \section{Pruebas del sistema}
-En está sección se van a describir las pruebas que se realizan con un modelo entrenado previamente, para así concoer su fiabilidad.
+En está sección se van a describir las pruebas que se realizan con un modelo entrenado previamente, para así conocer su fiabilidad.
+
+Lo primero será seleccionar el fichero de etiquetas con el que deseamos trabajar para evaluación, para ello se deberá de modificar la línea \textit{\_\_C.YOLO.CLASSES} del fichero \textit{config.py}, con el fichero de etiquetas con las clases del modelo a evaluar.
+\imagen{pruebaEval}{Selección del fichero de etiquetas}
+Tras esto deberemos de crear una carpeta con las imágenes, con las que deseamos evaluar el modelo y con los ficheros \textit{txt} de cada imagen con las posiciones de los objetos detectados
+
+\imagen{headImgEval}{Ejemplo de imágen que se usará para evaluar el modelo}
+\imagen{headPosEval}{Ejemplo de etiqueta que se usará para evaluar el modelo}
+
+Tras esto, deberemos ejecutar el script \textit{preprocessDataEvaluate.py}, el cuál nos devolverá un único fichero con toda la información de las imágenes en formato YOLO.
+\imagen{pdeHead}{Comando \textit{preprocessDataEvaluate.py} con el flag \textit{positions} con la ruta de las imágenes y el flag \textit{name\_txt\_export} con el nombre del fichero que se exportará}
+
+El fichero que obtendremos será de este estilo:
+\imagen{textHeadEval}{Fichero con todas las imágenes y sus posiciones en formato YOLO junto con la clase del objeto detectado}
+En él, encontaremos el PATH a la imagen, la posición del objeto detectado (como x, y, width, height) y el valor de la etiqueta con la que se corresponde el objeto, estos dos últimos valores se repetirán tantas veces como objetos halla en la imagen. El fichero contará con tantas líneas como imagenes para evaluar tengamos en la carpeta.
+
+Con este fichero ya podremos evalaur el modelo, para ello usaremos el script \textit{evaluate.py}
+\imagen{evalHead}{Script \textit{evaluate.py} junto con los flags \textit{weights} con el modelo que se quiere evaluar y \textit{annotation\_path} con el PATH del fichero obtenido previamente}
+Durante la ejecución de la evalaución obtendremos por pantalla el siguiente resultado:
+Donde contaremos con las posiciones originales, dónde por cada detección veremos el nombre de la clase, así como las posiciones de la imagen, y las posiciones detectadas dónde tendremos el nombre de la clase, el \textit{accuraccy} de la detección y la psoción en la que se encuentra el objeto.
+\imagen{resultEval}{Ejemplo del resultado de una imagen}
+
+Por último, para ver el resultado, tendremos que movermos a la carpeta \textit{mAP} y ejecutar el script \textit{main.py}.
+Donde podremos ver el resultado del \textit{mAP}
+\imagen{evalMAP}{mAP del modelo de detección de las cabezas}
+\imagen{infoEval}{información sobre la evalaución del modelo}
+\imagen{prEval}{Precission-Recall de la clase \textit{head}}
