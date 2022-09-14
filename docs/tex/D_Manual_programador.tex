@@ -49,7 +49,7 @@ El repositorio del proyecto puede ser consultado en el siguiente enlace: \textbf
     \item \texttt{/codigo/data/dataset/head.txt}: fichero de evaluacion del módelo de las cabezas. 
     \item \texttt{/codigo/data/dataset/license\_plate.txt}: fichero de evaluación del modelo de las matrículas.
     \item \texttt{/codigo/data/dataset/val2017.txt}: fichero de evaluación del modelo coco.
-    \item \texttt{/codigo/data/images}: carpeta que contiene diferentes imagenes para su detección.
+    \item \texttt{/codigo/data/images}: carpeta que contiene diferentes imágenes para su detección.
     \item \texttt{/codigo/data/video}: carpeta que contien diferentes vídeos para su detección/contabilización.
     \item \texttt{/codigo/deep\_sort}: carpeta que contiene los diferentes ficheros en Python para su evaluacion con Object Tracking.
     \item \texttt{/codigo/deep\_sort/detection.py}: fichero Python que contiene las funciones de detección para Obejct Tracking.
@@ -61,7 +61,7 @@ El repositorio del proyecto puede ser consultado en el siguiente enlace: \textbf
     \item \texttt{/codigo/deep\_sort/track.py}: fichero Python que contiene las funciones necearias para detectar los objetos y sus etiquetas correspondeitnes, con su respectivo número de identificación.
     \item \texttt{/codigo/deep\_sort/tracker.py}: fichero Python que contiene las funciones necearias para detectar los objetos y sus etiquetas correspondeitnes, con su respectivo número de identificación.
     \item \texttt{/codigo/detections}: carpeta con el lso resultados de las detecciones obtenidas mediante la línea de comandos.
-    \item \texttt{/codigo/detections/images}: carpeta con el resultado de las imagenes detectadas.
+    \item \texttt{/codigo/detections/images}: carpeta con el resultado de las imágenes detectadas.
     \item \texttt{/codigo/detections/videos}: carpeta con el resultado de los vídeos detectados.
     \item \texttt{/codigo/mAP}: carpeta que contiene lso resultados de la evaluaciones de los modelos, así como scripts de ayuda para ello.
     \item \texttt{/codigo/mAP/extra}: carepeta con los cripts de ayuda para la evaluación del modelo.
@@ -76,8 +76,8 @@ El repositorio del proyecto puede ser consultado en el siguiente enlace: \textbf
     \item \texttt{/codigo/static}: carpeta que contiene los ficheros 'estaticos' para Flask.
     \item \texttt{/codigo/static/css}: carpeta que contiene los diferentes ficheros de estilos\cite{css} usados a lo largo de la app Flask.
     \item \texttt{/codigo/static/js}: carpeta que contiene los diferentes scripts de JavaScript\cite{js} utilizados a lo largo de la app Flask.
-    \item \texttt{/codigo/static/detections}: carpeta que contiene las imagenes, videos etiquetados tras su detección, así como los ficheros CSV de las posiciones.
-    \item \texttt{/codigo/static/imgs}: carpeta con todas las imagenes usadas a lo largo de la app Flask.
+    \item \texttt{/codigo/static/detections}: carpeta que contiene las imágenes, videos etiquetados tras su detección, así como los ficheros CSV de las posiciones.
+    \item \texttt{/codigo/static/imgs}: carpeta con todas las imágenes usadas a lo largo de la app Flask.
     \item \texttt{/codigo/temp}: carpeta que almacena los ficheros de detección temporales, generados al inicio de las detecciones en la app Flask.
     \item \texttt{/codigo/templates}: carpeta que contienelos ficheros .html usados a lo alrgo de la app Flask.
     \item \texttt{/codigo/tools}: carpeta que contiene los scripts Python utilizados cómo herramientas a la hora de detectar.
@@ -219,7 +219,7 @@ Lo primero será seleccionar el fichero de etiquetas con el que deseamos trabaja
 \imagen{pruebaEval}{Selección del fichero de etiquetas}
 Tras esto deberemos de crear una carpeta con las imágenes, con las que deseamos evaluar el modelo y con los ficheros \textit{txt} de cada imagen con las posiciones de los objetos detectados
 
-\imagen{headImgEval}{Ejemplo de imágen que se usará para evaluar el modelo}
+\imagen{headImgEval}{Ejemplo de imagen que se usará para evaluar el modelo}
 \imagen{headPosEval}{Ejemplo de etiqueta que se usará para evaluar el modelo}
 
 Tras esto, deberemos ejecutar el script \textit{preprocessDataEvaluate.py}, el cuál nos devolverá un único fichero con toda la información de las imágenes en formato YOLO.
@@ -227,7 +227,7 @@ Tras esto, deberemos ejecutar el script \textit{preprocessDataEvaluate.py}, el c
 
 El fichero que obtendremos será de este estilo:
 \imagen{textHeadEval}{Fichero con todas las imágenes y sus posiciones en formato YOLO junto con la clase del objeto detectado}
-En él, encontaremos el PATH a la imagen, la posición del objeto detectado (como x, y, width, height) y el valor de la etiqueta con la que se corresponde el objeto, estos dos últimos valores se repetirán tantas veces como objetos halla en la imagen. El fichero contará con tantas líneas como imagenes para evaluar tengamos en la carpeta.
+En él, encontaremos el PATH a la imagen, la posición del objeto detectado (como x, y, width, height) y el valor de la etiqueta con la que se corresponde el objeto, estos dos últimos valores se repetirán tantas veces como objetos halla en la imagen. El fichero contará con tantas líneas como imágenes para evaluar tengamos en la carpeta.
 
 Con este fichero ya podremos evalaur el modelo, para ello usaremos el script \textit{evaluate.py}
 \imagen{evalHead}{Script \textit{evaluate.py} junto con los flags \textit{weights} con el modelo que se quiere evaluar y \textit{annotation\_path} con el PATH del fichero obtenido previamente}

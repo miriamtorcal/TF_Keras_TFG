@@ -8,8 +8,148 @@ Siendo está una parte fundamental del proyecto, ya que permite visualizar el es
 La planificación temporal se
 
 \section{Estudio de viabilidad}
+En esta sección se va a desarrollar el estudio de la viabilidad del proyecto, con el objetivo de disponer de una visión global de los posibles benficios en contraposición del csote que supone el desarrollo del proyecto.
+El desarrolo de cualquier proyecto \textit{software} lleva consigo una serie de riesgos, entre los que destacan la experiencia del equipo desarrollador, el tamaño del proyecto, el tiempo del que se dispone para llevarlo a cabo..., influyendo todo ello en el resultado final del proyecto.
 
 \subsection{Viabilidad económica}
+El primer paso del estudio, consiste en calcular la viabilidad económica del proyetco, para ello se deben de reportar y analizar los costes/beneficios que habría supuesto el proyecto en España \footnote{Nos referimos a España ya que, es el país dónde tiene lugar el desarrollo, y por ello se tendrán en cuenta los valores económica de dicho país.}.
+
+\subsubsection{Costes}
+El llevar a acabo la realización de un proyecto de esta envergadura, posee una serie de costes, tanto fijos cómo variables, los cuáles se van a desglosar en \textit{hardware}, \textit{software}, \textit{personal}\dots
+
+\textbf{Costes Hardware}
+Para llevar a cabo el proyecto, es necesario contar con algún que otro sistema \textit{hardware}, el primero de ellos es un equipo portátil. Se utilizará un MSI GS63 Stealth 8RE, con un procesador Intel Core i7 (8ª generación) de 6 núcleos a 2.2 GHz, con 16 GB de memoria RAM y una tarjeta gráfica 1060 de 6 GB, el cuál posee un precio del mercado de 2200 €, se tiene en cuenta que el tiempo de vida útil del equipo se enceuntra en torno a los seis años, 
+por ello, de cara a los cálculos se tendrá en cuenta el tiempo de vida útil del inmovilizado, es decir, tres años.
+
+A su vez, se necesita una Raspberry Pi, para poder trabajar con la aplicación desde un dispositivo con una capacdad de computo muy inferior al equipo principal de trabajo, en este caso se contará con una Raspberry Pi 3B, la cuál cuenta con un procesador Broadcom BCM2837 con 4 núcleos a 1,2 GHz y 1 GB de memoria RAM, la cuál posee un precio de 38 € y teniendo en cuenta que la vida útil es de aproximádamente seis años.
+De la misma forma que con el portátil, se usará el tiempo medio de inmoviliado, es decir, tres años.
+
+La amortización para ambos equipos es distinta, pero el tiempo de uso es el mismo, de noviembre de 2021 a septiembre de 2022, ambos incluidos, por ende, diez meses. A continuación, se detallarán todos los costes hardware (Tabla \ref{tab:costesHardw})
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrr}
+        \toprule
+        \textbf{Concepto} & \textbf{Coste (\officialeuro)} & \textbf{Coste Amortizado (\officialeuro)}\\
+        \midrule
+        MSI GS63 Stealth 8RE & 2.200 & 611,11\\
+        Raspberry Pi 3B & 38 & 10,55 \\
+        \midrule
+        \textbf{Total} & 2.238 & 621.66 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Costes de \emph{hardware}.}\label{tab:costesHardw}
+\end{table}
+
+\textbf{Costes Software}\\
+Para el desarrollo del proeycto y uso del \textit{software} necesario, se necesita la adquisición de determinadas licencias, las cuáles se muestran a continuación , con su amortización correspondiente (Tabla \ref{tab:costesSoft}).
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrr}
+        \toprule
+        \textbf{Concepto} & \textbf{Coste (\officialeuro)} & \textbf{Coste Amortizado (\officialeuro)}\\
+        \midrule
+        Fork & 49.99 & 41,66\\
+        \TeX Works & 0 & 0 \\
+        Windows 10 Pro & 259 & 215 \\
+        Raspbian & 0 & 0 \\
+        Visual Studio Code & 0 & 0 \\
+        SonarCloud & 120 & 100 \\
+        TensorFlow & 0 & 0 \\
+        \midrule
+        \textbf{Total} & 428,99 & 356.66 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Costes de \emph{software}.}\label{tab:costesSoft}
+\end{table}
+
+\textbf{Coste de personal}\\
+El desarrollo del proyecto se ha llevado a cabo por un desarrollador y el tutor del proyecto.
+
+\begin{itemize}
+    \item El salario del desarrollador se calcula según~\cite{sueldoJunior}, siendo el salario medio anual del 20.201~\officialeuro{} netos al año.
+    \item El salario del tutor se calcula según~\cite{sueldoInvest}, siendo el salario medio anual de 22.784~\officialeuro{} netos al año. Con una carga de trabajo de dos horas semanales.
+\end{itemize}
+
+La duración total del proyecto es de 40 semanas, por lo tanto el tutor trabajará un total de 80 horas, mientras que el desarrollador trabajará 800.
+
+El IRPF es del 24\% y la retribución a la Seguridad Social, calculada tal cual se plantea en~\cite{ssCotizacion} por el Ministerio de Inclusión, Seguridad Social y Migraciones; se contribuye con un 31,40\% en total. Estando dividido en:
+\begin{itemize}
+    \tightlist
+    \item 23,60\% de contingencias comunes~\cite{BOEPCM2442022}.
+    \item 5,50\% por desempleo de tipo general~\cite{BOEPCM2442022}.
+    \item 0,20\% destinado al Fondo de Garantía Salarial~\cite{BOEPCM2442022}.
+    \item 0,60\% de formación profesional~\cite{BOEPCM2442022}.
+    \item 1,50\% de tipo de cotización por accidentes de trabajo y enfermedades profesionales~\cite{BOEENFERMEDADES}.
+\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrr}
+        \toprule
+        \textbf{Concepto} & \textbf{Desarrollador (\officialeuro)} & \textbf{Tutor (\officialeuro)}\\
+        \midrule
+        Salario total neto & 1.082,20 & 81 \\
+        Retención IRPF & 259,73 & 19,44 \\
+        Seguridad Social & 339,81 & 25,43 \\
+        \midrule
+        \textbf{Total salario bruto} &  1.681,74 & 125,87  \\
+        \midrule
+        \textbf{Total 10 meses} & 16.817,4 & 1.258,70 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Costes de personal.}\label{tab:costesPersonal}
+\end{table}
+
+En la Tabla \ref{tab:costesPersonal} se muestran de forma desgloasada los costes del personal, dando como coste final del personal:
+
+16.817,40 \officialeuro (Desarrollador) + 1.258,70 \officialeuro (Tutor) = 18.076,10 \officialeuro
+
+\textbf{Otros Costes}\\
+Aqui se indican, costes que no son agrupables en ningún de los otros grupos, pero hay que tenerlos en cuenta.
+Ver Tabla \ref{tab:costesOtros}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        \textbf{Concepto (\officialeuro)} & \textbf{Coste (\officialeuro)} \\
+        \midrule
+        Logo & 20 \\
+        Memoria impresa & 250 \\
+        Alquiler oficina & 1600 \\
+        Internet & 136\\
+        Electricidad & 140 \\
+        Agua & 51\\
+        Calefacción & 230 \\
+        \midrule
+        \textbf{Total} & 2.427 \\
+        \bottomrule
+    \end{tabular}
+\caption{Otros costes.}\label{tab:costesOtros}
+\end{table}
+
+A continaución, ver Tabla~\ref{tab:costesTotal}, se muestran los gastos totales del proyecto.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        \textbf{Categoría (\officialeuro)} & \textbf{Coste (\officialeuro)} \\
+        \midrule
+        \textit{Hardware} & 2.238 \\
+        \textit{Software} & 428,99 \\
+        Personal & 18.076,10 \\
+        Otros & 2.427 \\
+        \midrule
+        \textbf{Total} & 23.170,09 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Costes totales.}\label{tab:costesTotal}
+\end{table}
+
+\textbf{Beneficios}\\
 
 \subsection{Viabilidad legal}
 
