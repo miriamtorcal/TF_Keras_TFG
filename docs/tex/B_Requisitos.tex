@@ -4,8 +4,31 @@
 En este apéndice se recogen las necesidades funcionales que deberán de ser soportadas por el sistema que va a ser desarrollado. Con el objetivo de obtener una buena documentación, deben de identificarse y describirse los requesitos que tienen que ser satisfacidos por el sistema, pero sin entrar en su proceso de realización.
 
 \section{Objetivos generales}
+Los objetivos del proyecto son los siguientes:
+\begin{enumerate}
+    \item Realización de una aplicación que permita la detección de objetos en diferentes tipos de represenatciones visuales y de diferentes formas.
+    \item Creación de los \textit{datasets}, con los que se entrenarán los modelos y la obtención de estos en el formato, del algoritmo de detección usado.
+    \item Creación/mejora de los diferentes scripts que permiten tanto la detección de los objetos, la conversión de formato de los modelos, la evaluación de \textit{accuracy} de lso diferentes modelos entrenados. 
+    \item Conseguir que las interfaces a diseñar sean intuitivas y fáciles de utilizar. Deberán de ser transparentes al usuario, de tal forma, que se poseea un manejo de errores, ya sea producidos a nivel interno o por el usuario durante su uso.
+    \item Permitir el uso de diferentes modelos asociados a la librería de Tensorflow.   
+\end{enumerate}
 
 \section{Catalogo de requisitos}
+En esta sección se van a definir de forma clara y precisa todas las funcionalidades y restricciones del sistema.
+
+\subsection{Requisitos funcionales}
+\begin{itemize}
+    \tightlist
+    \item
+      \textbf{RF-1 Uso de algoritmos de aprendizaje automático.} Se debe de ser capaz de entrenar un modelo mediante el algoritmo de detección de YOLOv4 y posteriormente utilizar dicho modelo para predecir sobre una representación visual.
+    
+    \begin{itemize}
+    \tightlist
+    \item \textbf{RF-1.1 Entrenar el modelo.} Se debe de poder entrenar tantos modelos como desee el usuario, los cuáles llevarán un periodo indefinido de tiempo, obteniendose en función de este mejores o peores resultados.
+    \item \textbf{RF-1.2 Descarga del modelo.} Se debe de poder descargar/guardar el modelo, de cara a poder utilizarlo posteriormente.
+    \item \textbf{RF-1.3 Conversion del modelo.} Se debe de poder convertir el modelo entrenado, el cuál posee un formato \textit{weights} a uno formato apto de la librería TensorFlow.
+    \end{itemize}
+\end{itemize}
 
 \section{Especificación de requisitos}
 
