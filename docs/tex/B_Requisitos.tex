@@ -19,15 +19,31 @@ En esta sección se van a definir de forma clara y precisa todas las funcionalid
 \subsection{Requisitos funcionales}
 \begin{itemize}
     \tightlist
-    \item
-      \textbf{RF-1 Uso de algoritmos de aprendizaje automático.} Se debe de ser capaz de entrenar un modelo mediante el algoritmo de detección de YOLOv4 y posteriormente utilizar dicho modelo para predecir sobre una representación visual.
-    
+    \item \textbf{RF-1 Uso de YOLOv4 como algoritmo de aprendizáje.} Se debe de ser capaz de entrenar un modelo mediante el algoritmo de detección de YOLOv4 y posteriormente utilizar dicho modelo para predecir sobre una representación visual.
     \begin{itemize}
     \tightlist
     \item \textbf{RF-1.1 Entrenar el modelo.} Se debe de poder entrenar tantos modelos como desee el usuario, los cuáles llevarán un periodo indefinido de tiempo, obteniendose en función de este mejores o peores resultados.
     \item \textbf{RF-1.2 Descarga del modelo.} Se debe de poder descargar/guardar el modelo, de cara a poder utilizarlo posteriormente.
     \item \textbf{RF-1.3 Conversion del modelo.} Se debe de poder convertir el modelo entrenado, el cuál posee un formato \textit{weights} a uno formato apto de la librería TensorFlow.
     \end{itemize}
+    \item \textbf{RF-2 Detección de objetos}
+    \begin{itemize}
+      \tightlist
+      \item \textbf{RF-2.1 Detección de objetos sobre una imagen.} Permitir el reconocimiento de los objetos que posee el modelo, a través de una imagen, guardar el resultado de la detección en un vídeo y un fichero CSV con las posiciones.
+      \item \textbf{RF-2.2 Detección de objetos sobre un vídeo.} Permitir el reconocimiento de los objetos que posee el modelo, a través de una vídeo, guardar el resultado de la detección en un vídeo y un fichero CSV con las posiciones.
+      \item \textbf{RF-2.3 Detección de objetos visualizados por la webcam.} Permitir el reconocimiento de los objetos que posee el modelo, a través de el vídeo que captura la webcam, guardar el resultado de la detección en un vídeo y un fichero CSV con las posiciones
+      \item \textbf{RF-2.4 Contabilización de objetos sobre un vídeo.} Permitir la contabilización de los objetos que posee el modelo, a través de una vídeo, , guardar el resultado de la contabilización en un vídeo y un fichero CSV con las posiciones.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Requisitos no funcionales}
+\begin{itemize}
+\item \textbf{RNF-1 Usabilidad.} La plataforma debe de ser fácil tanto de aprender a utilizar como clara a la hora de reportar los errores que se puedan cometer. La interfaz debe ser intuitiva.
+\item \textbf{RNF-2 Rendimiento.} La interfaz web debe de tener unos tiempos de carga razonables.
+\item \textbf{RNF-3 Escalabilidad.} La plataforma debe soportar que se le añadan nuevas funcionalidades con relativa facilidad.
+\item \textbf{RNF-4 Disponibilidad.} La plataforma debe de ser accesible a través de Internet sin importar la geolocalización del cliente.
+\item \textbf{RNF-5 Mantenibilidad.} La plataforma debe cumplir los estándares de código de cada uno de los lenguajes en los que se desarrolla. 
+\item \textbf{RNF-6 Soporte.} La plataforma debe dar soporte a ficheros CSV, MP4, JPG como mínimo. Así como ser compatible con HTML5.
 \end{itemize}
 
 \section{Especificación de requisitos}
