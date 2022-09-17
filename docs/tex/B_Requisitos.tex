@@ -26,13 +26,21 @@ En esta sección se van a definir de forma clara y precisa todas las funcionalid
     \item \textbf{RF-1.2 Descarga del modelo.} Se debe de poder descargar/guardar el modelo, de cara a poder utilizarlo posteriormente.
     \item \textbf{RF-1.3 Conversion del modelo.} Se debe de poder convertir el modelo entrenado, el cuál posee un formato \textit{weights} a uno formato apto de la librería TensorFlow.
     \end{itemize}
-    \item \textbf{RF-2 Detección de objetos}
+    \item \textbf{RF-2 Detección de objetos.}
     \begin{itemize}
       \tightlist
       \item \textbf{RF-2.1 Detección de objetos sobre una imagen.} Permitir el reconocimiento de los objetos que posee el modelo, a través de una imagen, guardar el resultado de la detección en un vídeo y un fichero CSV con las posiciones.
       \item \textbf{RF-2.2 Detección de objetos sobre un vídeo.} Permitir el reconocimiento de los objetos que posee el modelo, a través de una vídeo, guardar el resultado de la detección en un vídeo y un fichero CSV con las posiciones.
       \item \textbf{RF-2.3 Detección de objetos visualizados por la webcam.} Permitir el reconocimiento de los objetos que posee el modelo, a través de el vídeo que captura la webcam, guardar el resultado de la detección en un vídeo y un fichero CSV con las posiciones
-      \item \textbf{RF-2.4 Contabilización de objetos sobre un vídeo.} Permitir la contabilización de los objetos que posee el modelo, a través de una vídeo, , guardar el resultado de la contabilización en un vídeo y un fichero CSV con las posiciones.
+      \item \textbf{RF-2.4 Contabilización de objetos sobre un vídeo.} Permitir la contabilización de los objetos que posee el modelo, a través de un vídeo, , guardar el resultado de la contabilización en un vídeo y un fichero CSV con las posiciones.
+      \item \textbf{RF-2.5 Deteccion de objetos sobre una imagen web, a través de su URL.} Permitir el reconociemiento de los objetos que posee el modelo, a través de la lectura de la URL de la imagen, , guardar el resultado de la contabilización en un vídeo y un fichero CSV con las posiciones.
+      \item \textbf{RF-2.6 Detección de objetos sobre un vídeo que se encuentra en YouTube.} Permitir la contabilización de los objetos que posee el modelo, a través de la lectura y procesamiento del vídeo de YouTube, guardar el resultado de la contabilización en un vídeo y un fichero CSV con las posiciones.  
+    \end{itemize}
+    \item \textbf{RF-3 Evaluación del modelo.}
+    \begin{itemize}
+      \item \textbf{RF-3.1 Preprocesamiento de la información.} El usuario debe ser capaz de obtener a partir de un dataset acto, un fichero que contenga la información necesaria para su evaluación.
+      \item \textbf{RF-3.2 Algoritmo de evaluación del modelo.} El usuario debe ser capaz de poder evaluar el modelo que desee a partir del fichero que obtuvo previamente.
+      \item \textbf{RF-3.3 Representación de los resultados.} El usaurio debe ser capaz de entender el resultado de la evaluación del algoritmo.
     \end{itemize}
 \end{itemize}
 
@@ -47,5 +55,123 @@ En esta sección se van a definir de forma clara y precisa todas las funcionalid
 \end{itemize}
 
 \section{Especificación de requisitos}
+Dentro de esta sección de va a desarrollar el Diagrama de Casos de Uso, ver Figura \ref{fig:useCases} y su explicación correspondiente.
 
+\imagen{useDiagram}{Diagrama de Casos de Uso} \label{fig:useCases}
 
+\subsection{Casos de Uso}
+A continuación se adjutan las tablas de los casos de uso anteriormente planteados.
+
+% Caso de Uso 1 -> Crear modelo
+\begin{table}[p]
+  \centering
+  \begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+  \toprule
+  \textbf{CU-1} & \textbf{Crear modelo}\\
+  \toprule
+  \textbf{Versión} & 1.0\\
+  \textbf{Autor} & Miriam Torres Calvo\\
+  \textbf{Requisitos asociados} & RF-1.1, RF-1.2\\
+  \textbf{Descripción} & Permite al usuario obtener un modelo entrenado.\\
+  \textbf{Precondición} & Tiene que existir un dataset previo con todas las clases que se desea detectar.\\
+  \textbf{Acciones} &
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item El usuario genera el dataset.
+  \item Ejecuta el script de entrenamiento.
+  \item Obtiene el modelo entrenado en el formato de YOLOv4.
+  \end{enumerate}\\
+  \textbf{Postcondición} & \\
+  \textbf{Excepciones} & No existen excepciones posibles.\\
+  \textbf{Importancia} & Alta \\
+  \bottomrule
+  \end{tabularx}
+  \caption{CU-1 Crear modelo.}
+\end{table}
+
+% Caso de Uso 2 -> Conversión del modelo
+\begin{table}[p]
+  \centering
+  \begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+  \toprule
+  \textbf{CU-1} & \textbf{Convertir modelo}\\
+  \toprule
+  \textbf{Versión} & 1.0\\
+  \textbf{Autor} & Miriam Torres Calvo\\
+  \textbf{Requisitos asociados} & RF-1.3\\
+  \textbf{Descripción} & Permite al usuario convertir el modelo entrenado a un formato de TensorFlow.\\
+  \textbf{Precondición} & Tiene que existir un modelo entrenado en formato \textit{weights}.\\
+  \textbf{Acciones} &
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item El usuario escoge el modelo que desea convertir.
+  \item El usuario escoge el fichero de etiquetas que se usará durante la conversión.
+  \item Escoge el el modelo de Tensorflow al que desea convertir.
+  \item Ejecuta el script correspondiente.
+  \item El usuario obtiene el modelo convertido.
+  \end{enumerate}\\
+  \textbf{Postcondición} & \\
+  \textbf{Excepciones} & Si el número de clases del modelo es mayor que las qu eposee el fichero de etiquetas.\\
+  \textbf{Importancia} & Alta \\
+  \bottomrule
+  \end{tabularx}
+  \caption{CU-2 Convertir modelo.}
+\end{table}
+
+% Caso de Uso 3 -> Crear modelo
+\begin{table}[p]
+  \centering
+  \begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+  \toprule
+  \textbf{CU-1} & \textbf{Evaluar modelo}\\
+  \toprule
+  \textbf{Versión} & 1.0\\
+  \textbf{Autor} & Miriam Torres Calvo\\
+  \textbf{Requisitos asociados} & RF-3.1, RF-3.2, RF-3.3\\
+  \textbf{Descripción} & Permite al usuario obtener un modelo entrenado.\\
+  \textbf{Precondición} & Tiene que existir un dataset previo con todas las clases que se desea detectar.\\
+  \textbf{Acciones} &
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item El usuario genera el dataset.
+  \item Ejecuta el script de entrenamiento.
+  \item Obtiene el modelo entrenado en el formato de YOLOv4.
+  \end{enumerate}\\
+  \textbf{Postcondición} & \\
+  \textbf{Excepciones} & Si el número de clases del modelo es mayor que las qu eposee el fichero de etiquetas.\\
+  \textbf{Importancia} & Alta \\
+  \bottomrule
+  \end{tabularx}
+  \caption{CU-3 Evaluar modelo.}
+\end{table}
+
+% Caso de Uso 4 -> Detectar modelo
+\begin{table}[p]
+  \centering
+  \begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+  \toprule
+  \textbf{CU-1} & \textbf{Detectar objetos}\\
+  \toprule
+  \textbf{Versión} & 1.0\\
+  \textbf{Autor} & Miriam Torres Calvo\\
+  \textbf{Requisitos asociados} & RF-2.1, RF-2.2, RF-2.3, RF-2.4, RF-2.5, RF-2.6\\
+  \textbf{Descripción} & Permite al usuario obtener un modelo entrenado.\\
+  \textbf{Precondición} & Tiene que existir un dataset previo con todas las clases que se desea detectar.\\
+  \textbf{Acciones} &
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item El usuario genera el dataset.
+  \item Ejecuta el script de entrenamiento.
+  \item Obtiene el modelo entrenado en el formato de YOLOv4.
+  \end{enumerate}\\
+  \textbf{Postcondición} & \\
+  \textbf{Excepciones} & Si el número de clases del modelo es mayor que las que posee el fichero de etiquetas. Extensión del fichero inválida\\
+  \textbf{Importancia} & Alta \\
+  \bottomrule
+  \end{tabularx}
+  \caption{CU-4 Detectar modelo.}
+\end{table}
