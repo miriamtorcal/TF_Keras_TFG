@@ -4,9 +4,68 @@
 En este apéndice se va a exponer cómo se han resuelto los objetivos anteriormente comentados. Así como la definición de datos que se utilizan en la aplicación, procedimientos ...
 
 \section{Diseño de datos}
-Al tartarse este proyecto de un proyecto de investigación, apenas cuenta con un diseño de datos.
+Al tratarse este proyecto de un proyecto de investigación, apenas cuenta con un diseño de datos. Por ello, se van a diferenciar los diferentes tipos de datos que componen la aplicación.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l p{5cm}}
+        \toprule
+        \textbf{Objeto} & \textbf{Descripción}\\
+        \midrule
+        \textit{Modelo} & Elemento que permite la detección de los objetos para los cuáles ha sido entrenado. \\
+        \textit{Fichero de etiquetas} & Clasifica la detecciones del objetos en fucnión de las posiciones el fichero. \\
+        \textit{Resultados detección} & Imágenes, vídeos y ficheros CSV, que muestran la información obtenida tras la finalización de la detección. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
 \section{Diseño procedimental}
 
+En esta sección se recogen los detalles más relevantes en cuanto a los procedimientos llevados a cabo por la plataforma, según las acciones del usuario.
+
+A continuación se explican lso diferentes diagrmas de secuencia (DS):
+
+\begin{itemize}
+    \item \textbf{DS para la subida del modelo.} Figura \ref{fig:subidaModeloCS}. Muestra el proceso que debe de seguir un usuario, para subir un modelo funcional y poder trabajar con él. Cuando el usuario se encuentra en la ventana modal correspondiente, deberá seleccionar el modelo que desea
+    subir, si el fichero seleccionado, cumple con las validaciones del modelo, este se subirá, en caso contario, nos mostrará eñ mensaje de error concreto.
+    \item \textbf{DS para la subida del fichero de etiquetas.} Figura \ref{fig:subidaEtiq}. Muestar el proceso que debe de seguir un usuario, para subir un fichero de etiquetas y poder trabajar con él. Cuando el usuario se encuentra en la ventana modal correspondiente, deberá seleccionar el fichero de etiquetas que desea
+    subir, si el fichero seleccionado, cumple con las validaciones del fichero de etiquetas, este se subirá, en caso contario, nos mostrará eñ mensaje de error concreto.
+    \item \textbf{DS para cambiar el modelo.} Figura \ref{fig:changeModelCS}. Muestra el proceso que debe de seguir un usuario, para cambiar el modelo actual por otro. Cuando el usuario se encuentra en la ventana modal correspondiente, deberá seleccionar el modelo deseado de la lista de los que se encuentran almacenados.
+    \item \textbf{DS para cambiar el fichero de etiquetas.} Figura \ref{fig:changeEtiq}. Muestra el proceso que debe de seguir un usuario, para cambiar el fichero de etiquetas asignado en ese momento por otro. Cuando el usuario se encuentra en la ventana modal correspondiente, deberá seleccionar el fichero de etiquetas deseado de la lisat de todos los ficheros que se encuentran en el sistema.
+    \item \textbf{DS para detectar objetos sobre un imagen.} Figura \ref{fig:imgDetect}. Muestra el procedimiento que debe de seguir un usuario para detectar los objetos del modelo, que se encuentran en la imagen, para ello una vez que el usuario se enecuentra en la ventana correspondiente deberá seleccionar la imagen que desea detectar, si todo va bien devolverá la imagen detectada, sino nos mostrar el mensaje de error.
+    \item \textbf{DS para detectar objetos sobre un vídeo.} Figura \ref{fig:videoDetect}. Muestra el procedimiento que debe de seguir un usuario para detectar los objetos del modelo, que se encuentran en un vídeo, para ello una vez que el usuario se enecuentra en la ventana correspondiente deberá seleccionar el vídeo que desea detectar, si todo va bien devolverá el vídeo detectado, sino nos mostrar el mensaje de error. 
+    \item \textbf{DS para la contabilziación de objetos.} Figura \ref{fig:OTVideo}. Muestra el procedimiento que debe de seguir un usuario para contabilizar los objetos del modelo, que se encuentran en un vídeo, para ello una vez que el usuario se enecuentra en la ventana correspondiente deberá seleccionar el vídeo que desea conyabilziar, si todo va bien devolverá el vídeo contabilzado, sino nos mostrar el mensaje de error.
+    \item \textbf{DS para la detección de objetos a través de la webcam.} Figura \ref{fig:webcamDetect}. Muestra el procedimiento que debe de seguir un usuario para detectar los objetos del modelo, que se encuentran en a través de la webcam, para ello una vez que el usuario se enecuentra en la ventana correspondiente deberá decidir si solo deseea detectar o guardar el resultado de la detección, si todo va bien y se ha decidido guardar el resultado, este se devolverá como un vídeo, sino nos mostrar el mensaje de error.
+    \item \textbf{DS para la detección de obejtos a través de la URL de la imagen.} Figura \ref{fig:urlDetect}. Muestra el procedimiento que debe de seguir un usuario para detectar los objetos del modelo, que se encuentran en la imagen que se lee a través de la URL, para ello una vez que el usuario se enecuentra en la ventana correspondiente deberá sintroducir la URL de la imagen que desea detectar, si todo va bien devolverá la imagen detectada, sino nos mostrar el mensaje de error.
+    \item \textbf{DS para la detección de obejtos a través de la URL del vídeo de YouTube.} Figura \ref{fig:urlYTDetect}. Muestra el procedimiento que debe de seguir un usuario para detectar los objetos del modelo, que se encuentran en el vídeo de YouTube, para ello una vez que el usuario se enecuentra en la ventana correspondiente deberá introducir la URL del vídeo de YouTube qie deseea detectar, si todo va bien devolverá lel video detectado, sino nos mostrar el mensaje de error.
+\end{itemize}
+
+\imagen{subidaModeloCS}{Diagrama de Secuencia Subida Modelo de Detección}
+\imagen{subidaEtiq}{Diagrama de Secuencia Subida Fichero de Etiquetas}
+\imagen{changeModelCS}{Diagrama de Secuencia Cambio Modelo de Detección}
+\imagen{changeEtiq}{Diagrama de Secuencia Cambio Fichero de Etiquetas}
+\imagen{imgDetect}{Diagrama de Secuencia Detección Imagen}
+\imagen{videoDetect}{Diagrama de Secuencia Detección Vídeo}
+\imagen{OTVideo}{Diagrama de Secuencia Contabilización Vídeo}
+\imagen{webcamDetect}{Diagrama de Secuencia Detección Webcam}
+\imagen{urlDetect}{Diagrama de Secuencia Detección URL Imagen}
+\imagen{urlYTDetect}{Diagrama de Secuencia Detección Vídeo YouTube}
+
+\clearpage
+
 \section{Diseño arquitectónico}
-
-
+La estructura de la aplaicación es muy sencilla, ya que los modelos, ficheros de etiquetas y resultados de las detecciones se alamcenan en carpetas en el interior de la aplicación.
+Guardándose de la siguiente manera:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        \textbf{Objeto} & \textbf{Carpeta}\\
+        \midrule
+        \textit{Modelo} & checkpoints \\
+        \textit{Fichero de etiquetas} & data\//classes \\
+        \textit{Videos (URL)} & temp \\
+        \textit{Resultados detección} & static\//detection \\
+        \bottomrule
+    \end{tabular}
+    \caption{Carpetas donde se almacenan los fichero en la aplicación}
+\end{table}
