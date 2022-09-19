@@ -5,14 +5,133 @@ En este apéndice se va a mostrar la planificación del proyecto, la cuál es la
 Siendo está una parte fundamental del proyecto, ya que permite visualizar el escenario en el que se desarrollará, de tal forma que podamos realizar una alineación estrategica de los elementos que deben de ser completados, con el objetivo de finalizarlo correctamente.
 
 \section{Planificación temporal}
-La planificación temporal se
+La planificación temporal se ha dividido en distintos sprints de dos o tres semanas de duración cada uno (algunos han tenido menos actividad de la planificada debido a los exámenes y a la carga de trabajo aumentada por la realización de las prácticas), en los cuales se realizaron distintas tareas y reuniones. Las reuniones se realizaban cada dos semanas informando de
+las tareas realizadas y los problemas surgidos, a lo que aportaban distintas soluciones y tareas nuevas.
+
+Sprint 0 (5 Octubre 2021 - 13 Diciembre 2021)
+En este Sprint, se han realizado las pruebas previas a la inicialización del proeycto, de cara a poder conocer cómo funcionan los algoritmos de \textit{detección de objetos}, así cómo el \textit{Transfer Learning}.
+
+\clearpage
+
+Sprint 1 (5 Abril - 6 Mayo)
+\imagen{Sprint5Abril-6Mayo}{Sprint 1}
+A lo largo de este Sprint, se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Creación de un modelo YOLOV4, capaz de detectar matrículas
+    \item Convertir dicho modelo a un modelo de TensorFlow (con extensión \textit{pb})
+    \item Scripts de detección (vídeo e imagen), con exportación de las posiciones detectadas en un fichero CSV
+\end{itemize}
+
+Sprint 2 (10 Mayo - 24 Mayo)
+\imagen{Sprint10Mayo-24Mayo}{Sprint 2}
+A lo largo de este Sprint, se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Obtener información acerca de la conversión del modelo a TensorRT
+    \item Modificar el fichero de posiciones (CSV), añadiendo la clase a la que pertenece.
+\end{itemize}
+
+Sprint 3 (24 Mayo - 7 Junio)
+\imagen{Sprint24Mayo-7Jun}{Sprint 3}
+A lo largo de este Sprint, se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Cambios y añadidos a la memoria
+\end{itemize}
+
+Sprint 4 (7 Junio - 21 Junio)
+\imagen{Sprint7Jun-21Jun}{Sprint 4}
+
+A lo largo de este Sprint, se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Realización de pruebas de \textit{accuraccy}
+    \item Pruebas de detección de vídeo desde la webcam
+\end{itemize}
+
+Sprint 5 (21 Junio - 5 Julio)
+\imagen{Sprint21Jun-5Jul}{Sprint 5}
+
+A lo largo de este Sprint, se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Asignar licencia al proyecto
+    \item Crear modelo de YOLOv4 capaz de detectar cabezas
+    \item Mejoras y pruebas en la detección de objetos desde la webcam
+    \item Creación y primeros pasos de un script para la contabilización de objetos
+    \item Cambios en el script de detección de objetos en imágenes
+    \item Actualización del fichero de requeriments
+    \item Pruebas con el modelo de las cabezas
+    \item Revisión vulberabilidades detectadas
+    \item Cambios en memoria
+    \item Cambios en anexos
+\end{itemize}
+
+Sprint 6 (5 Julio - 19 Julio)
+\imagen{Sprint5Jul-19Jul}{Sprint 6}
+
+A lo largo de este Sprint, se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Ajustar la conversión a Tensorflow Lite
+    \item Ajustar las conversiones a tensorflow Lite
+    \item Pruebas con Flask
+    \item Primeros pasos de la aplicacion Flask
+\end{itemize}
+
+\clearpage
+
+Sprint 7 (19 Julio - 2 Agosto)
+\imagen{Sprint19Jul-2Ago}{Sprint 7}
+A lo largo de este Sprint, se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Detección en vídeo en Flask
+    \item Detección en imagen desde url en Flask
+    \item Contabilizar objetos desde vídeo en Flask
+    \item Detección en vídeo desde url de YouTube en Flask
+\end{itemize}
+
+Sprint 8 (2 Agosto - 16 Agosto)
+\imagen{Sprint2Ago-16Ago}{Sprint 8}
+A lo largo de este Sprint, se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Detección en vídeo a través de webcam en Flask
+    \item Ajustar estilos y favicon
+\end{itemize}
+
+Sprint 9 (16 Agosto - 30 Agosto)
+\imagen{Sprint16Ago-30Ago}{Sprint 9}
+A lo largo de este Sprint, se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Detección en vídeo a través de webcam en Flask
+    \item Añadir modal para añadir modelos
+    \item Añadir modal para añadir fichero de etiquetas
+    \item Añadir modal para cambiar el modelo actual
+    \item Añadir modal para cambiar el fichero de etiquetas actual
+\end{itemize}
+
+Sprint 10 (30 Agosto - 13 Septiembre)
+\imagen{Sprint30Ago-13Sep}{Sprint 10}
+A lo largo de este Sprint, se han realizado las siguientes tareas:
+
+\begin{itemize}
+    \item Ajustes de maquetación de la aplicación
+    \item Ajustes Flask
+    \item Añadir mensajes error
+    \item Cambios memoria
+    \item Cambios anexos
+\end{itemize}
 
 \section{Estudio de viabilidad}
-En esta sección se va a desarrollar el estudio de la viabilidad del proyecto, con el objetivo de disponer de una visión global de los posibles benficios en contraposición del csote que supone el desarrollo del proyecto.
+En esta sección se va a desarrollar el estudio de la viabilidad del proyecto, con el objetivo de disponer de una visión global de los posibles beneficios en contraposición del csote que supone el desarrollo del proyecto.
 El desarrolo de cualquier proyecto \textit{software} lleva consigo una serie de riesgos, entre los que destacan la experiencia del equipo desarrollador, el tamaño del proyecto, el tiempo del que se dispone para llevarlo a cabo..., influyendo todo ello en el resultado final del proyecto.
 
 \subsection{Viabilidad económica}
-El primer paso del estudio, consiste en calcular la viabilidad económica del proyetco, para ello se deben de reportar y analizar los costes/beneficios que habría supuesto el proyecto en España \footnote{Nos referimos a España ya que, es el país dónde tiene lugar el desarrollo, y por ello se tendrán en cuenta los valores económica de dicho país.}.
+El primer paso del estudio, consiste en calcular la viabilidad económica del proyecto, para ello se deben de reportar y analizar los costes/beneficios que habría supuesto el proyecto en España \footnote{Nos referimos a España ya que, es el país dónde tiene lugar el desarrollo, y por ello se tendrán en cuenta los valores económicos de dicho país.}.
 
 \subsubsection{Costes}
 El llevar a acabo la realización de un proyecto de esta envergadura, posee una serie de costes, tanto fijos cómo variables, los cuáles se van a desglosar en \textit{hardware}, \textit{software}, \textit{personal}\dots
