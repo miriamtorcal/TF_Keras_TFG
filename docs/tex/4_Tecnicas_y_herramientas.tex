@@ -49,7 +49,7 @@ Existen diferentes algoritmos:
         \item Si dos objetos se encuentran muy juntos, se podrían llegara a detectar como un único objeto.    
     \end{list}
     
-    \item \textbf{R-CNN:} \textit{(Region Based Convolutional Neural Networks)} surgen en el año 2014, con la siguiente propuesta: determianr primero las regiones de interés de la imagen y después realizar la clasificación de imagenes sobre dichas áreas usando una red preentrenada.\cite{r-cnn}
+    \item \textbf{R-CNN:} \textit{(Region Based Convolutional Neural Networks)} surgen en el año 2014, con la siguiente propuesta: determianr primero las regiones de interés de la imagen y después realizar la clasificación de imágenes sobre dichas áreas usando una red preentrenada.\cite{r-cnn}
     Esto implica, que haya un primer algoritmo que detecte las áreas de interés de la imagen, las cuáles pueden ser muchas y de diversos tamaños. Seguidamente, se pasán las diferentes regiones por la CNN, validandose las clases correctas mediante un clasificador bianrio, de tal forma, que se eliminarán
     las que tenga un bajo nivel de confianza. Por último, se ajustaría la posición mediante un regresor.
     

@@ -1,20 +1,22 @@
 \capitulo{1}{Introducción}
 
 Hoy en día la tecnologia ha avanzado tanto, que es muy fácil contar con ella a la hora de realizar ciertas tareas, pero cada vez la demandamos 
-más para poder trabajar codo con codo con ella, es decir, recibir su ayuda de tal forma que les podamos asignar tareas asegurando que tendrán un
+más para poder trabajar junto a ella mano a mano, es decir, recibir su ayuda de tal forma que les podamos asignar tareas asegurando que tendrán un
 porcentaje de acierto igual o superior al que tendría si lo realizasemos cualquiera de nosotros.
 
-Pero generalmente, para poder llevar a cabo estas tareas, se necesitan dispositivos con una gran cantidad de computo, ya que necesitaremos entrenarlo 
+Pero generalmente, para poder llevar a cabo estas tareas, se necesitan dispositivos con una gran potencia de cómputo, ya que necesitaremos entrenarlo 
 con el objeto u objetos a predecir, siendo está la tarea más importante y la que más capacidad de computo va a necesitar y la que más recursos va consumir.
 Tras su entrenamiento, volveremos a consumir recursos para su detección, de tal forma que necesitaremos un equipo lo suficientemente potente para poder realizar
 ambas tareas con efectividad y poder obtener buenos resultados.
 
 Debido a esto, el poder entrenar el modelo en un ordenador lo suficientemente potente y seguidamente poder adaptarlo para poder ser utilizado en dispositivos pequeños
-como puede ser la Jetson Nano de NVIDIA, y que este dispositivo lo ejecute, sacrificando el porcentaje de acierto pero respetando los tiempos de ejecución, puede facilitar a
-muchos trabajadores y/o investigadores en sus trabajos ya que pueden tener una herramienta funcional en poco espacio y además fácil de transportar para poder usarla en diferentes
+como puede ser la Raspberry PI 3 de Raspberry, y que este dispositivo lo ejecute, sacrificando el porcentaje de acierto pero respetando los tiempos de ejecución, puede facilitar a
+muchos personas en sus puestos de trabajo ya que pueden tener una herramienta funcional en poco espacio y además fácil de transportar para poder usarla en diferentes
 lugares.
 
-\clearpage
+Por lo tanto, en este Trabajo de Fin de Grado se ha hecho lo siguiente, se han creado diferentes modelos de detección basados en el algoritmo de detección de YOLO, concretamente se basa en la versión 4 de dicho algoritmo, la cuál utiliza una única red convolucional, ya que su forma de trabajar facilita la detección en dispositivos que poseean una baja capacidad de computo.
+Para mejorar la capacidad de detección del modelo, este se convertirá posteriormente a un modelo de la librería de Tensorflow, con el objetivo de que este sea más manejable a los diferentes dispositivos de Edge Computing que hay en el mercado.
+En este caso, las pruebas se han realizado en una Raspberry utilizando modelos de Tensorflow Lite, que se han convertido desde los modelos generados a lo largo del proyecto basados en el algoritmo de YOLO.
 
 \section{Estructura de la memoria}
 La memoria consta de las siguiente estructura:
