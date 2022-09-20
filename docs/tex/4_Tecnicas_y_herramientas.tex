@@ -1,6 +1,6 @@
 \capitulo{4}{Técnicas y herramientas}
 
-\section{Metodología}\label{scrum}
+\section{Metodología Ágil Scrum}\label{scrum}
 A lo largo del proyecto se intentado seguir la \textit{metodología ágil Scrum}, pero adaptada ya que para pdoer aplciar esta metodología es necesario contar con un equipo, en el cuál los diferentes miembros se reparten las roles entre los diferentes miembros que lo conforman. En este caso, lso roles recaeen todo sobre una única persona.
 
 \imagen{scrum}{Pasos de la metodología Scrum}
@@ -21,7 +21,7 @@ A la hora de empezar un nuevo proyecto es importante relacionado con el \textit{
 En este caso se decantó por el uso de \textit{Python}, debido al mayor conocimiento de este lenaguaje y haber trabajado más con este lenguaje que con \textit{Matlab}.
 No hay grandes ventajas entre escoger uno u otro.
 
-\subsection*{Python}
+\subsection{Python}
 Python es un lenguaje de programación multiplataforma y multiparadigma \footnote{Debido a que soporta parcialmente la orientación a objetos, la programación funcional y la imperativa.}, destacando entre sus características la legibilidad y la limpieza del código. Python es un \textit{software open source}, siendo por ello gratuito sus uso.
 
 Fue desarrollado al inicio de la década de los 90 por \textit{Guido van Rosseun}. Fue implementado como el sucesor del lenguaje \textit{ABC} y se encuentra fuertemente influenciado por otros como: ABC, Ada, ALGOL 68, APL, C, C++, CLU, Dylan, Haskell, Icon, Java,
@@ -29,53 +29,7 @@ Lips, Modula-3, Perl, Standard ML.
 
 Su principal objetivo es automatizar los procesos, con el fin de minimizar tanto el tiempo de desarrollo, como complicaciones, debido a esto, hoy en día Python es uno de los lenguajes más usados para el desarrolo de todo tipo de aplicaciones.
 
-\section{Algoritmo de detección}
-A parte de tener claro el lenguaje que se quiere utilizar, otra característica a tener en cuenta es elegir el \textit{algoritmo de detección} en el que se va a basar el modelo.
-Existen diferentes algoritmos:
-\begin{list}{\textbullet}{ %
-    \addtolength{\itemsep}{-2mm} %
-    \setlength{\itemindent}{2mm}}
-
-    \item \textbf{CNN:} \textit{(Convolutional Neuronal Network)} es la opción maás básica que se puede escoger,ya que se parte de una red neuronal convolucional \cite{cnn} la cuál itera la imagen hasta devolver las posiciones de los objetos que detecta.
-    
-    Está opción trae consigo diferentes inconvenientes:
-    \begin{list}{\textbullet}{ %
-        \addtolength{\itemsep}{-2mm} %
-        \setlength{\itemindent}{2mm}}
-        \item Si la imagen detecta varios objetos, situados en zonas opuestas, ¿cuántos píxeles tendremos que desplazarnos en cada dirección?.
-        \item El tiempo de cómputo es variable, pudiendo llegar a ser muy largo, ya que por cada movimiento implica una clasificación individual con la red.
-        \item Deetectar un objeto dentro de la red, no indica que se poseen los valores 'x' e 'y' de su posición.
-        \item Si por un casual el desplazamiento de píxeles que se realiza es muy pequeño, podríamos estar detectadndo el mismo objeto múltiples veces.
-        \item Si dos objetos se encuentran muy juntos, se podrían llegara a detectar como un único objeto.    
-    \end{list}
-    
-    \item \textbf{R-CNN:} \textit{(Region Based Convolutional Neural Networks)} surgen en el año 2014, con la siguiente propuesta: determianr primero las regiones de interés de la imagen y después realizar la clasificación de imágenes sobre dichas áreas usando una red preentrenada.\cite{r-cnn}
-    Esto implica, que haya un primer algoritmo que detecte las áreas de interés de la imagen, las cuáles pueden ser muchas y de diversos tamaños. Seguidamente, se pasán las diferentes regiones por la CNN, validandose las clases correctas mediante un clasificador bianrio, de tal forma, que se eliminarán
-    las que tenga un bajo nivel de confianza. Por último, se ajustaría la posición mediante un regresor.
-    
-    \imagen{r-cnn-regions}{Pasos de la detección en R-CNN}
-
-    \item \textbf{Fast R-CNN / Faster R-CNN:} Son dos algoritmos que surgen como mejora a R-CNN \cite{faster_rcnn}:
-    \begin{list}{\textbullet}{ %
-        \addtolength{\itemsep}{-2mm} %
-        \setlength{\itemindent}{2mm}}
-        \item \textbf{Fast R-CNN:} mejora el algoritmo inicial reutilizando algunso recursos, como las \textit{features} extraídaa por la CNN, de tal forma que se agiliza el entreno y la detección de las imágenes.
-        Esta red, posee también mejoras en el cálculo del IoU \textit{(Intersection Over Union)} y en la función de \textit{Loss}. Pero a pesar de esto, no tiene mejoras drásticas en la velocidad de entrenamiento y en la detección.
-        \imagen{fast-RCNN}{Arquitectura red Fast-RCNN}
-        \clearpage
-       \item \textbf{Faster R-CNN:} logra una mejora de velocidad al integrar el algoritmo de \textit{region proposal} \cite{region_proposal} sobre la propia CNN.
-       Además aperece el concepto de usar \textit{anchors} fijos, lo cuál consiste en usar tamaños pre calculados para la detección de obejtos de la red.
-       \imagen{fasterRCNN}{Arquitectura red Faster-RCNN}
-    \end{list}
-
-    \item \textbf{YOLO:} surge en 2016, su nombre viene formado por las siglas de \textit{You Only Look Once} \cite{yolov4}.
-    Esta red, como su propio nombre indica hace una única pasada a la red y detecta todos los obejtos para los que ha sido entrenada para clasificar, al realizar un único vistazo obtiene velocidades muy buenas en equipos que no son necesariamente potentes. Lo cuál permite, detecciones en tiempo real de cientos obejtos de forma simúltanea y su ejecución en dispositivos móviles.  
-\end{list}
-Debido a esto, el modelo escogido ha sido YOLO y en su versión 4, la cuál fue lanzada en Abril del año 2020.
-
-\imagen{resultsYOLOv4}{Comparativa resultados Dataset COCO}
-
-\section{Tensorflow}
+\subsection{Tensorflow}
 \textit{Tensorflow} \cite{tensorflow} es una biblioteca de código abierto, la cuál fue lanzada en el año 2015 por Google, la cuál es muy utilizada por muchas empresas resultado de gran utilidad por su versatilidad y nivel de desarrollo.
 
 Esta herramienta se basa en el \textbf{Deep Learning,} a pesar de que el mercado habia herramientas similares como \textit{DistBelief} \cite{distBelief}, la cuál también fue construida por Google en el año 2011, como un sistema propietario de aprendizaje automático. Su uso creció rápidamente debido al uso de compaañias como \textit{Alphabet}. Pero los años pasaron y el avance de la tecnología 
@@ -86,11 +40,7 @@ Se basa en un sistema de redes neuronales, lo cuál permite relacionar varios da
 \section{TensorRT}
 \textit{TensorRT} \cite{tensorrt} es un \textit{framework} de aprendizaje automático, el cuál fue publicado por \textbf{Nvidia} para ejecutar inferencias que son interferencias de aprendizaje automático en su hardware. Este \textit{framework}, se encuentra altamente cualificado para ejecutarse en \textit{GPUs Nvidia}, siendo una de las formas más rápidas de ejecutar un modelo en este momento.
 
-\imagen{workflowTensorrt}{Workflow del framework \textit{Tensorrt}}
-
-\section{GitHub}
-\textit{GitHub} \cite{github} es una herramienta para el alojamiento del código desarrollado, por cualquier individuo en la web. Esta herramienta permite llevar un control de versiones, siendo esto muy interesante de cara al proyecto que se va a llevar a cabo.
-Otra característica destacable es que se puede integrar este sistema en \textit{Visual Studio Code} \cite{visualStudioCode} y que podemos enlazar de forma fácil a nuestro repositorio los códigos realizados con \textit{Google Colab}\cite{colab}.
+\imagen{workflowTensorrt}{Workflow del framework \textit{Tensorrt} \cite{imgTRT}}
 
 \section{Flask}
 \textit{Flask} \cite{flask} es un framework de Python, utilizado para crear aplicaciones web, APIs... En el partimos de un lienzo en blanco, es decir, partimos totalmente de cero, lo cuál nos permite utilizar sólo los módulos que necesitemos para nuestra aplicación.
@@ -98,57 +48,16 @@ Facilitando el trabajo a la hora del desarrollo, al sólo tener la necesidad de 
 
 Con este framework se puede hacer lo mismo que con Django, siendo este más pesado y con una curva de aprendizaje muchisimo más grande que la que posee Flask, la cuál es más pequeña.
 
-
-\imagen{holaMundoFlask}{Hola Mundo en el framework Flask}
-\imagen{flask}{Logo Flask}
-
-\clearpage
-
-\section{Herramientas de control de calidad del código} \label{calidad_codigo}
-Las herramientas de control de calidad de código evaluan y procesan de forma automática las líneas de código que conforman el proyecto, comparándolas con unos estándares de calidad. El proyecto será evaluado y dependiendo de si se cumplen o no los estándares y en que medida, la calificación será mejor o peor.
-
-La integración de herramientas de evaluación de código, ayudan a los desarrolladores a evaluar cómo de bueno es un producto software, consiguiendo una mejor mantenibilidad, reducir los errores, hacer revisiones del código centrándose en puntos especificos del código, así como determianr como de buena es la corbertura de pruebas con el objetivo de aumentar el valor del producto software.
-
-Para llevar acabo esta evaluación, se ha contando con la herramienta \textit{SonarCloud}. 
-
-\subsection*{SonarCloud}
-
-SonarCloud \cite{sonar_cloud} es una herramienta de evaluación de código que es capaz, de calcular de forma automática, la duplicación de código, la corbertura del código, su fiabilidad, mantenibilidad, así como su seguridad y sus posibles puntos vulnerables.
-Para llevar a cabo sus evaluaciones, SoanrCloud se fija en los estándares y reglas de cada lenguaje.
-
-\begin{list}{\textbullet}{ %
-    \addtolength{\itemsep}{-2mm} %
-    \setlength{\itemindent}{2mm}}
-
-    \item \textbf{Duplciación de código:} identifica las líneas, fragementos o ficheros de código duplicado.
-    \begin{enumerate}
-        \item Las duplicaciones en un único archivo, es igual al número de copias encontradase en dicho archivo.
-        \item Un archivo se considera duplicado de otro, si el número de líneas iguales supera un determinado umbral.
-    \end{enumerate}
-    \item \textbf{Seguridad:} para analizar la seguridad de código, se fija en dos puntos: \textit{Security Hostpots} y en las \textit{vulneravilidades}
-    \begin{enumerate}
-        \item Los Security Hostpots, son partes de código sensible a la seguridad, estos pueden estar bien, pero requieren de una revisión humana.
-        \item Las vulnerabilidades de seguridad requieren una acción inmediata, para ello, se fija en las reglas  y en los estándares del lenguaje concreto
-    \end{enumerate}
-    \item \textbf{Quality Gate:} son un conjunto de condiciones \textit{booleanas}, los cuáles siguen los estándares de vulnerabilidad y revisión de puntos de acceso. Esta métrica, nos indica si el código está listo pra pasar a producción.
-\end{list}
-
-\section{Fork}
-Fork\ cite{fork}, es un software diseñado para poder realizar de forma gráfica, todas las tareas que se realziarían mediante Git en la consola de comandos.
-Es una herramienta multiplataforma, que cuenta con soporte para Windows y MacOS; permite de forma sencilla mantenerse al tanto de repositorios, \textit{branches}, etiquetas, históricos, realizar \textit{commits}... Entre sus características más relevantes se encuentran:
-\begin{list}{\textbullet}{ %
-    \addtolength{\itemsep}{-2mm} %
-    \setlength{\itemindent}{2mm}}
-
-    \item Integración nativa con GitHub Enterprise, GitLab, BitBucket.
-    \item Edición y visualización de ramas, merging, histórico de commits.
-    \item Simplicidad a la hora de hacer un merge, rebase y push.
-    \item Creación, clonación y añadir dispositivos de forma remota.
-    \item Muestra la diferencia entre los ficheros con cambios respecto a lo ya cometido.
-    \item Soporte de GitFlow, Git Hooks y LFS
-\end{list}
-
-\clearpage
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{holaMundoFlask}
+		\caption{Hola Mundo en el framework Flask \cite{flask}}\label{fig:holaMundoFlask}
+	\end{figure}
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.3\textwidth]{flask}
+		\caption{Logo Flask \cite{imgFlask}}\label{fig:flask}
+\end{figure}
 
 \section{LabelImg}
 LabelImg \cite{labelImg} es una herramienta gratuita \textit{open source} que permite etiquetar gráficamente imágenes. Se encuentra escrita en Python y de cara a la interfaz gráfica usa QT.
@@ -156,8 +65,6 @@ Esta herramienta permite el etiquetado en los froamto de texto \textbf{VOC, XML}
 Para llevar acabo el etiquetado de imágenes, lo primero ha realizar es la apertura de la carpeta contenedora de las imágenes (haciendo \textit{click} en \textbf{\textit{Open Dir}}), seguidamente presioanremos la tecla 'w', para comenzar con la seleción de la región a etiquetar, marcaremos el área de la etiqueta y seguidamente nos preguntará el nombre de la clase a la que pertenece dicha etiqueta, creando a su vez un fichero (\textit{classes.txt}) con todas las clases usadas.
 
 \imagen{labelImg}{Funcionamiento de LabelImg}
-
-\clearpage
 
 \section{OIDv4 ToolKit}
 OIDv4 ToolKit \cite{OIDv4TK} es un conjunto de herramientas, que permite obtener datos de \textit{train} y de \textit{validation} del \textit{Open Images Dataset V4} 
@@ -204,3 +111,51 @@ Para \textit{normalizarlas} al formato válido de \textit{YOLO}, hay que realiza
 Google Colab \cite{colab} es una herramienta gratuita desarrollada por Google, esta se enecuentra alojada en la nube y basada en \textit{Jupyter Notebook}.
 Los \textit{notebook}, se encuentran formados por celdas, dónde cada una de de ellas puede contener código, texto, imágenes... Colab conecta el \textit{notebook} a un entorno \textit{runtime}, de tal forma que carga todas las aplicaciones de un programa y la ejecuta desde la nube. Pudiendo ejecutar el código Python sin necesidad de tenerlo instalado previamente, ya que este se encuentra instalado en el entorno de ejcución alojado en la nube.
 Además, cuenta con acceso gratuito a una GPU, lo suficientemente potente para la realización de ciertos trabajos, entre ellos, el entremiento de modelo de detección.
+
+\section{GitHub}
+\textit{GitHub} \cite{github} es una herramienta para el alojamiento del código desarrollado, por cualquier individuo en la web. Esta herramienta permite llevar un control de versiones, siendo esto muy interesante de cara al proyecto que se va a llevar a cabo.
+Otra característica destacable es que se puede integrar este sistema en \textit{Visual Studio Code} \cite{visualStudioCode} y que podemos enlazar de forma fácil a nuestro repositorio los códigos realizados con \textit{Google Colab}\cite{colab}.
+
+\section{Herramientas de control de calidad del código} \label{calidad_codigo}
+Las herramientas de control de calidad de código evaluan y procesan de forma automática las líneas de código que conforman el proyecto, comparándolas con unos estándares de calidad. El proyecto será evaluado y dependiendo de si se cumplen o no los estándares y en que medida, la calificación será mejor o peor.
+
+La integración de herramientas de evaluación de código, ayudan a los desarrolladores a evaluar cómo de bueno es un producto software, consiguiendo una mejor mantenibilidad, reducir los errores, hacer revisiones del código centrándose en puntos especificos del código, así como determianr como de buena es la corbertura de pruebas con el objetivo de aumentar el valor del producto software.
+
+Para llevar acabo esta evaluación, se ha contando con la herramienta \textit{SonarCloud}. 
+
+\subsection*{SonarCloud}
+
+SonarCloud \cite{sonar_cloud} es una herramienta de evaluación de código que es capaz, de calcular de forma automática, la duplicación de código, la corbertura del código, su fiabilidad, mantenibilidad, así como su seguridad y sus posibles puntos vulnerables.
+Para llevar a cabo sus evaluaciones, SoanrCloud se fija en los estándares y reglas de cada lenguaje.
+
+\begin{list}{\textbullet}{ %
+    \addtolength{\itemsep}{-2mm} %
+    \setlength{\itemindent}{2mm}}
+
+    \item \textbf{Duplciación de código:} identifica las líneas, fragementos o ficheros de código duplicado.
+    \begin{enumerate}
+        \item Las duplicaciones en un único archivo, es igual al número de copias encontradase en dicho archivo.
+        \item Un archivo se considera duplicado de otro, si el número de líneas iguales supera un determinado umbral.
+    \end{enumerate}
+    \item \textbf{Seguridad:} para analizar la seguridad de código, se fija en dos puntos: \textit{Security Hostpots} y en las \textit{vulneravilidades}
+    \begin{enumerate}
+        \item Los Security Hostpots, son partes de código sensible a la seguridad, estos pueden estar bien, pero requieren de una revisión humana.
+        \item Las vulnerabilidades de seguridad requieren una acción inmediata, para ello, se fija en las reglas  y en los estándares del lenguaje concreto
+    \end{enumerate}
+    \item \textbf{Quality Gate:} son un conjunto de condiciones \textit{booleanas}, los cuáles siguen los estándares de vulnerabilidad y revisión de puntos de acceso. Esta métrica, nos indica si el código está listo pra pasar a producción.
+\end{list}
+
+\section{Fork}
+Fork\ cite{fork}, es un software diseñado para poder realizar de forma gráfica, todas las tareas que se realziarían mediante Git en la consola de comandos.
+Es una herramienta multiplataforma, que cuenta con soporte para Windows y MacOS; permite de forma sencilla mantenerse al tanto de repositorios, \textit{branches}, etiquetas, históricos, realizar \textit{commits}... Entre sus características más relevantes se encuentran:
+\begin{list}{\textbullet}{ %
+    \addtolength{\itemsep}{-2mm} %
+    \setlength{\itemindent}{2mm}}
+
+    \item Integración nativa con GitHub Enterprise, GitLab, BitBucket.
+    \item Edición y visualización de ramas, merging, histórico de commits.
+    \item Simplicidad a la hora de hacer un merge, rebase y push.
+    \item Creación, clonación y añadir dispositivos de forma remota.
+    \item Muestra la diferencia entre los ficheros con cambios respecto a lo ya cometido.
+    \item Soporte de GitFlow, Git Hooks y LFS
+\end{list}
