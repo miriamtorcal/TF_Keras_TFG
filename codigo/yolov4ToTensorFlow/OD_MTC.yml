@@ -1,0 +1,21 @@
+name: ODMTC
+
+dependencies:
+  - python==3.7
+  - pip
+  - matplotlib
+  - opencv
+  - pip:
+    - opencv-python==4.1.1.26
+    - tensorflow==2.8.0
+    - absl-py
+    - easydict
+    - pillow
+    - Flask
+    - pafy
+    - youtube-dl==2020.12.2
+    - keyboard
+    - requests
+    - pandas==1.1.5
+    - scipy==1.4.1
+    - protobuf==3.19.4

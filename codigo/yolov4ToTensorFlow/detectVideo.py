@@ -13,6 +13,7 @@ from absl.flags import FLAGS
 from absl import app, flags
 import time
 import tensorflow as tf
+import keyboard
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
 if len(physical_devices) > 0:
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
@@ -74,6 +75,7 @@ def main(_argv):
 
 
     frame_id = 0
+    init = time.time()
     while True:
         return_value, frame = vid.read()
         if return_value:
@@ -82,6 +84,7 @@ def main(_argv):
         else:
             if frame_id == vid.get(cv2.CAP_PROP_FRAME_COUNT):
                 print("Video processing complete")
+                print(f"Tiempo empleado: {end-init}")
                 break
             raise ValueError("No image! Try with another video format")
 
@@ -183,8 +186,13 @@ def main(_argv):
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
+        if keyboard.is_pressed('q'):
+            break
+
         frame_id += 1
     cv2.destroyAllWindows()
+    end = time.time()
+    print(f"Tiempo empleado: {end-init}")
 
 if __name__ == '__main__':
     try:
