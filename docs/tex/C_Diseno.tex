@@ -1,7 +1,7 @@
 \apendice{Especificación de diseño}
 
 \section{Introducción}
-En este apéndice se va a exponer cómo se han resuelto los objetivos anteriormente comentados. Así como la definición de datos que se utilizan en la aplicación, procedimientos ...
+En este apéndice se va a exponer cómo se han resuelto los objetivos anteriormente comentados. Así como la definición de datos que se utilizan en la aplicación, procedimientos etc.
 
 \section{Diseño de datos}
 Al tratarse este proyecto de un proyecto de investigación, apenas cuenta con un diseño de datos. Por ello, se van a diferenciar los diferentes tipos de datos que componen la aplicación.
@@ -22,11 +22,11 @@ Al tratarse este proyecto de un proyecto de investigación, apenas cuenta con un
 
 En esta sección se recogen los detalles más relevantes en cuanto a los procedimientos llevados a cabo por la plataforma, según las acciones del usuario.
 
-A continuación se explican lso diferentes diagrmas de secuencia (DS):
+A continuación se explican los diferentes diagrmas de secuencia (DS):
 
 \begin{itemize}
     \item \textbf{DS para la subida del modelo.} Figura \ref{fig:subidaModeloCS}. Muestra el proceso que debe de seguir un usuario, para subir un modelo funcional y poder trabajar con él. Cuando el usuario se encuentra en la ventana modal correspondiente, deberá seleccionar el modelo que desea
-    subir, si el fichero seleccionado, cumple con las validaciones del modelo, este se subirá, en caso contario, nos mostrará eñ mensaje de error concreto.
+    subir, si el fichero seleccionado, cumple con las validaciones del modelo, este se subirá, en caso contario, nos mostrará el mensaje de error concreto.
     \item \textbf{DS para la subida del fichero de etiquetas.} Figura \ref{fig:subidaEtiq}. Muestar el proceso que debe de seguir un usuario, para subir un fichero de etiquetas y poder trabajar con él. Cuando el usuario se encuentra en la ventana modal correspondiente, deberá seleccionar el fichero de etiquetas que desea
     subir, si el fichero seleccionado, cumple con las validaciones del fichero de etiquetas, este se subirá, en caso contario, nos mostrará eñ mensaje de error concreto.
     \item \textbf{DS para cambiar el modelo.} Figura \ref{fig:changeModelCS}. Muestra el proceso que debe de seguir un usuario, para cambiar el modelo actual por otro. Cuando el usuario se encuentra en la ventana modal correspondiente, deberá seleccionar el modelo deseado de la lista de los que se encuentran almacenados.
@@ -53,7 +53,7 @@ A continuación se explican lso diferentes diagrmas de secuencia (DS):
 \clearpage
 
 \section{Diseño arquitectónico}
-La estructura de la aplaicación es muy sencilla, ya que los modelos, ficheros de etiquetas y resultados de las detecciones se alamcenan en carpetas en el interior de la aplicación.
+La estructura de la aplaicación es muy sencilla, ya que los modelos, ficheros de etiquetas y resultados de las detecciones se almacenan en carpetas en el interior de la aplicación.
 Guardándose de la siguiente manera:
 \begin{table}[H]
     \centering

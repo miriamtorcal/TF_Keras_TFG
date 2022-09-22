@@ -94,7 +94,25 @@ El repositorio del proyecto puede ser consultado en el siguiente enlace: \textbf
     \item \texttt{/codigo/yolov4ToTensorFlow/objectTracker.py}: fichero de Python que contabiliza objetos en un vídeo, según un modelo de detección.
     \item \texttt{/codigo/yolov4ToTensorFlow/preprocessDataEvaluate.py}: fichero de Python que obtiene las posiciones de las imágenes en el formato necesario apra su evalaución.
     \item \texttt{/codigo/yolov4ToTensorFlow/save\_model\_tflite.py}: fichero de Python que convierte un fichero de pesos en formato .weights a un modelo de TensorFlow Lite. 
-    \item \texttt{/codigo/yolov4ToTensorFlow/save\_model.py}: fichero de Python que convierte un fichero de pesos en formato .weights a un modelo de TensorFlow.  
+    \item \texttt{/codigo/yolov4ToTensorFlow/save\_model.py}: fichero de Python que convierte un fichero de pesos en formato .weights a un modelo de TensorFlow. 
+\end{itemize}
+
+\begin{itemize}
+    \item \texttt{/docs}: Carpeta que posee toda la documentación relacionada con el proyecto.
+    \item \texttt{/docs/img}: Carpeta que posee todas las imagenes que se usan en la documentación.
+    \item \texttt{/docs/tex}: Carpeta que contiene todos los ficheros de \LaTeX que se usan para generar la documentación.
+    \item \texttt{/docs/IEEEabrv.bib}: Fichero necesario para el uso de librerías externas .
+    \item \texttt{/docs/IEEEtran.bst}: Fichero necesario para el uso de librerías externas.
+    \item \texttt{/docs/memoria.pdf}: Fichero que posee la memoria del proyecto en pdf.
+    \item \texttt{/docs/anexos.pdf}: Fichero que posee los anexos del proyecto en pdf.
+    \item \texttt{/docs/memoria.tex}: Fichero de \LaTeX que posee las características básicas que se generan para la documentación de la memoria.
+    \item \texttt{/docs/anexos.tex}: Fichero de \LaTeX que posee las características básicas que se generan para la documentación de los anexos.
+    \item \texttt{/docs/bibliografia.bib}: Fichero bib que contiene la bibliografia de la memoria.
+    \item \texttt{/docs/bibliografiaAnexos.bib}: Fichero bib que contiene la bibliografia de los anexos. 
+\end{itemize}
+
+\begin{itemize}
+    \item \texttt{/pruebas previas}: Carpeta que contiene todas las pruebas previas que se han realizado de forma previa al proyecto.
 \end{itemize}
 
 \section{Manual del programador}
@@ -240,18 +258,18 @@ Donde podremos ver el resultado del \textit{mAP}
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=0.6\textwidth]{evalMAP}
-    \caption{mAP del modelo de detección de las cabezas}\label{fig:evalMAP}
+    \includegraphics[width=0.6\textwidth]{cocoMAP}
+    \caption{mAP sobre la evalaución de un modelo}\label{fig:cocoMAP}
 \end{figure}
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=0.6\textwidth]{infoEval}
-    \caption{información sobre la evaluación del modelo}\label{fig:infoEval}
+    \includegraphics[width=0.6\textwidth]{cocoPredict}
+    \caption{información sobre la evaluación del modelo}\label{fig:cocoPredict}
 \end{figure}
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=0.6\textwidth]{prEval}
-    \caption{Precission-Recall de la clase \textit{head}}\label{fig:prEval}
+    \includegraphics[width=0.6\textwidth]{bear}
+    \caption{Precission-Recall de una clase del modelo evalaudo}\label{fig:bear}
 \end{figure}

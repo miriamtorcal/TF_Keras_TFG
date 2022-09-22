@@ -83,9 +83,74 @@ Resultados de la evaluación de la calidad del código para el modelo detector d
 
 \clearpage
 
+Resultados de la evaluación de la calidad del código para el modelo COCO:
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{cocoMAP}
+    \caption{mAP del modelo COCO}\label{fig:cocoMAP}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \subfloat[Clase \textit{bear}]{
+    \label{f:bear}
+        \includegraphics[width=0.55\textwidth]{bear.png}}\\
+    \subfloat[Clase \textit{tvmonitor}]{
+    \label{f:tvmonitor}
+        \includegraphics[width=0.55\textwidth]{tvmonitor.png}}\\
+    \subfloat[Clase \textit{snowboard}]{
+    \label{f:snowboard}
+        \includegraphics[width=0.55\textwidth]{snowboard.png}}\\
+    \caption{Gráficos Precission y Recall modelo COCO}
+    \label{f:graficos precission-recall}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.55\textwidth]{cocoPredict}
+    \caption{Información sobre los \textit{False Predictions} y \textit{True Positives}}\label{fig:cocoPredict}
+\end{figure}
+
+\clearpage
+
+Comparativa de la ejecución de los modelos en Pc y en Raspberry a través de un modelo de Tensorflow Lite
+\imagen{compEjecImg}{Comparativa del tiempo de ejecución a través de imágenes}
+\imagen{compEjecVid}{Comparativa del tiempo de ejecución a través de vídeos}
+
+Al realizarse estás pruebas bajo el modelo de Tensorflow Lite (ya que es el más apto para las característica de la Raspberry), es muy complicado sacar buenos tiempos en la detección a través de un vídeo y tampoco perder la calidad de detección
+del modelo, por ende, se ha ajustado la conversión del modelo YOLO a Tensorflow Lite, de tal forma, que la perdida de la calidad de la detección sea minima.
+
+\clearpage
+
+Comparativa Tensorflow VS Tensorflow Lite (Matrículas)
+\imagen{apTF}{Detección en imagen de matrículas (Tensorflow)}
+\imagen{apTFL}{Detección en imagen de matrículas (Tensorflow Lite)}
+
+\clearpage
+
+Comparativa Tensorflow VS Tensorflow Lite (Cabezas)
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{head1}
+    \caption{Detección en imagen de cabezas (Tensorflow)}\label{fig:head1}
+\end{figure}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{headTFL}
+    \caption{Detección en imagen de cabezas (Tensorflow Lite)}\label{fig:headTFL}
+\end{figure}
+
+\clearpage
+
+Comparativa Tensorflow VS Tensorflow Lite (COCO)
+\imagen{cocoTF}{Detección en imagen de YOLO (Tensorflow)}
+\imagen{cocoTFL}{Detección en imagen de YOLO (Tensorflow Lite)}
+
+\clearpage
+
 \section{Resultados evaluación de código} 
-Durante el desarrollo se integró una herramienta que permitiesen medir la calidad del código, con el objetivo de controlar la calidad del desarrollo, respecto a los estándares definidos (\textit{ver Apartado }\ref{calidad_codigo}).
-En este aprtado veremos los resultados que se han ido obteniendo, los cuáles se ejecutaban automáticamente los análisis al realizarse un \textit{commit}.
+Durante el desarrollo se integró una herramienta que permitiese medir la calidad del código, con el objetivo de controlar la calidad del desarrollo, respecto a los estándares definidos (\textit{ver Apartado }\ref{calidad_codigo}).
+En este apartado veremos los resultados que se han ido obteniendo, los cuáles se ejecutaban automáticamente al realizarse un \textit{commit}.
 
 \imagen{code_quality_results}{Resultados de la evaluación de la calidad del código}
 
