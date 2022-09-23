@@ -85,6 +85,8 @@
   # Convertir modelo YOLO a Tensorflow Lite
    python .\save_model_tflite.py --weights .\data\heads_v2.weights --output ./checkpoints/heads_tfl-416 --input_size 416 --model yolov4
 
+   python .\convert_tflite.py --weights .\checkpoints\heads_tfl-416\ --output .\checkpoints\heads-416-int8.tflite --quantize_mode int8
+
   # Detección de objetos en imagen
   python detect.py --weights .\checkpoints\custom-416-int8.tflite --size 416 --image .\data\images\head_1.png --output .\detections\images\plate_tflite.png --model yolov4 --framework tflite --quality True
 
